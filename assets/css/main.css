@@ -708,7 +708,7 @@ h6 {
 # Pricing Section
 --------------------------------------------------------------*/
 .gallery {
-  margin-top: 40px;
+  margin-top: 30%;
 }
 
 .gallery .gallery-item {
@@ -759,7 +759,7 @@ h6 {
 }
 
 .gallery .gallery-item:hover img {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .glightbox-clean .gslide-description {
@@ -1075,7 +1075,7 @@ h6 {
 }
 
 .contact .info-item:hover i {
-  background: var(--color-primary);
+  background: #ffffff;
   color: #fff;
 }
 
@@ -1131,33 +1131,35 @@ h6 {
 
 .contact .php-email-form input,
 .contact .php-email-form textarea {
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: none;
   font-size: 14px;
-  background-color: var(--color-secondary);
-  border: 1px solid #2e3133;
+  background-color: #222831;
+  border: 2px solid #ffffff;
   color: #fff;
 }
 
 .contact .php-email-form input {
   height: 44px;
+  color: #fff;
 }
 
 .contact .php-email-form textarea {
   padding: 10px 12px;
+  color: #fff;
 }
 
 .contact .php-email-form button[type=submit] {
   background: var(--color-primary);
   border: 0;
   padding: 10px 35px;
-  color: #fff;
+  color: #222831;
   transition: 0.4s;
   border-radius: 4px;
 }
 
 .contact .php-email-form button[type=submit]:hover {
-  background: rgba(39, 167, 118, 0.8);
+  background: rgb(96, 96, 96);
 }
 
 @keyframes animate-loading {
@@ -1179,7 +1181,7 @@ h6 {
   background: #222831;
   background-size: cover;
   position: relative;
-  padding: 140px 0 60px 0;
+  padding: 140px 0 30px 0;
 }
 
 .hero h2 {
@@ -1229,7 +1231,7 @@ h6 {
 }
 
 .hero .btn-get-started:hover {
-  background: #2cbc85;
+  background: #434f60;
 }
 
 @media (max-width: 768px) {
