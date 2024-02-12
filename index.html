@@ -4,19 +4,19 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>PhotoFolio Bootstrap Template - Index</title>
+    <title>Sinabook | e-cinema booking</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
+    <link href="assets/img/ticketLogo1.png" rel="icon" />
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&display=swap"
       rel="stylesheet"
     />
     <!-- Vendor CSS Files -->
@@ -61,6 +61,7 @@
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.png" alt=""> -->
           <!-- <i class="bi bi-camera"></i> -->
+          <img src="assets/img/ticketLogo1.png" alt="" />
           <h1>Sinabook</h1>
         </a>
 
@@ -93,7 +94,7 @@
                 </li>
               </ul>
             </li> -->
-            <li><a href="login.html">Login</a></li>
+            <li><a href="login.html">Log in</a></li>
             <!-- <li><a href="services.html">Services</a></li>
             <li><a href="contact.html">Contact</a></li> -->
           </ul>
@@ -175,7 +176,80 @@
                 </div>
               </div>
               <div class="text-center">
-                <button type="submit">Book Movie</button>
+                <!-- <button type="submit">Book Movie</button> -->
+                <!-- Button trigger modal -->
+                <button
+                  type="submit"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Book Movie
+                </button>
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="exampleModal"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <!-- <h5 class="modal-title" id="exampleModalLabel">
+                          Everything Everywhere All At Once
+                        </h5> -->
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <h2>Everything Everywhere All At Once</h2>
+                        <div class="movieSynopsis">
+                          <p>
+                            A middle-aged Chinese immigrant is swept up into an
+                            insane adventure in which she alone can save
+                            existence by exploring other universes and
+                            connecting with the lives she could have led.
+                          </p>
+                        </div>
+                        <br />
+                        <iframe
+                          width="1000"
+                          height="550"
+                          src="https://www.youtube.com/embed/wxN1T1uxQ2g"
+                        >
+                        </iframe>
+                        <br />
+                        <br />
+                        <h3>Select a show time:</h3>
+                        <br />
+                        <h3>Select number of tickets:</h3>
+                        <br />
+                        <h3>Enter age:</h3>
+                        <br />
+                        <h3>Select seats:</h3>
+                        <br />
+                      </div>
+                      <!-- <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Cancel
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Done
+                        </button>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- End Gallery Item -->
@@ -259,9 +333,11 @@
             <!-- End Gallery Item -->
           </div>
         </div>
-        <!-- End Currently running section -->
-        <div><br /><br /><br /></div>
-        <!-- ======= Coming soon section ======= -->
+      </section>
+      <!-- End Currently running section -->
+      <div><br /><br /><br /></div>
+      <!-- ======= Coming soon section ======= -->
+      <section id="gallery" class="gallery">
         <div class="container-fluid">
           <h4>Coming soon:</h4>
           <div class="row gy-4 justify-content-center">
