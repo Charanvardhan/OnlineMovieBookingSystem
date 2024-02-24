@@ -13,8 +13,10 @@
 /* Fonts */
 :root {
   --font-default: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-primary: "Fredoka", sans-serif;
-  --font-secondary: "Cardo", sans-serif;
+  --font-primary: "Josefin Sans",
+    sans-serif;
+  --font-secondary: "Josefin Sans",
+    sans-serif;
 }
 
 /* Colors */
@@ -33,8 +35,7 @@
 # General
 --------------------------------------------------------------*/
 body {
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   color: var(--color-default);
   background-color: #222831;
 }
@@ -55,8 +56,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Fredoka",
-      sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -75,8 +75,7 @@ h6 {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.6);
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .section-header h2::after {
@@ -93,8 +92,7 @@ h6 {
   margin: 0;
   font-size: 36px;
   font-weight: 700;
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   color: #fff;
 }
 
@@ -111,8 +109,7 @@ h6 {
   font-size: 56px;
   font-weight: 500;
   color: #fff;
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 @media (max-width: 768px) {
@@ -126,8 +123,7 @@ h6 {
 }
 
 .page-header .cta-btn {
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-weight: 400;
   font-size: 14px;
   display: inline-block;
@@ -309,8 +305,7 @@ h6 {
   margin: 0;
   font-weight: 400;
   color: #fff;
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .header .logo i {
@@ -838,8 +833,7 @@ h6 {
   margin-bottom: 20px;
   padding-bottom: 20px;
   position: relative;
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .gallery-single .portfolio-info h3:after {
@@ -889,8 +883,7 @@ h6 {
   font-weight: 700;
   margin-bottom: 20px;
   color: #fff;
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .gallery-single .portfolio-description p {
@@ -1198,11 +1191,10 @@ h6 {
 
 .hero h2 {
   margin: 0 0 10px 0;
-  font-size: 60px;
+  font-size: 80px;
   font-weight: 400;
   color: #fff;
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .hero h2 span {
@@ -1230,8 +1222,7 @@ h6 {
 }
 
 .hero .btn-get-started {
-  font-family: "Fredoka",
-    sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   font-weight: 400;
   font-size: 14px;
   display: inline-block;
