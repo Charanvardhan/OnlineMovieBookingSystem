@@ -46,7 +46,7 @@ a {
 }
 
 a:hover {
-  color: #32cf93;
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -1226,17 +1226,18 @@ h6 {
   font-weight: 400;
   font-size: 14px;
   display: inline-block;
-  padding: 12px 40px;
+  padding: 12px 30px;
   border-radius: 4px;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: 0.3s;
-  color: #fff;
+  color: #14171d;
   background: var(--color-primary);
 }
 
 .btn-get-started:hover {
-  background: #434f60;
+  color: #222831;
+  background: #ffe49e;
 }
 
 @media (max-width: 768px) {

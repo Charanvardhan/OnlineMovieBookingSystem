@@ -69,13 +69,13 @@
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="../assets/img/logo.png" alt=""> -->
           <img src="../assets/img/ticketLogo1.png" alt="" />
-          <h1>Sinabook</h1>
+          <h1>SINABOOK</h1>
         </a>
 
         <nav id="navbar" class="navbar">
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
+            <!-- <li><a href="about.html">About</a></li> -->
             <!-- <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="gallery.html">Nature</a></li>
@@ -114,10 +114,14 @@
     <main id="main" data-aos="fade" data-aos-delay="1500">
       <!-- ======= End Page Header ======= -->
       <div class="page-header d-flex align-items-center">
-        <div class="container position-relative">
+        <div class="login-container position-relative">
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6 text-center">
               <h2>Create account:</h2>
+              <p>
+                Already have an account?
+                <a href="login.html"> Log in</a>
+              </p>
               <!-- <p>Sign in below to start browsing and booking movies.</p> -->
             </div>
           </div>
@@ -127,7 +131,7 @@
 
       <!-- ======= Contact Section ======= -->
       <section id="contact" class="contact">
-        <div class="container">
+        <div class="login-container">
           <div class="row gy-4 justify-content-center">
             <!-- <div class="col-lg-3">
               <div class="info-item d-flex">
@@ -164,7 +168,7 @@
           </div>
 
           <div class="row justify-content-center mt-4">
-            <div class="col-lg-9">
+            <div class="loginWindow">
               <form
                 action="forms/contact.php"
                 method="post"
@@ -226,6 +230,184 @@
                     required
                   />
                 </div>
+                <p>Confirm password:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                    required
+                  />
+                </div>
+              </form>
+            </div>
+            <br />
+            <br />
+            <div class="loginWindow">
+              <form
+                action="forms/contact.php"
+                method="post"
+                role="form"
+                class="php-email-form"
+              >
+                <h5>Address information</h5>
+                <p class="createAccountOptional">(optional)</p>
+                <p>Address Line 1:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Address Line 2:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Apartment, Suite, etc:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>City:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>State / Province:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Country:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Zip / Postal code:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="loginWindow">
+              <form
+                action="forms/contact.php"
+                method="post"
+                role="form"
+                class="php-email-form"
+              >
+                <h5>Payment information</h5>
+                <p class="createAccountOptional">(optional)</p>
+                <p>Name on Card:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Card Number:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Expiration: (MM/YY)</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>CVV:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Zip / Postal Code:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <!-- <div class="my-3">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">
+                    Look for a verification email in your inbox shortly!
+                  </div>
+                </div> -->
+                <div class="text-center">
+                  <div class="text-center">
+                    <a
+                      href="registrationconfirmation.html"
+                      class="btn-get-started"
+                    >
+                      Create Account
+                    </a>
+                  </div>
+                  <br />
+                  <br />
+                  <p>
+                    Already have an account?
+                    <a href="login.html"> Log in</a>
+                  </p>
+                </div>
                 <!-- <div class="form-group mt-3">
                   <textarea
                     class="form-control"
@@ -235,16 +417,6 @@
                     required
                   ></textarea>
                 </div> -->
-                <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">
-                    Look for a verification email in your inbox shortly!
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button type="submit">Create account</button>
-                </div>
               </form>
             </div>
             <!-- End Contact Form -->
