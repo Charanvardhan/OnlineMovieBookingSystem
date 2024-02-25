@@ -113,3 +113,53 @@ button {
 .modal-dialog ::-webkit-scrollbar {
     display: none;
 }
+
+.loginWindow {
+    flex: 0 0 auto;
+    width: 50%;
+    background-color: #14171d;
+    padding: 70px 50px 70px 50px;
+    border-radius: 10px;
+}
+
+.login-page-header {
+    padding: 120px 0 0px 0;
+    min-height: 30vh;
+    position: relative;
+}
+
+.login-page-header h2 {
+    font-size: 56px;
+    font-weight: 500;
+    color: #fff;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.login-container {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 90%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 20px;
+    padding-bottom: 0px;
+}
+
+.nav-container {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 90%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.header {
+    padding: 10px 0;
+    background-color: #222831c5;
+}
