@@ -23,6 +23,10 @@
       href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Vendor CSS Files -->
     <link
@@ -68,13 +72,13 @@
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="../assets/img/logo.png" alt=""> -->
           <img src="../assets/img/ticketLogo1.png" alt="" />
-          <h1>Sinabook</h1>
+          <h1>SINABOOK</h1>
         </a>
 
         <nav id="navbar" class="navbar">
           <ul>
             <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About</a></li>
+            <!-- <li><a href="about.html">About</a></li> -->
             <!-- <li class="dropdown">
               <a href="#"
                 ><span>Gallery</span>
@@ -175,6 +179,91 @@
             </div> -->
             <!-- End Info Item -->
           </div>
+          <h3>Address information:</h3>
+          <div class="row justify-content-center mt-4">
+            <div class="col-lg-9">
+              <form
+                action="forms/contact.php"
+                method="post"
+                role="form"
+                class="php-email-form"
+              >
+                <p>Address Line 1:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Address Line 2:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Apartment, Suite, etc:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>City:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>State / Province:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Country:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Zip / Postal code:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+          <br />
+          <br />
+          <br />
           <h3>Payment information:</h3>
           <div class="row justify-content-center mt-4">
             <div class="col-lg-9">
@@ -184,28 +273,9 @@
                 role="form"
                 class="php-email-form"
               >
-                <div class="row">
-                  <div class="col-md-6 form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      id="name"
-                      placeholder="Your Name"
-                      required
-                    />
-                  </div>
-                  <div class="col-md-6 form-group mt-3 mt-md-0">
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="Your Email"
-                      required
-                    />
-                  </div>
-                </div>
+                <h5>Payment information</h5>
+                <p class="createAccountOptional">(optional)</p>
+                <p>Name on Card:</p>
                 <div class="form-group mt-3">
                   <input
                     type="text"
@@ -213,33 +283,55 @@
                     name="subject"
                     id="subject"
                     placeholder="Subject"
-                    required
                   />
                 </div>
+                <p>Card Number:</p>
                 <div class="form-group mt-3">
-                  <textarea
+                  <input
+                    type="text"
                     class="form-control"
-                    name="message"
-                    rows="5"
-                    placeholder="Message"
-                    required
-                  ></textarea>
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
                 </div>
-                <!-- <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">
-                    Your message has been sent. Thank you!
-                  </div>
-                </div> -->
-                <!-- <div class="text-center">
-                  <button type="submit">Complete Purchase</button>
-                </div> -->
+                <p>Expiration: (MM/YY)</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>CVV:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
+                <p>Zip / Postal Code:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                  />
+                </div>
               </form>
             </div>
             <!-- End Contact Form -->
           </div>
-          <div><br /><br /><br /></div>
+          <br />
+          <br />
+          <br />
           <h3>Billing information:</h3>
           <div class="row justify-content-center mt-4">
             <div class="col-lg-9">
@@ -298,7 +390,9 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="submit">Complete Purchase</button>
+                  <a href="orderconfirmation.html" class="btn-get-started">
+                    Complete Purchase
+                  </a>
                 </div>
               </form>
             </div>

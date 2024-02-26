@@ -723,7 +723,7 @@ h6 {
 }
 
 .gallery .gallery-item img {
-  transition: 0.2s;
+  transition: 0.1;
 }
 
 .gallery .gallery-links {
@@ -738,7 +738,7 @@ h6 {
 .gallery .gallery-links .preview-link,
 .gallery .gallery-links .details-link {
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0);
   transition: 0.3s;
   line-height: 1.2;
   margin: 30px 8px 0 8px;
@@ -746,7 +746,7 @@ h6 {
 
 .gallery .gallery-links .preview-link:hover,
 .gallery .gallery-links .details-link:hover {
-  color: #fff;
+  color: #ffffff00;
 }
 
 .gallery .gallery-links .details-link {
@@ -764,7 +764,7 @@ h6 {
 }
 
 .gallery .gallery-item:hover img {
-  transform: scale(1.02);
+  transform: scale(1.0);
 }
 
 .glightbox-clean .gslide-description {

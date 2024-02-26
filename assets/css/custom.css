@@ -107,7 +107,7 @@ button {
 }
 
 .modal-dialog-scrollable {
-    height: 105%;
+    height: 90%;
 }
 
 .modal-dialog ::-webkit-scrollbar {
@@ -193,6 +193,15 @@ button {
     overflow: hidden;
     border-radius: 10px;
     padding-bottom: 20px;
+}
+
+.gallery .gallery-links {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: none;
+    background: none;
+    z-index: 3;
 }
 
 .createAccountOptional {
