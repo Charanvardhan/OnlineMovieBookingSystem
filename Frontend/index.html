@@ -4,40 +4,48 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Sinabook | e-cinema booking</title>
+    <title>SINABOOK | Home</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="assets/img/ticketLogo1.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="../assets/img/ticketLogo1.png" rel="icon" />
+    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Vendor CSS Files -->
     <link
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      href="../assets/vendor/bootstrap/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
-      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      href="../assets/vendor/bootstrap-icons/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
     <link
-      href="assets/vendor/glightbox/css/glightbox.min.css"
+      href="../assets/vendor/swiper/swiper-bundle.min.css"
       rel="stylesheet"
     />
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="../assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="../assets/vendor/aos/aos.css" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet" />
-    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="../assets/css/main.css" rel="stylesheet" />
+    <link href="../assets/css/custom.css" rel="stylesheet" />
 
     <!-- =======================================================
   * Template Name: PhotoFolio
@@ -52,7 +60,7 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
       <div
-        class="container-fluid d-flex align-items-center justify-content-between"
+        class="nav-container d-flex align-items-center justify-content-between"
       >
         <a
           href="index.html"
@@ -61,14 +69,14 @@
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.png" alt=""> -->
           <!-- <i class="bi bi-camera"></i> -->
-          <img src="assets/img/ticketLogo1.png" alt="" />
-          <h1>Sinabook</h1>
+          <img src="../assets/img/ticketLogo1.png" alt="" />
+          <h1>SINABOOK</h1>
         </a>
 
         <nav id="navbar" class="navbar">
           <ul>
             <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About</a></li>
+            <!-- <li><a href="about.html">About</a></li> -->
             <!-- <li class="dropdown">
               <a href="#"
                 ><span>Gallery</span>
@@ -123,11 +131,9 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-6 text-center">
-            <h2><span>Welcome to Sinabook!</span></h2>
+            <h2><span>WELCOME TO SINABOOK!</span></h2>
             <p>Browse, book, and benefit!</p>
-            <a href="contact.html" class="btn-get-started"
-              >View Current Showtimes</a
-            >
+            <a href="#main" class="btn-get-started">View Current Movies</a>
           </div>
         </div>
       </div>
@@ -157,29 +163,23 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="assets/img/gallery/eeaao.png"
+                  src="../assets/img/gallery/eeaao.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a
-                    href="assets/img/gallery/eeaao.png"
-                    title="Gallery 1"
-                    class="glightbox preview-link"
-                    ><i class="bi bi-arrows-angle-expand"></i
-                  ></a>
-                  <a href="gallery-single.html" class="details-link"
-                    ><i class="bi bi-link-45deg"></i
-                  ></a>
+                  <a href="../assets/img/gallery/eeaao.png" title="Gallery 1">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
               <div class="text-center">
                 <!-- <button type="submit">Book Movie</button> -->
                 <!-- Button trigger modal -->
                 <button
-                  type="submit"
+                  class="btn-book"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
                 >
@@ -256,7 +256,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="assets/img/gallery/interstellar.png"
+                  src="../assets/img/gallery/interstellar.png"
                   class="img-fluid"
                   alt=""
                 />
@@ -264,70 +264,73 @@
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
                   <a
-                    href="assets/img/gallery/interstellar.png"
+                    href="../assets/img/gallery/interstellar.png"
                     title="Gallery 2"
-                    class="glightbox preview-link"
-                    ><i class="bi bi-arrows-angle-expand"></i
-                  ></a>
-                  <a href="gallery-single.html" class="details-link"
-                    ><i class="bi bi-link-45deg"></i
-                  ></a>
+                  >
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
               <div class="text-center">
-                <button type="submit">Book Movie</button>
+                <button
+                  class="btn-book"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Book Movie
+                </button>
               </div>
             </div>
             <!-- End Gallery Item -->
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="assets/img/gallery/fastx.png"
+                  src="../assets/img/gallery/fastx.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a
-                    href="assets/img/gallery/fastx.png"
-                    title="Gallery 3"
-                    class="glightbox preview-link"
-                    ><i class="bi bi-arrows-angle-expand"></i
-                  ></a>
-                  <a href="gallery-single.html" class="details-link"
-                    ><i class="bi bi-link-45deg"></i
-                  ></a>
+                  <a href="../assets/img/gallery/fastx.png" title="Gallery 3">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
               <div class="text-center">
-                <button type="submit">Book Movie</button>
+                <button
+                  class="btn-book"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Book Movie
+                </button>
               </div>
             </div>
             <!-- End Gallery Item -->
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="assets/img/gallery/frozen.png"
+                  src="../assets/img/gallery/frozen.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a
-                    href="assets/img/gallery/frozen.png"
-                    title="Gallery 3"
-                    class="glightbox preview-link"
-                    ><i class="bi bi-arrows-angle-expand"></i
-                  ></a>
-                  <a href="gallery-single.html" class="details-link"
-                    ><i class="bi bi-link-45deg"></i
-                  ></a>
+                  <a href="../assets/img/gallery/frozen.png" title="Gallery 3">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
               <div class="text-center">
-                <button type="submit">Book Movie</button>
+                <button
+                  class="btn-book"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Book Movie
+                </button>
               </div>
             </div>
             <!-- End Gallery Item -->
@@ -344,22 +347,16 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="assets/img/gallery/barbie.png"
+                  src="../assets/img/gallery/barbie.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a
-                    href="assets/img/gallery/barbie.png"
-                    title="Gallery 1"
-                    class="glightbox preview-link"
-                    ><i class="bi bi-arrows-angle-expand"></i
-                  ></a>
-                  <a href="gallery-single.html" class="details-link"
-                    ><i class="bi bi-link-45deg"></i
-                  ></a>
+                  <a href="../assets/img/gallery/barbie.png" title="Gallery 1">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
             </div>
@@ -367,7 +364,7 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="assets/img/gallery/oppenheimer.png"
+                  src="../assets/img/gallery/oppenheimer.png"
                   class="img-fluid"
                   alt=""
                 />
@@ -375,14 +372,11 @@
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
                   <a
-                    href="assets/img/gallery/oppenheimer.png"
+                    href="../assets/img/gallery/oppenheimer.png"
                     title="Gallery 2"
-                    class="glightbox preview-link"
-                    ><i class="bi bi-arrows-angle-expand"></i
-                  ></a>
-                  <a href="gallery-single.html" class="details-link"
-                    ><i class="bi bi-link-45deg"></i
-                  ></a>
+                  >
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
             </div>
@@ -390,22 +384,16 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="assets/img/gallery/avatar.png"
+                  src="../assets/img/gallery/avatar.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a
-                    href="assets/img/gallery/avatar.png"
-                    title="Gallery 3"
-                    class="glightbox preview-link"
-                    ><i class="bi bi-arrows-angle-expand"></i
-                  ></a>
-                  <a href="gallery-single.html" class="details-link"
-                    ><i class="bi bi-link-45deg"></i
-                  ></a>
+                  <a href="../assets/img/gallery/avatar.png" title="Gallery 3">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
             </div>
@@ -446,13 +434,13 @@
     </div>
 
     <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../assets/vendor/aos/aos.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
 
     <!-- Template Main JS File -->
-    <script src="assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
   </body>
 </html>
