@@ -209,4 +209,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     updateSelectedCount();
   });
+  // Select the input element
+  const movieSearchInput = document.getElementById("movieSearchInput");
+
+  // Initialize a variable to store the input value
+  let userInput = "";
+
+  // Add an event listener to the input element
+  movieSearchInput.addEventListener("input", function (event) {
+    // Update the userInput variable with the current value of the input
+    userInput = event.target.value;
+
+    // Optionally, you can log the userInput variable to see the current input
+    console.log(userInput);
+  });
 });
