@@ -45,7 +45,7 @@
 
 button {
     font-family: "Fredoka",
-        sans-serif;
+    sans-serif;
     border-radius: 10px;
     border-color: #FFC93C;
     background-color: #14171d;
@@ -379,4 +379,13 @@ span {
     margin-right: auto;
     display: flex;
     justify-content: center;
+}
+
+.userProfile {
+    flex-shrink: 0;
+    width: 30%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x)* .5);
+    padding-left: calc(var(--bs-gutter-x)* .5);
+    margin-top: var(--bs-gutter-y);
 }
