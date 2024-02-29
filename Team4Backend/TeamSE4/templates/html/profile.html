@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Order Confirmation</title>
+    <title>SINABOOK | Edit Profile</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -17,10 +17,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -64,7 +60,7 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
       <div
-        class="container-fluid d-flex align-items-center justify-content-between"
+        class="nav-container d-flex align-items-center justify-content-between"
       >
         <a
           href="index.html"
@@ -98,7 +94,7 @@
             </ul>
           </li> -->
             <!-- <li><a href="services.html">Services</a></li> -->
-            <li><a href="contact.html" class="active">Log in</a></li>
+            <li><a href="login.html" class="active">Log in</a></li>
             <li><a href="profile.html">Profile</a></li>
           </ul>
         </nav>
@@ -118,15 +114,11 @@
 
     <main id="main" data-aos="fade" data-aos-delay="1500">
       <!-- ======= End Page Header ======= -->
-      <div class="page-header d-flex align-items-center">
-        <div class="container position-relative">
+      <div class="login-page-header d-flex align-items-center">
+        <div class="login-container position-relative">
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6 text-center">
-              <h2>Thanks for your order!</h2>
-              <p>
-                Check your inbox shortly for important information regarding
-                your order.
-              </p>
+              <h2>Edit Profile:</h2>
             </div>
           </div>
         </div>
@@ -135,44 +127,15 @@
 
       <!-- ======= Contact Section ======= -->
       <section id="contact" class="contact">
-        <div class="container">
-          <div class="row gy-4 justify-content-center">
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h4>Location:</h4>
-                  <p>A108 Adam Street, New York, NY 535022</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
-
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h4>Email:</h4>
-                  <p>info@example.com</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
-
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-phone flex-shrink-0"></i>
-                <div>
-                  <h4>Call:</h4>
-                  <p>+1 5589 55488 55</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
-          </div>
-
+        <div class="login-container">
           <div class="row justify-content-center mt-4">
-            <div class="col-lg-9">
+            <img
+              class="userProfile"
+              src="../assets/img/user icon.png"
+              width="50px"
+              alt="profile"
+            />
+            <div class="loginWindow">
               <form
                 action="forms/contact.php"
                 method="post"
@@ -211,29 +174,62 @@
                     placeholder="Subject"
                     required
                   />
-                </div>
-                <p>Email:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Subject"
-                    required
-                  />
-                </div>
-                <p>Password:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Subject"
-                    required
-                  />
                 </div> -->
+                <p>Username:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Username"
+                    required
+                  />
+                </div>
+                <p>Full Name:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Full Name"
+                    required
+                  />
+                </div>
+                <p>Phone Number:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Phone Number"
+                    required
+                  />
+                </div>
+                <p>Email Address:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Email Address"
+                    required
+                  />
+                </div>
+                <p>Address:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Address"
+                    required
+                  />
+                </div>
                 <!-- <div class="form-group mt-3">
                   <textarea
                     class="form-control"
@@ -243,17 +239,15 @@
                     required
                   ></textarea>
                 </div> -->
-                <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">
-                    Your message has been sent. Thank you!
-                  </div>
-                </div>
-                <div class="text-center">
-                  <a href="index.html" class="btn-get-started"> Return Home </a>
-                </div>
+                <br />
               </form>
+            </div>
+            <div class="text-center">
+              <br />
+              <br />
+              <br />
+              <a href="" class="btn-get-started">Update Profile</a>
+              <br />
             </div>
             <!-- End Contact Form -->
           </div>

@@ -1,8 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
-
 <html lang="en">
-
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -12,8 +9,8 @@
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="{% static 'img/ticketLogo1.png' %}" rel="icon" />
-    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon" />
+    <link href="../assets/img/ticketLogo1.png" rel="icon" />
+    <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,26 +26,26 @@
 
     <!-- Vendor CSS Files -->
     <link
-      href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+      href="../assets/vendor/bootstrap/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
-      href="{% static '/vendor/bootstrap-icons/bootstrap-icons.css' %}"
+      href="../assets/vendor/bootstrap-icons/bootstrap-icons.css"
       rel="stylesheet"
     />
     <link
-      href="{% static '/vendor/swiper/swiper-bundle.min' %}"
+      href="../assets/vendor/swiper/swiper-bundle.min.css"
       rel="stylesheet"
     />
     <link
-      href="{% static '/vendor/glightbox/css/glightbox.min' %}"
+      href="../assets/vendor/glightbox/css/glightbox.min.css"
       rel="stylesheet"
     />
-    <link href="{% static '/vendor/aos/aos' %}" rel="stylesheet" />
+    <link href="../assets/vendor/aos/aos.css" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
-    <link href="{% static '/css/main.css' %}" rel="stylesheet" />
-    <link href="{% static '/css/custom.css' %}" rel="stylesheet" />
+    <link href="../assets/css/main.css" rel="stylesheet" />
+    <link href="../assets/css/custom.css" rel="stylesheet" />
 
     <!-- =======================================================
   * Template Name: PhotoFolio
@@ -72,7 +69,7 @@
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="assets/img/logo.png" alt=""> -->
           <!-- <i class="bi bi-camera"></i> -->
-          <img src="{% static '/img/ticketLogo1.png' %}" alt="" />
+          <img src="../assets/img/ticketLogo1.png" alt="" />
           <h1>SINABOOK</h1>
         </a>
 
@@ -106,6 +103,8 @@
               </ul>
             </li> -->
             <li><a href="login.html">Log in</a></li>
+            <li><a href="profile.html">Profile</a></li>
+
             <!-- <li><a href="services.html">Services</a></li>
             <li><a href="contact.html">Contact</a></li> -->
           </ul>
@@ -145,12 +144,13 @@
     <div class="container">
       <div class="row height d-flex justify-content-center align-items-center">
         <div class="col-md-6">
-          <div class="form" >
+          <div class="form">
             <i class="fa fa-search"></i>
             <input
               type="text"
               class="form-control form-input"
               placeholder="Search for a movie..."
+              id="movieSearchInput"
             />
             <span class="left-pan"><i class="fa fa-microphone"></i></span>
           </div>
@@ -163,65 +163,17 @@
         <div class="container-fluid">
           <h4>Currently running:</h4>
           <div class="row gy-4 justify-content-center">
-            {% for movie in now_showing_movies %}
             <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="gallery-item h-100">
-                    <img src="{{ movie.image.url }}" class="img-fluid" alt="{{ movie.title }}">
-                    <div class="gallery-links d-flex align-items-center justify-content-center">
-                        <a href="{{ movie.image.url }}" title="{{ movie.title }}"></a>
-                        {% comment %} <a href="{% url 'gallery-single' movie.id %}" class=" "></a> {% endcomment %}
-                    </div>
-                </div>
-                <div class="text-center">
-                    <button class="btn-book" data-bs-toggle="modal" data-bs-target="#exampleModal{{ movie.id }}">
-                        Book Movie
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal{{ movie.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <h2>{{ movie.title }}</h2>
-                                    <div class="movieSynopsis">
-                                        <p>{{ movie.description }}</p>
-                                    </div>
-
-                                    <h2>{{movie.trailer_url}}</h2>
-                                    <br>
-                                    <iframe width="1000" height="550" src={'https://www.youtube.com/embed/${new URLSearchParams(new URL({{movie.trailer_url}}).search).get('v')}'}></iframe>
-                                    <br>
-                                    <br>
-                                    <h3>Select a show time:</h3>
-                                    <br>
-                                    <h3>Select number of tickets:</h3>
-                                    <br>
-                                    <h3>Enter age:</h3>
-                                    <br>
-                                    <h3>Select seats:</h3>
-                                    <br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-
-            {% comment %} <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="{% static '/img/gallery/eeaao.png' %}"
+                  src="../assets/img/gallery/eeaao.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a href="{% static '/img/gallery/eeaao.png' %}" title="Gallery 1">
+                  <a href="../assets/img/gallery/eeaao.png" title="Gallery 1">
                   </a>
                   <a href="gallery-single.html" class=" "> </a>
                 </div>
@@ -277,13 +229,124 @@
                         </iframe>
                         <br />
                         <br />
-                        <h3>Select a show time:</h3>
-                        <br />
                         <h3>Select number of tickets:</h3>
+                        <label for="quantity"></label>
+                        <input
+                          type="number"
+                          id="quantity"
+                          name="quantity"
+                          min="1"
+                          max="5"
+                        />
                         <br />
-                        <h3>Enter age:</h3>
                         <br />
-                        <h3>Select seats:</h3>
+                        <h3>Select age:</h3>
+                        <input type="checkbox" name="child" checked />
+                        <label for="child">Child</label>
+                        <input type="checkbox" name="adult" />
+                        <label for="adult">Adult</label>
+                        <input type="checkbox" name="senior" />
+                        <label for="senior">Senior</label>
+                        <br />
+                        <div class="movie-container">
+                          <h3>Select a showtime:</h3>
+                          <select id="movie">
+                            <option value="0">Select here</option>
+                            <option value="12">10:00am</option>
+                            <option value="12">2:00pm</option>
+                            <option value="14">4:30pm</option>
+                            <option value="16">8:00pm</option>
+                          </select>
+                          <h3>Select seats:</h3>
+                          <ul class="showcase">
+                            <li>
+                              <div class="seat"></div>
+                              <small>N/A</small>
+                            </li>
+                            <li>
+                              <div class="seat selected"></div>
+                              <small>Selected</small>
+                            </li>
+                            <li>
+                              <div class="seat occupied"></div>
+                              <small>Occupied</small>
+                            </li>
+                          </ul>
+
+                          <div class="seatsContainer">
+                            <div class="screen"></div>
+
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                            </div>
+
+                            <p class="text">
+                              You have selected <span id="count">0</span> seats
+                              for the total price of $
+                              <span id="total">0</span>
+                            </p>
+                          </div>
+                          <a href="orderSummary.html" class="btn-get-started"
+                            >Continue</a
+                          >
+                        </div>
                         <br />
                       </div>
                       <!-- <div class="modal-footer">
@@ -302,12 +365,12 @@
                   </div>
                 </div>
               </div>
-            </div> {% endcomment %}
+            </div>
             <!-- End Gallery Item -->
-            {% comment %} <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="{% static '/img/gallery/interstellar.png' %}"
+                  src="../assets/img/gallery/interstellar.png"
                   class="img-fluid"
                   alt=""
                 />
@@ -315,7 +378,7 @@
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
                   <a
-                    href="{% static '/img/gallery/interstellar.png' %}"
+                    href="../assets/img/gallery/interstellar.png"
                     title="Gallery 2"
                   >
                   </a>
@@ -336,14 +399,14 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="{% static '/img/gallery/fastx.png' %}"
+                  src="../assets/img/gallery/fastx.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a href="{% static '/img/gallery/fastx.png' %}" title="Gallery 3">
+                  <a href="../assets/img/gallery/fastx.png" title="Gallery 3">
                   </a>
                   <a href="gallery-single.html" class=" "> </a>
                 </div>
@@ -362,14 +425,14 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="{% static '/img/gallery/frozen.png' %}"
+                  src="../assets/img/gallery/frozen.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a href="{% static '/img/gallery/frozen.png' %}" title="Gallery 3">
+                  <a href="../assets/img/gallery/frozen.png" title="Gallery 3">
                   </a>
                   <a href="gallery-single.html" class=" "> </a>
                 </div>
@@ -383,7 +446,7 @@
                   Book Movie
                 </button>
               </div>
-            </div> {% endcomment %}
+            </div>
             <!-- End Gallery Item -->
           </div>
         </div>
@@ -395,41 +458,27 @@
         <div class="container-fluid">
           <h4>Coming soon:</h4>
           <div class="row gy-4 justify-content-center">
-            {% for movie in coming_soon_movies %}
             <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="gallery-item h-100">
-                    <img src="{{ movie.image.url }}" class="img-fluid" alt="{{ movie.title }}">
-                    <div class="gallery-links d-flex align-items-center justify-content-center">
-
-                        <a href="{{ movie.image.url }}" title="{{ movie.title }}"></a>
-                        {% comment %} <a href="{% url 'gallery-single' movie.id %}" class=" "></a> {% endcomment %}
-                    </div>
-                </div>
-                <div class="text-center">
-                    <!-- You can add any other details or buttons for coming soon movies here -->
-                </div>
-            </div>
-            {% endfor %}
-              {% comment %} <div class="gallery-item h-100">
+              <div class="gallery-item h-100">
                 <img
-                  src="{% static '/img/gallery/barbie.png' %}"
+                  src="../assets/img/gallery/barbie.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a href="{% static '/img/gallery/barbie.png' %}" title="Gallery 1">
+                  <a href="../assets/img/gallery/barbie.png" title="Gallery 1">
                   </a>
                   <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
-            </div> {% endcomment %}
+            </div>
             <!-- End Gallery Item -->
-            {% comment %} <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="{% static '/img/gallery/oppenheimer.png' %}"
+                  src="../assets/img/gallery/oppenheimer.png"
                   class="img-fluid"
                   alt=""
                 />
@@ -437,7 +486,7 @@
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
                   <a
-                    href="{% static '/img/gallery/oppenheimer.png' %}"
+                    href="../assets/img/gallery/oppenheimer.png"
                     title="Gallery 2"
                   >
                   </a>
@@ -449,19 +498,19 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="{% static '/img/gallery/avatar.png' %}"
+                  src="../assets/img/gallery/avatar.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a href="{% static '/img/gallery/avatar.png' %}" title="Gallery 3">
+                  <a href="../assets/img/gallery/avatar.png" title="Gallery 3">
                   </a>
                   <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
-            </div> {% endcomment %}
+            </div>
             <!-- End Gallery Item -->
           </div>
         </div>
@@ -499,13 +548,13 @@
     </div>
 
     <!-- Vendor JS Files -->
-    <script src="{% static '/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static '/vendor/swiper/swiper-bundle.min.js' %}"></script>
-    <script src="{% static '/vendor/glightbox/js/glightbox.min.js' %}"></script>
-    <script src="{% static '/vendor/aos/aos.js' %}"></script>
-    <script src="{% static '/vendor/php-email-form/validate.js' %}"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../assets/vendor/aos/aos.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
 
     <!-- Template Main JS File -->
-    <script src="{% static '/js/main.js' %}"></script>
+    <script src="../assets/js/main.js"></script>
   </body>
 </html>

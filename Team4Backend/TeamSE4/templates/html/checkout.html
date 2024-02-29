@@ -105,6 +105,7 @@
               </ul>
             </li> -->
             <li><a href="login.html">Log in</a></li>
+            <li><a href="profile.html">Profile</a></li>
             <!-- <li><a href="services.html">Services</a></li>
             <li><a href="contact.html">Contact</a></li> -->
           </ul>
@@ -128,7 +129,7 @@
       <div class="page-header d-flex align-items-center">
         <div class="container position-relative">
           <div class="row d-flex justify-content-center">
-            <h2>Shopping Cart</h2>
+            <h2>Checkout</h2>
             <div class="col-lg-6 text-center">
               <!-- <p>
                 Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
@@ -195,7 +196,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="Address Line 1"
                   />
                 </div>
                 <p>Address Line 2:</p>
@@ -205,7 +206,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="Address Line 2"
                   />
                 </div>
                 <p>Apartment, Suite, etc:</p>
@@ -215,7 +216,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="Apartment, Suite, etc"
                   />
                 </div>
                 <p>City:</p>
@@ -225,7 +226,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="City"
                   />
                 </div>
                 <p>State / Province:</p>
@@ -235,7 +236,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="State / Province"
                   />
                 </div>
                 <p>Country:</p>
@@ -245,7 +246,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="Country"
                   />
                 </div>
                 <p>Zip / Postal code:</p>
@@ -255,7 +256,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="Zip / Postal code"
                   />
                 </div>
               </form>
@@ -282,7 +283,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="Name on Card"
                   />
                 </div>
                 <p>Card Number:</p>
@@ -292,7 +293,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="Card Number"
                   />
                 </div>
                 <p>Expiration: (MM/YY)</p>
@@ -302,7 +303,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="(MM/YY)"
                   />
                 </div>
                 <p>CVV:</p>
@@ -312,7 +313,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="CVV"
                   />
                 </div>
                 <p>Zip / Postal Code:</p>
@@ -322,7 +323,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
+                    placeholder="Zip / Postal Code"
                   />
                 </div>
               </form>
@@ -341,46 +342,85 @@
                 role="form"
                 class="php-email-form"
               >
-                <div class="row">
-                  <div class="col-md-6 form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      id="name"
-                      placeholder="Your Name"
-                      required
-                    />
-                  </div>
-                  <div class="col-md-6 form-group mt-3 mt-md-0">
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="Your Email"
-                      required
-                    />
-                  </div>
-                </div>
+                <p>Full Name:</p>
                 <div class="form-group mt-3">
                   <input
                     type="text"
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
-                    required
+                    placeholder="Full Name"
                   />
                 </div>
+                <p>Address Line 1:</p>
                 <div class="form-group mt-3">
-                  <textarea
+                  <input
+                    type="text"
                     class="form-control"
-                    name="message"
-                    rows="5"
-                    placeholder="Message"
-                    required
-                  ></textarea>
+                    name="subject"
+                    id="subject"
+                    placeholder="Address Line 1"
+                  />
+                </div>
+                <p>Address Line 2:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Address Line 2"
+                  />
+                </div>
+                <p>Apartment, Suite, etc:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Apartment, Suite, etc"
+                  />
+                </div>
+                <p>City:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="City"
+                  />
+                </div>
+                <p>State / Province:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="State / Province"
+                  />
+                </div>
+                <p>Country:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Country"
+                  />
+                </div>
+                <p>Zip / Postal code:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Zip / Postal code"
+                  />
                 </div>
                 <div class="my-3">
                   <div class="loading">Loading</div>
@@ -393,6 +433,7 @@
                   <a href="orderconfirmation.html" class="btn-get-started">
                     Complete Purchase
                   </a>
+                  <a href="index.html" class="btn-cancel"> Cancel </a>
                 </div>
               </form>
             </div>

@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Manage Users</title>
+    <title>SINABOOK | Order Summary</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-     <link href="../assets/img/ticketLogo1.png" rel="icon" />
+    <link href="../assets/img/ticketLogo1.png" rel="icon" />
     <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
@@ -17,6 +17,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -46,7 +50,6 @@
     <!-- Template Main CSS File -->
     <link href="../assets/css/main.css" rel="stylesheet" />
     <link href="../assets/css/custom.css" rel="stylesheet" />
-
     <!-- =======================================================
   * Template Name: PhotoFolio
   * Updated: Jan 29 2024 with Bootstrap v5.3.2
@@ -67,16 +70,15 @@
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png" alt=""> -->
-          <!-- <i class="bi bi-camera"></i> -->
+          <!-- <img src="../assets/img/logo.png" alt=""> -->
           <img src="../assets/img/ticketLogo1.png" alt="" />
           <h1>SINABOOK</h1>
         </a>
 
-       <!-- <nav id="navbar" class="navbar">
+        <nav id="navbar" class="navbar">
           <ul>
             <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About</a></li> -->
+            <!-- <li><a href="about.html">About</a></li> -->
             <!-- <li class="dropdown">
               <a href="#"
                 ><span>Gallery</span>
@@ -102,7 +104,8 @@
                 </li>
               </ul>
             </li> -->
-           <!-- <li><a href="login.html">Log in</a></li> -->
+            <li><a href="login.html">Log in</a></li>
+            <li><a href="profile.html">Profile</a></li>
             <!-- <li><a href="services.html">Services</a></li>
             <li><a href="contact.html">Contact</a></li> -->
           </ul>
@@ -114,40 +117,133 @@
         <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
         <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
         <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-         -->
+      </div> -->
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
       </div>
     </header>
     <!-- End Header -->
 
-    <!-- ======= Hero Section ======= -->
-    <section
-      id="hero"
-      class="hero d-flex flex-column justify-content-center align-items-center"
-      data-aos="fade"
-      data-aos-delay="1500"
-    >
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class= "text-center">
-            <h3><span>Manage Users</span></h3>
-            <p>Handle Functions Related to Users and Administrators
-            </p>
+    <main id="main" data-aos="fade" data-aos-delay="1500">
+      <!-- ======= End Page Header ======= -->
+      <div class="page-header d-flex align-items-center">
+        <div class="container position-relative">
+          <div class="row d-flex justify-content-center">
+            <h2>Order Summary</h2>
+            <div class="col-lg-6 text-center">
+              <!-- <p>
+                Odio et unde deleniti. Deserunt numquam exercitationem. Officiis
+                quo odio sint voluptas consequatur ut a odio voluptatem. Sit
+                dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
+                quaerat ipsum dolorem.
+              </p> -->
+            </div>
           </div>
         </div>
       </div>
-    </section>
-    <!-- End Hero Section -->
-    
+      <!-- End Page Header -->
 
-                
+      <!-- ======= Payment Section ======= -->
+      <section id="contact" class="contact">
+        <div class="container">
+          <div class="row gy-4 justify-content-center"></div>
+          <h2>Showtime:</h2>
+          <p>10:00am</p>
+          <p>Want to change your showtime?</p>
+          <select id="movie">
+            <option value="0">Select here</option>
+            <option value="12">10:00am</option>
+            <option value="12">2:00pm</option>
+            <option value="14">4:30pm</option>
+            <option value="16">8:00pm</option>
+          </select>
+          <br />
+          <br />
+          <h2>Ticket Price:</h2>
+          <p>$12.00</p>
+          <h2>Seat reservation(s):</h2>
+          <button class="btn-get-started" onclick="decrement()">-</button>
+          <input
+            class="plusMinus"
+            id="seatCount"
+            type="number"
+            min="1"
+            max="100"
+            value="0"
+          />
+          <button class="btn-get-started" onclick="increment()">+</button>
+          <p class="orderSummarytext">
+            You have selected <span id="countDisplay">0</span> seats.
+          </p>
+          <script>
+            function increment() {
+              var countElement = document.getElementById("seatCount");
+              var count = parseInt(countElement.value, 10);
+              countElement.value = count + 1;
+              updateDisplay();
+            }
+
+            function decrement() {
+              var countElement = document.getElementById("seatCount");
+              var count = parseInt(countElement.value, 10);
+              if (count > 0) {
+                // Prevents negative values
+                countElement.value = count - 1;
+              }
+              updateDisplay();
+            }
+
+            function updateDisplay() {
+              var count = parseInt(
+                document.getElementById("seatCount").value,
+                10
+              );
+              document.getElementById("countDisplay").innerText = count;
+              calculateTotal();
+            }
+
+            function calculateTotal() {
+              var ticketPrice = 12; // Assuming a fixed price of $12 per ticket
+              var count = parseInt(
+                document.getElementById("seatCount").value,
+                10
+              );
+              var total = ticketPrice * count;
+              document.getElementById("total").innerText = total.toFixed(2);
+            }
+
+            // Initialize the display on page load
+            document.addEventListener("DOMContentLoaded", function () {
+              updateDisplay(); // To reflect any default value or changes on reload
+            });
+          </script>
+          <!-- <p>15A, 15B, 15C</p> -->
+          <br />
+          <br />
+          <br />
+          <br />
+          <hr />
+          <h2>Total:</h2>
+          <p class="text">
+            $
+            <span id="total">0</span>
+          </p>
+          <hr />
+          <a href="checkout.html" class="btn-get-started"
+            >Continue to Checkout</a
+          >
+          <!-- End Contact Form -->
+        </div>
+      </section>
+      <!-- End Contact Section -->
+    </main>
+    <!-- End #main -->
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
       <div class="container">
         <div class="copyright">
-          &copy; Copyright <strong><span>University of Georgia</span></strong
+          &copy; Copyright <strong><span>PhotoFolio</span></strong
           >. All Rights Reserved
         </div>
         <div class="credits">
