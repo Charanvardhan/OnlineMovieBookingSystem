@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Manage Users</title>
+    <title>SINABOOK | Edit Profile</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-     <link href="../assets/img/ticketLogo1.png" rel="icon" />
+    <link href="../assets/img/ticketLogo1.png" rel="icon" />
     <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
@@ -60,51 +60,41 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
       <div
-        class="container-fluid d-flex align-items-center justify-content-between"
+        class="nav-container d-flex align-items-center justify-content-between"
       >
         <a
           href="index.html"
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png" alt=""> -->
-          <!-- <i class="bi bi-camera"></i> -->
+          <!-- <img src="../assets/img/logo.png" alt=""> -->
           <img src="../assets/img/ticketLogo1.png" alt="" />
           <h1>SINABOOK</h1>
         </a>
 
-       <nav id="navbar" class="navbar">
+        <nav id="navbar" class="navbar">
           <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="login.html">Login</a></li>
-            <!-- <li class="dropdown">
-              <a href="#"
-                ><span>Gallery</span>
-                <i class="bi bi-chevron-down dropdown-indicator"></i
-              ></a>
-              <ul>
-                <li><a href="gallery.html">Nature</a></li>
-                <li><a href="gallery.html">People</a></li>
-                <li><a href="gallery.html">Architecture</a></li>
-                <li><a href="gallery.html">Animals</a></li>
-                <li><a href="gallery.html">Sports</a></li>
-                <li><a href="gallery.html">Travel</a></li>
-                <li class="dropdown">
-                  <a href="#"
-                    ><span>Sub Menu</span>
-                    <i class="bi bi-chevron-down dropdown-indicator"></i
-                  ></a>
-                  <ul>
-                    <li><a href="#">Sub Menu 1</a></li>
-                    <li><a href="#">Sub Menu 2</a></li>
-                    <li><a href="#">Sub Menu 3</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li> -->
-           <!-- <li><a href="login.html">Log in</a></li> -->
-            <!-- <li><a href="services.html">Services</a></li>
-            <li><a href="contact.html">Contact</a></li> -->
+            <li><a href="index.html">Home</a></li>
+            <!-- <li><a href="about.html">About</a></li> -->
+            <!-- <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <li><a href="gallery.html">Nature</a></li>
+              <li><a href="gallery.html">People</a></li>
+              <li><a href="gallery.html">Architecture</a></li>
+              <li><a href="gallery.html">Animals</a></li>
+              <li><a href="gallery.html">Sports</a></li>
+              <li><a href="gallery.html">Travel</a></li>
+              <li class="dropdown"><a href="#"><span>Sub Menu</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li><a href="#">Sub Menu 1</a></li>
+                  <li><a href="#">Sub Menu 2</a></li>
+                  <li><a href="#">Sub Menu 3</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li> -->
+            <!-- <li><a href="services.html">Services</a></li> -->
+            <li><a href="login.html" class="active">Log in</a></li>
           </ul>
         </nav>
         <!-- .navbar -->
@@ -114,63 +104,157 @@
         <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
         <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
         <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-         -->
+      </div> -->
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
       </div>
     </header>
-    <section>
-    </section>
     <!-- End Header -->
 
-    <!-- ======= Hero Section ======= -->
-    <section
-      id="hero"
-      class="hero d-flex flex-column justify-content-center align-items-center"
-      data-aos="fade"
-      data-aos-delay="1500"
-    >
-      <div class="login-container">
-        <div class="row justify-content-center">
-          <div class= "text-center">
-            <h3><span>Profile</span></h3>
-            <section>
-                <img src="../assets/img/user icon.png" width="250" alt="profile" />
-                <div class="form-group">
-                    <label>Username</label>
-                    <div class>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label >Email Address</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Phone Number</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Address</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div></div>
-                  <button>Update Profile</button>
-            </section>
+    <main id="main" data-aos="fade" data-aos-delay="1500">
+      <!-- ======= End Page Header ======= -->
+      <div class="login-page-header d-flex align-items-center">
+        <div class="login-container position-relative">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 text-center">
+              <h2>Edit Profile:</h2>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-    <!-- End Hero Section -->
-    
+      <!-- End Page Header -->
 
-                
+      <!-- ======= Contact Section ======= -->
+      <section id="contact" class="contact">
+        <div class="login-container">
+          <div class="row justify-content-center mt-4">
+            <img
+              class="userProfile"
+              src="../assets/img/user icon.png"
+              width="50px"
+              alt="profile"
+            />
+            <div class="loginWindow">
+              <form
+                action="forms/contact.php"
+                method="post"
+                role="form"
+                class="php-email-form"
+              >
+                <!-- <div class="row">
+                  <div class="col-md-6 form-group">
+                    <input
+                      type="text"
+                      name="name"
+                      class="form-control"
+                      id="name"
+                      placeholder="Your Name"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6 form-group mt-3 mt-md-0">
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="email"
+                      id="email"
+                      placeholder="Your Email"
+                      required
+                    />
+                  </div>
+                </div> -->
+                <!-- <p>Full Name:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                    required
+                  />
+                </div> -->
+                <p>Username:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Username"
+                    required
+                  />
+                </div>
+                <p>Full Name:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Full Name"
+                    required
+                  />
+                </div>
+                <p>Phone Number:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Phone Number"
+                    required
+                  />
+                </div>
+                <p>Email Address:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Email Address"
+                    required
+                  />
+                </div>
+                <p>Address:</p>
+                <div class="form-group mt-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Address"
+                    required
+                  />
+                </div>
+                <!-- <div class="form-group mt-3">
+                  <textarea
+                    class="form-control"
+                    name="message"
+                    rows="5"
+                    placeholder="Message"
+                    required
+                  ></textarea>
+                </div> -->
+                <br />
+              </form>
+            </div>
+            <div class="text-center">
+              <br />
+              <br />
+              <br />
+              <a href="" class="btn-get-started">Update Profile</a>
+              <br />
+            </div>
+            <!-- End Contact Form -->
+          </div>
+        </div>
+      </section>
+      <!-- End Contact Section -->
+    </main>
+    <!-- End #main -->
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
