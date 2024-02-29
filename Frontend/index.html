@@ -226,13 +226,121 @@
                         </iframe>
                         <br />
                         <br />
-                        <h3>Select a show time:</h3>
-                        <br />
                         <h3>Select number of tickets:</h3>
+                        <label for="quantity"></label>
+                        <input
+                          type="number"
+                          id="quantity"
+                          name="quantity"
+                          min="1"
+                          max="5"
+                        />
                         <br />
-                        <h3>Enter age:</h3>
                         <br />
-                        <h3>Select seats:</h3>
+                        <h3>Select age:</h3>
+                        <input type="checkbox" name="child" checked />
+                        <label for="child">Child</label>
+                        <input type="checkbox" name="adult" />
+                        <label for="adult">Adult</label>
+                        <input type="checkbox" name="senior" />
+                        <label for="senior">Senior</label>
+                        <br />
+                        <div class="movie-container">
+                          <h3>Select a showtime:</h3>
+                          <select id="movie">
+                            <option value="0">Select here</option>
+                            <option value="12">10:00am</option>
+                            <option value="12">2:00pm</option>
+                            <option value="14">4:30pm</option>
+                            <option value="16">8:00pm</option>
+                          </select>
+                          <h3>Select seats:</h3>
+                          <ul class="showcase">
+                            <li>
+                              <div class="seat"></div>
+                              <small>N/A</small>
+                            </li>
+                            <li>
+                              <div class="seat selected"></div>
+                              <small>Selected</small>
+                            </li>
+                            <li>
+                              <div class="seat occupied"></div>
+                              <small>Occupied</small>
+                            </li>
+                          </ul>
+
+                          <div class="seatsContainer">
+                            <div class="screen"></div>
+
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                            </div>
+
+                            <p class="text">
+                              You have selected <span id="count">0</span> seats
+                              for the total price of $
+                              <span id="total">0</span>
+                            </p>
+                          </div>
+                        </div>
                         <br />
                       </div>
                       <!-- <div class="modal-footer">
