@@ -1240,6 +1240,25 @@ h6 {
   background: #ffe49e;
 }
 
+.btn-cancel {
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: 0.3s;
+  color: #14171d;
+  background: #999;
+}
+
+.btn-cancel:hover {
+  color: #222831;
+  background: #ffe49e;
+}
+
 @media (max-width: 768px) {
   .hero h2 {
     font-size: 32px;
