@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+# pip install python-decouple
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'TeamSE4',
-    'csp',
+    'django_csp',
 ]
 
 MIDDLEWARE = [
@@ -81,15 +82,17 @@ WSGI_APPLICATION = 'Team4Backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# created .env file, to access values downloaded pip install python-decouple
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Team4SE',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+        'OPTIONS' : {
+            'db': 'Team4SE',
+            'user': 'root',
+            'passwd': 'password',
+        }
+    } 
 }
 
 
