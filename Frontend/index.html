@@ -166,14 +166,14 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="../assets/img/gallery/eeaao.png"
+                  src="../assets/img/gallery/interstellar.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a href="../assets/img/gallery/eeaao.png" title="Gallery 1">
+                  <a href="../assets/img/gallery/interstellar.png" title="Gallery 1">
                   </a>
                   <a href="gallery-single.html" class=" "> </a>
                 </div>
@@ -184,7 +184,7 @@
                 <button
                   class="btn-book"
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
+                  data-bs-target="#interstellar"
                 >
                   Book Movie
                 </button>
@@ -192,7 +192,7 @@
                 <!-- Modal -->
                 <div
                   class="modal fade"
-                  id="exampleModal"
+                  id="interstellar"
                   tabindex="-1"
                   aria-labelledby="exampleModalLabel"
                   aria-hidden="true"
@@ -211,20 +211,244 @@
                         ></button>
                       </div>
                       <div class="modal-body">
-                        <h2>Everything Everywhere All At Once</h2>
+                        <h2>Interstellar</h2>
                         <div class="movieSynopsis">
                           <p>
-                            A middle-aged Chinese immigrant is swept up into an
-                            insane adventure in which she alone can save
-                            existence by exploring other universes and
-                            connecting with the lives she could have led.
+                            When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.
                           </p>
                         </div>
                         <br />
                         <iframe
                           width="1000"
                           height="550"
-                          src="https://www.youtube.com/embed/wxN1T1uxQ2g"
+                          src="https://www.youtube.com/embed/4T4wxDnTYLg"
+                        >
+                        </iframe>
+                        <br />
+                        <br />
+                        <h3>Select number of tickets:</h3>
+                        <label for="quantity"></label>
+                        <input
+                          type="number"
+                          id="quantity"
+                          name="quantity"
+                          min="1"
+                          max="5"
+                        />
+                        <br />
+                        <br />
+                        <h3>Select age:</h3>
+                        <input type="checkbox" name="child" checked />
+                        <label for="child">Child</label>
+                        <input type="checkbox" name="adult" />
+                        <label for="adult">Adult</label>
+                        <input type="checkbox" name="senior" />
+                        <label for="senior">Senior</label>
+                        <br />
+                        <div class="movie-container">
+                          <h3>Select a showtime:</h3>
+                          <select id="movie">
+                            <option value="0">Select here</option>
+                            <option value="12">10:00am</option>
+                            <option value="12">2:00pm</option>
+                            <option value="14">4:30pm</option>
+                            <option value="16">8:00pm</option>
+                          </select>
+                          <h3>Select seats:</h3>
+                          <ul class="showcase">
+                            <li>
+                              <div class="seat"></div>
+                              <small>N/A</small>
+                            </li>
+                            <li>
+                              <div class="seat selected"></div>
+                              <small>Selected</small>
+                            </li>
+                            <li>
+                              <div class="seat occupied"></div>
+                              <small>Occupied</small>
+                            </li>
+                          </ul>
+
+                          <div class="seatsContainer">
+                            <div class="screen"></div>
+
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                            </div>
+
+                            <p class="text">
+                              You have selected <span id="count">0</span> seats
+                              for the total price of $
+                              <span id="total">0</span>
+                            </p>
+                          </div>
+                          <a href="orderSummary.html" class="btn-get-started"
+                            >Continue</a
+                          >
+                        </div>
+                        <br />
+                      </div>
+                      <!-- <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Cancel
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Done
+                        </button>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Gallery Item -->
+            <!-- <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="gallery-item h-100">
+                <img
+                  src="../assets/img/gallery/interstellar.png"
+                  class="img-fluid"
+                  alt=""
+                />
+                <div
+                  class="gallery-links d-flex align-items-center justify-content-center"
+                >
+                  <a
+                    href="../assets/img/gallery/interstellar.png"
+                    title="Gallery 2"
+                  >
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
+                </div>
+              </div>
+              <div class="text-center">
+                <button
+                  class="btn-book"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                >
+                  Book Movie
+                </button>
+              </div>
+            </div> -->
+            <!-- End Gallery Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="gallery-item h-100">
+                <img
+                  src="../assets/img/gallery/fastx.png"
+                  class="img-fluid"
+                  alt=""
+                />
+                <div
+                  class="gallery-links d-flex align-items-center justify-content-center"
+                >
+                  <a href="../assets/img/gallery/fastx.png" title="Gallery 3">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
+                </div>
+              </div>
+              <div class="text-center">
+                <button
+                  class="btn-book"
+                  data-bs-toggle="modal"
+                  data-bs-target="#fastX"
+                >
+                  Book Movie
+                </button>
+
+                <div
+                  class="modal fade"
+                  id="fastX"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <!-- <h5 class="modal-title" id="exampleModalLabel">
+                          Everything Everywhere All At Once
+                        </h5> -->
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <h2>Fast and Furious X</h2>
+                        <div class="movieSynopsis">
+                          <p>
+                            Over many missions and against impossible odds, Dom Toretto and his family have outsmarted and outdriven every foe in their path. Now, they must confront the most lethal opponent they've ever faced. Over many missions and against impossible odds, Dom Toretto and his family have outsmarted and outdriven every foe in their path. Now, they must confront the most lethal opponent they've ever faced. 
+                          </p>
+                        </div>
+                        <br />
+                        <iframe
+                          width="1000"
+                          height="550"
+                          src="https://www.youtube.com/embed/32RAq6JzY-w"
                         >
                         </iframe>
                         <br />
@@ -370,17 +594,14 @@
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
-                  src="../assets/img/gallery/interstellar.png"
+                  src="../assets/img/gallery/avatar.png"
                   class="img-fluid"
                   alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
-                  <a
-                    href="../assets/img/gallery/interstellar.png"
-                    title="Gallery 2"
-                  >
+                  <a href="../assets/img/gallery/avatar.png" title="Gallery 3">
                   </a>
                   <a href="gallery-single.html" class=" "> </a>
                 </div>
@@ -389,40 +610,185 @@
                 <button
                   class="btn-book"
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
+                  data-bs-target="#avatar"
                 >
                   Book Movie
                 </button>
-              </div>
-            </div>
-            <!-- End Gallery Item -->
-            <div class="col-xl-3 col-lg-4 col-md-6">
-              <div class="gallery-item h-100">
-                <img
-                  src="../assets/img/gallery/fastx.png"
-                  class="img-fluid"
-                  alt=""
-                />
+
                 <div
-                  class="gallery-links d-flex align-items-center justify-content-center"
+                  class="modal fade"
+                  id="avatar"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
                 >
-                  <a href="../assets/img/gallery/fastx.png" title="Gallery 3">
-                  </a>
-                  <a href="gallery-single.html" class=" "> </a>
+                  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <!-- <h5 class="modal-title" id="exampleModalLabel">
+                          Everything Everywhere All At Once
+                        </h5> -->
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <h2>Avatar: The Way of Water</h2>
+                        <div class="movieSynopsis">
+                          <p>
+                            Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home.
+                          </p>
+                        </div>
+                        <br />
+                        <iframe
+                          width="1000"
+                          height="550"
+                          src="https://www.youtube.com/embed/d9MyW72ELq0"
+                        >
+                        </iframe>
+                        <br />
+                        <br />
+                        <h3>Select number of tickets:</h3>
+                        <label for="quantity"></label>
+                        <input
+                          type="number"
+                          id="quantity"
+                          name="quantity"
+                          min="1"
+                          max="5"
+                        />
+                        <br />
+                        <br />
+                        <h3>Select age:</h3>
+                        <input type="checkbox" name="child" checked />
+                        <label for="child">Child</label>
+                        <input type="checkbox" name="adult" />
+                        <label for="adult">Adult</label>
+                        <input type="checkbox" name="senior" />
+                        <label for="senior">Senior</label>
+                        <br />
+                        <div class="movie-container">
+                          <h3>Select a showtime:</h3>
+                          <select id="movie">
+                            <option value="0">Select here</option>
+                            <option value="12">10:00am</option>
+                            <option value="12">2:00pm</option>
+                            <option value="14">4:30pm</option>
+                            <option value="16">8:00pm</option>
+                          </select>
+                          <h3>Select seats:</h3>
+                          <ul class="showcase">
+                            <li>
+                              <div class="seat"></div>
+                              <small>N/A</small>
+                            </li>
+                            <li>
+                              <div class="seat selected"></div>
+                              <small>Selected</small>
+                            </li>
+                            <li>
+                              <div class="seat occupied"></div>
+                              <small>Occupied</small>
+                            </li>
+                          </ul>
+
+                          <div class="seatsContainer">
+                            <div class="screen"></div>
+
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                            </div>
+                            <div class="row">
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat occupied"></div>
+                              <div class="seat"></div>
+                            </div>
+
+                            <p class="text">
+                              You have selected <span id="count">0</span> seats
+                              for the total price of $
+                              <span id="total">0</span>
+                            </p>
+                          </div>
+                          <a href="orderSummary.html" class="btn-get-started"
+                            >Continue</a
+                          >
+                        </div>
+                        <br />
+                      </div>
+                      <!-- <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Cancel
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Done
+                        </button>
+                      </div> -->
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="text-center">
-                <button
-                  class="btn-book"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  Book Movie
-                </button>
-              </div>
             </div>
-            <!-- End Gallery Item -->
-            <div class="col-xl-3 col-lg-4 col-md-6">
+            <!-- <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
                   src="../assets/img/gallery/frozen.png"
@@ -446,7 +812,7 @@
                   Book Movie
                 </button>
               </div>
-            </div>
+            </div> -->
             <!-- End Gallery Item -->
           </div>
         </div>
@@ -495,7 +861,7 @@
               </div>
             </div>
             <!-- End Gallery Item -->
-            <div class="col-xl-3 col-lg-4 col-md-6">
+            <!-- <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
                   src="../assets/img/gallery/avatar.png"
@@ -510,7 +876,7 @@
                   <a href="gallery-single.html" class=" "> </a>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- End Gallery Item -->
           </div>
         </div>
