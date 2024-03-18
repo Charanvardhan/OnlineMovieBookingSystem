@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'TeamSE4',
-    'django_csp',
+    'csp',
 ]
 
 MIDDLEWARE = [
@@ -82,13 +82,12 @@ WSGI_APPLICATION = 'Team4Backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# created .env file, to access values downloaded pip install python-decouple
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS' : {
-            'db': 'Team4SE',
+            'db': 'team4se',
             'user': 'root',
             'passwd': 'password',
         }
