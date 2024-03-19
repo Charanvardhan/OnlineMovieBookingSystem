@@ -26,3 +26,5 @@ def search_movies(request):
         form = MovieSearchForm()
     print(form)
     return render(request, 'search_movies.html', {'form': form})
+
+
