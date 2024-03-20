@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'TeamSE4',
     'csp',
+    'users',
 ]
 
 MIDDLEWARE = [
