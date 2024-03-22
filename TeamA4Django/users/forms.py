@@ -12,7 +12,6 @@ class CustomLoginForm(AuthenticationForm):
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    
 
     class Meta:
         model = User

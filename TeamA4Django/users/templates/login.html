@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -135,48 +136,53 @@
 
               <form method="POST">
                 {% csrf_token %}
-                {{ form }}
-                <button type="submit" class="btn-get-started">Login</button>
-              </form>
+                <!--{{ form }}-->
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Errors:</strong>
+                    {{ form.errors }}
+                </div>
+                 {% endif %}
 
+                <div class="form-group mt-3">
+                <p>User Name:</p>
+                {% render_field form.username class="form-control" placeholder="user name" %}
+                {% if form.username.errors %}
+                    <div class="error">{{ form.username.errors.as_text }}</div>
+                {% endif %}
+
+                <div class="form-group mt-3">
+                  <p>Password:</p>
+                  {% render_field form.password class="form-control" placeholder="Password" %}
+                  {% if form.password.errors %}
+                      <div class="error">{{ form.password.errors }}</div>
+                  {% endif %}
+              </div>
+              <br />
+              <br />
+        
+
+                <div class="text-center">
+                  <button type="submit" class="btn-get-started">Login</button>
+                  <br />
+                  <br />
+                  <div class="text-center">
+               
+            
               <form
                 action="forms/contact.php"
                 method="post"
                 role="form"
                 class="php-email-form"
               >
-                <p>Email:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Subject"
-                    required
-                  />
-                </div>
-                <p>Password:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Subject"
-                    required
-                  />
-                </div>
+              
+                
                 <div class="my-3">
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>
                   <div class="sent-message">You are now logged in!</div>
                 </div>
-                <div class="text-center">
-                  <a href="index.html" class="btn-get-started">Log in</a>
-                  <br />
-                  <br />
-                  <div class="text-center">
+            
                     <a href="{% url 'password_reset' %}">Forgot Password?</a>
                 </div>
                   <p>
@@ -186,7 +192,8 @@
                   <br />
                   <a href="adminlogin.html">Admin Login</a>
                 </div>
-              </form>
+  
+              
             </div>
             <!-- End Contact Form -->
           </div>

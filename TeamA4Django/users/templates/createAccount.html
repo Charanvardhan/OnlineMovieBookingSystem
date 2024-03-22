@@ -177,6 +177,14 @@
 
               <form action="{% url 'createAccount' %}" method="POST" >
                 {% csrf_token %}
+
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Errors:</strong>
+                    {{ form.errors }}
+                </div>
+                 {% endif %}
+
                 <div class="form-group mt-3">
                   <p>User Name:</p>
                     {% render_field form.username class="form-control" placeholder="Full name" %}
