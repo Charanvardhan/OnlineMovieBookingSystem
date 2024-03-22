@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -172,157 +173,124 @@
           <div class="row justify-content-center mt-4">
             <div class="loginWindow">
               
+            <!-- used django widget tweaks to combine html/css and django -->
+
               <form action="{% url 'createAccount' %}" method="POST" >
                 {% csrf_token %}
-          
-                {% if form.errors %}
-                    <div class="alert alert-danger">
-                        <strong>Errors:</strong>
-                        {{ form.errors }}
+                <div class="form-group mt-3">
+                  <p>User Name:</p>
+                    {% render_field form.username class="form-control" placeholder="Full name" %}
+                    {% if form.username.errors %}
+                        <div class="error">{{ form.username.errors.as_text }}</div>
+                    {% endif %}
+
+                    <p>Email:</p>
+                    <div class="form-group mt-3">
+                        {% render_field form.email|add_class:"form-control" placeholder="Email" %}
+                        {% if form.email.errors %}
+                            <div class="error">{{ form.email.errors }}</div>
+                        {% endif %}
                     </div>
-                {% endif %}
-                {{ form }} <!-- This will render the form fields -->
-                <div class="text-center">
-                  <button type="submit" class="btn-get-started">Create Account</button>
+                
+                    <p>Password:</p>
+                    <div class="form-group mt-3">
+                        {{ form.password1|add_class:"form-control" }}
+                        {% if form.password1.errors %}
+                            <div class="error">{{ form.password1.errors }}</div>
+                        {% endif %}
+                    </div>
+                
+                    <p>Confirm Password:</p>
+                    <div class="form-group mt-3">
+                        {{ form.password2|add_class:"form-control" }}
+                        {% if form.password2.errors %}
+                            <div class="error">{{ form.password2.errors }}</div>
+                        {% endif %}
+                    </div>
                 </div>
-       
+
                 <br />
-              </form>
-
-
-
-            </div>
-            <br />
-            <br />
-            <div class="loginWindow">
-              <form action="{% url 'createAccount' %}" method="POST" >
-       
+                <br />
+                <br />
+                <br />
           
-                <h5>Address information</h5>
-                <p class="createAccountOptional">(optional)</p>
-                <p>Address Line 1:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Address Line 1"
-                  />
-                </div>
-                <p>Address Line 2:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Address Line 2"
-                  />
-                </div>
-                <p>Apartment, Suite, etc:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Apartment, Suite, etc"
-                  />
-                </div>
-                <p>City:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="City"
-                  />
-                </div>
-                <p>State / Province:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="State / Province"
-                  />
-                </div>
-                <p>Country:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Country"
-                  />
-                </div>
-                <p>Zip / Postal code:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Zip / Postal code"
-                  />
-                </div>
-                <br />
-                <h5>Payment information</h5>
-                <p class="createAccountOptional">(optional)</p>
-                <p>Name on Card:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Name on Card"
-                  />
-                </div>
-                <p>Card Number:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Card Number"
-                  />
-                </div>
-                <p>Expiration: (MM/YY)</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="(MM/YY)"
-                  />
-                </div>
-                <p>CVV:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="CVV"
-                  />
-                </div>
-                <p>Zip / Postal Code:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Zip / Postal Code"
-                  />
-                </div>
+                  <h5>Address information</h5>
+                  <p class="createAccountOptional">(optional)</p>
+          
+                  <div class="form-group mt-3">
+                      <label for="{{ optional_info_form.address_line_1.id_for_label }}">Address Line 1:</label>
+                      {{ optional_info_form.address_line_1|add_class:"form-control" }}
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label for="{{ optional_info_form.address_line_2.id_for_label }}">Address Line 2:</label>
+                      {{ optional_info_form.address_line_2|add_class:"form-control" }}
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label for="{{ optional_info_form.apartment_suite.id_for_label }}">Apartment, Suite, etc:</label>
+                      {{ optional_info_form.apartment_suite|add_class:"form-control" }}
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label for="{{ optional_info_form.city.id_for_label }}">City:</label>
+                      {{ optional_info_form.city|add_class:"form-control" }}
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label for="{{ optional_info_form.state_province.id_for_label }}">State / Province:</label>
+                      {{ optional_info_form.state_province|add_class:"form-control" }}
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label for="{{ optional_info_form.country.id_for_label }}">Country:</label>
+                      {{ optional_info_form.country|add_class:"form-control" }}
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label for="{{ optional_info_form.zip_postal_code.id_for_label }}">Zip / Postal Code:</label>
+                      {{ optional_info_form.zip_postal_code|add_class:"form-control" }}
+                  </div>
+          
+                  <h5>Payment information</h5>
+                  <p class="createAccountOptional">(optional)</p>
+          
+  
+                  <div class="form-group mt-3">
+                      <label>Name on Card:</label>
+                      <input type="text" class="form-control" placeholder="Name on Card">
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label>Card Number:</label>
+                      <input type="text" class="form-control" placeholder="Card Number">
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label>Expiration (MM/YY):</label>
+                      <input type="text" class="form-control" placeholder="(MM/YY)">
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label>CVV:</label>
+                      <input type="text" class="form-control" placeholder="CVV">
+                  </div>
+          
+                  <div class="form-group mt-3">
+                      <label>Zip / Postal Code:</label>
+                      <input type="text" class="form-control" placeholder="Zip / Postal Code">
+                  </div>
+          
+                  <br />
+                  <div class="text-center">
+                    <button type="submit" class="btn-get-started">Create Account</button>
+                  </div>
+         
+                  <br />
+              
+              </form>
+          </div>
+          
                 <!-- <div class="my-3">
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>

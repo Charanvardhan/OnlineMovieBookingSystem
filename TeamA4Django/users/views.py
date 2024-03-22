@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import CustomUserCreationForm  # I'm assuming you created this based on previous messages
+from .forms import CustomUserCreationForm, OptionalInfoForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 
@@ -8,16 +8,25 @@ from django.http import HttpResponse
 def create_account_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
+        optional_info_form = OptionalInfoForm(request.POST)
+        if form.is_valid() and optional_info_form.is_valid():
             user = form.save()
-            login(request, user)  
-            return redirect('registrationconfirmation')  
-        else: 
-            print(form.errors)  # Debug print
+            login(request, user)
+      
+            profile = optional_info_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect('registrationconfirmation')
+        else:
+            print(form.errors, optional_info_form.errors)
     else:
         form = CustomUserCreationForm()
+        optional_info_form = OptionalInfoForm()
 
-    return render(request, "createAccount.html", {"form": form})
+    return render(request, "createAccount.html", {
+        "form": form,
+        "optional_info_form": optional_info_form
+    })
 
 def index_view(request):
    return render(request, 'index.html')
