@@ -1,8 +1,8 @@
 from base64 import urlsafe_b64encode
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
-from .forms import CustomUserCreationForm, OptionalInfoForm
-from django.contrib.auth.forms import AuthenticationForm
+from .forms import OptionalInfoForm, CustomUserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from django.http import HttpResponse
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -12,6 +12,22 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.utils.encoding import force_str
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+
+# @login_required
+# def edit_profile(request):
+#     if request.method == 'POST':
+#         form = EditProfileForm(request.POST, instance=request.user)
+#         if form.is_valid():
+#             form.save()
+#             # Optionally, add a success message
+#             return redirect('profile')  # Redirect to profile page after editing
+#     else:
+#         form = EditProfileForm(instance=request.user)
+#     return render(request, 'edit_profile.html', {'form': form})
+
+
 from django.core.mail import send_mail
 from django.contrib import messages
 
@@ -69,6 +85,7 @@ def index_view(request):
 
 def profile_view(request):
    return render(request, 'profile.html')
+
 
 def login_view(request):
     if request.method == "POST":
