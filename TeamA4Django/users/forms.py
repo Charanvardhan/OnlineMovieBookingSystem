@@ -31,10 +31,12 @@ class OptionalInfoForm(forms.ModelForm):
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=100)
+    last_name = forms.CharField(max_length=100)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
         
 class EditProfileForm(forms.ModelForm):
     class Meta:
