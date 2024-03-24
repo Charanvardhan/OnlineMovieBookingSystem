@@ -186,11 +186,29 @@
                  {% endif %}
 
                 <div class="form-group mt-3">
-                  <p>User Name:</p>
-                    {% render_field form.username class="form-control" placeholder="Full name" %}
-                    {% if form.username.errors %}
-                        <div class="error">{{ form.username.errors.as_text }}</div>
-                    {% endif %}
+                  p>Username:</p>
+                    <div class="form-group mt-3">
+                      {% render_field form.username|add_class:"form-control" placeholder="@Username" %}
+                      {% if form.username.errors %}
+                            <div class="error">{{ form.username.errors.as_text }}</div>
+                        {% endif %}
+                    </div>
+
+                    <p>First Name:</p>
+                    <div class="form-group mt-3">
+                      {% render_field form.first_name|add_class:"form-control" placeholder="First Name" %}
+                      {% if form.first_name.errors %}
+                            <div class="error">{{ form.first_names.errors.as_text }}</div>
+                        {% endif %}
+                    </div>
+
+                    <p>Last Name:</p>
+                    <div class="form-group mt-3">
+                      {% render_field form.last_name|add_class:"form-control" placeholder="Last Name" %}
+                      {% if form.last_name.errors %}
+                            <div class="error">{{ form.last_names.errors.as_text }}</div>
+                        {% endif %}
+                    </div>
 
                     <p>Email:</p>
                     <div class="form-group mt-3">

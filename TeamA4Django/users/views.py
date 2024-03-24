@@ -37,6 +37,7 @@ def create_account_view(request):
         if form.is_valid() and optional_info_form.is_valid():
             user = form.save(commit=False) 
             user.is_active = False  # User should not be active until they confirm their email
+            # first_name = form.save(first_name)
             user.save()
             profile = optional_info_form.save(commit=False)
             profile.user = user
