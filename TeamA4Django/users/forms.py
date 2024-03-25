@@ -25,10 +25,19 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['username','first_name', 'last_name', 'email', 'password1', 'password2']
         
+##Editable information on the profile.html page
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['user', 'address_line_1', 'address_line_2']
+        exclude = ['user']  # Exclude the user field
+
+        # fields = ['first_name', 'last_name', 'email', 'address_line_1', 'address_line_2', 'apartment_suite', 'city', 
+        #           'state_province', 'country', 'zip_postal_code', 'name_on_card', 
+        #           'card_number', 'expiration', 'cvv', 'billing_zip_postal_code', 'register_for_promotions']
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        # Disable editing of email field
+        self.fields['email'].disabled = True
 
