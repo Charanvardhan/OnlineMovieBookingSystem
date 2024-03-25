@@ -1,4 +1,5 @@
 from base64 import urlsafe_b64encode
+from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
 from .forms import OptionalInfoForm, CustomUserCreationForm
@@ -85,7 +86,22 @@ def index_view(request):
    return render(request, 'index.html')
 
 def profile_view(request):
-   return render(request, 'profile.html')
+   
+#    print("current user ", current_user)
+#    print("Is user authenticated: ", User.is_authenticated)
+   ##I cannot check when the user is logged out, since we don't have logout functionality. Maybe check if user's id > 0? 
+   if request.user is not None: 
+    #    print("request user ", request.user)
+    #    print("request user's id: ", request.user.id)
+       current_user = User.objects.get(id=request.user.id)
+       form = CustomUserCreationForm(request.POST or None, instance = current_user)
+    #    optional_info_form = OptionalInfoForm(request.user)
+       
+       return render(request, 'profile.html', {'form': form}) 
+   else:
+       messages.success(request,("You must be logged in to view this page"))
+       return(redirect, 'login.html')
+   
 
 
 def login_view(request):
