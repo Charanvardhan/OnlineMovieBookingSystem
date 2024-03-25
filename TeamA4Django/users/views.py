@@ -2,7 +2,7 @@ from base64 import urlsafe_b64encode
 from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
-from .forms import OptionalInfoForm, CustomUserCreationForm
+from .forms import OptionalInfoForm, CustomUserCreationForm, EditProfileForm
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from django.http import HttpResponse
 from django.core.mail import EmailMessage
@@ -85,22 +85,26 @@ def create_account_view(request):
 def index_view(request):
    return render(request, 'index.html')
 
+#The instance of the user is displayed on profile.html with email being an uneditable field
+#I cannot check when user is logged out
 def profile_view(request):
-   
-#    print("current user ", current_user)
-#    print("Is user authenticated: ", User.is_authenticated)
-   ##I cannot check when the user is logged out, since we don't have logout functionality. Maybe check if user's id > 0? 
-   if request.user is not None: 
-    #    print("request user ", request.user)
-    #    print("request user's id: ", request.user.id)
-       current_user = User.objects.get(id=request.user.id)
-       form = CustomUserCreationForm(request.POST or None, instance = current_user)
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id=request.user.id)
+        form = EditProfileForm(request.POST or None, instance = current_user)
+        optional_info_form = OptionalInfoForm(request.POST or None, instance = current_user)
+        if form.is_valid():
+             form.save()
+            #  messages.success(request, ("Your profile has been updated!"))
     #    optional_info_form = OptionalInfoForm(request.user)
-       
-       return render(request, 'profile.html', {'form': form}) 
-   else:
-       messages.success(request,("You must be logged in to view this page"))
-       return(redirect, 'login.html')
+        if optional_info_form.is_valid():
+            optional_info_form.save()
+
+        return render(request, 'profile.html', {'form': form,
+                                                "optional_info_form": optional_info_form}) 
+    else:
+    #    messages.success(request.POST, ("You must be logged in to view this page"))
+    #    return redirect ('login')
+        return HttpResponse('You must be logged in to view this page')
    
 
 
