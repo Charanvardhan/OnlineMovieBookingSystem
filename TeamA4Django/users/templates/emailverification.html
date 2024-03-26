@@ -5,14 +5,13 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Registration Confirmation</title>
+    <title>SINABOOK | Email Confirmation</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="{% static 'assets/img/ticketLogo1.png' %}" rel="icon" />
-    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon" />
-
+    <link href="{% static 'assets/img/ticketLogo1.png'%}" rel="icon" />
+    <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,7 +75,7 @@
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <!-- <li><a href="about.html">About</a></li> -->
             <!-- <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
@@ -96,8 +95,9 @@
             </ul>
           </li> -->
             <!-- <li><a href="services.html">Services</a></li> -->
-            <li><a href="{% url 'login' %}" class="active">Log In </a></li> 
+            <li><a href="{% url 'login' %}" class="active">Log in</a></li>
             <li><a href="{% url 'profile' %}">Profile</a></li>
+        
           </ul>
         </nav>
         <!-- .navbar -->
@@ -120,17 +120,11 @@
         <div class="container position-relative">
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6 text-center">
-              <h2>You've Successfully Registered!</h2>
+              <h2>Please click on the link to confirm your registration!</h2>
               <p>
                 Enjoy endless browsing and the ability to book showtimes of both
                 current and upcoming films. Happy watching!
               </p>
-            </div>
-            <div class="text-center">
-              <a href="{% url 'login' %}"class="btn-get-started">
-                Return to login
-              
-              </a>
             </div>
           </div>
         </div>
@@ -254,15 +248,9 @@
                     Your message has been sent. Thank you!
                   </div>
                 </div>
-
-               <!--
                 <div class="text-center">
-                  <a href="{% url 'login' %}"class="btn-get-started">
-                    Return to login
-                  
-                  </a>
+               
                 </div>
-                --> 
               </form>
             </div>
             <!-- End Contact Form -->

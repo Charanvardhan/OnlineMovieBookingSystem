@@ -1,18 +1,16 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Registration Confirmation</title>
+    <title>SINABOOK | Admin Login</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="{% static 'assets/img/ticketLogo1.png' %}" rel="icon" />
-    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon" />
-
+    <link href="{% static 'assets/img/ticketLogo1.png'%}"rel="icon" />
+    <link href="{% static 'assets/img/apple-touch-icon.png'%}"rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,11 +41,11 @@
       href="{% static 'assets/vendor/glightbox/css/glightbox.min.css'%}"
       rel="stylesheet"
     />
-    <link href="{% static 'assets/vendor/aos/aos.css'%}" rel="stylesheet" />
+    <link href="{% static 'assets/vendor/aos/aos.css'%}"rel="stylesheet" />
 
     <!-- Template Main CSS File -->
-    <link href="{% static 'assets/css/main.css'%}" rel="stylesheet" />
-    <link href="{% static 'assets/css/custom.css'%}" rel="stylesheet" />
+    <link href="{% static 'assets/css/main.css'%}"rel="stylesheet" />
+    <link href="{% static 'assets/css/custom.css'%}"rel="stylesheet" />
 
     <!-- =======================================================
   * Template Name: PhotoFolio
@@ -69,15 +67,14 @@
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
-          <img src="{% static 'assets/img/ticketLogo1.png'%}" alt="" />
-          <!-- <i class="bi bi-camera"></i> -->
-          <h1><h1>SINABOOK</h1></h1>
+          <!-- <img src="{% static 'assets/img/logo.png'%}"alt=""> -->
+          <img src="{% static 'assets/img/ticketLogo1.png'%}"alt="" />
+          <h1>SINABOOK</h1>
         </a>
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a href="{% url 'index' %}">Home</a></li>
-            <!-- <li><a href="about.html">About</a></li> -->
+            <li><a href="index.html">Home</a></li>
             <!-- <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="gallery.html">Nature</a></li>
@@ -96,8 +93,7 @@
             </ul>
           </li> -->
             <!-- <li><a href="services.html">Services</a></li> -->
-            <li><a href="{% url 'login' %}" class="active">Log In </a></li> 
-            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="login.html" class="active">Log in</a></li>
           </ul>
         </nav>
         <!-- .navbar -->
@@ -120,17 +116,8 @@
         <div class="container position-relative">
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6 text-center">
-              <h2>You've Successfully Registered!</h2>
-              <p>
-                Enjoy endless browsing and the ability to book showtimes of both
-                current and upcoming films. Happy watching!
-              </p>
-            </div>
-            <div class="text-center">
-              <a href="{% url 'login' %}"class="btn-get-started">
-                Return to login
-              
-              </a>
+              <h2>Admin Log in:</h2>
+              <p>Sign in to manage movies, users, and promotions</p>
             </div>
           </div>
         </div>
@@ -183,39 +170,6 @@
                 role="form"
                 class="php-email-form"
               >
-                <!-- <div class="row">
-                  <div class="col-md-6 form-group">
-                    <input
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      id="name"
-                      placeholder="Your Name"
-                      required
-                    />
-                  </div>
-                  <div class="col-md-6 form-group mt-3 mt-md-0">
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="Your Email"
-                      required
-                    />
-                  </div>
-                </div> -->
-                <!-- <p>Full Name:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Subject"
-                    required
-                  />
-                </div>
                 <p>Email:</p>
                 <div class="form-group mt-3">
                   <input
@@ -223,8 +177,7 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
-                    required
+                    placeholder="Email"
                   />
                 </div>
                 <p>Password:</p>
@@ -234,36 +187,15 @@
                     class="form-control"
                     name="subject"
                     id="subject"
-                    placeholder="Subject"
-                    required
+                    placeholder="Password"
                   />
-                </div> -->
-                <!-- <div class="form-group mt-3">
-                  <textarea
-                    class="form-control"
-                    name="message"
-                    rows="5"
-                    placeholder="Message"
-                    required
-                  ></textarea>
-                </div> -->
-                <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">
-                    Your message has been sent. Thank you!
-                  </div>
                 </div>
-
-               <!--
-                <div class="text-center">
-                  <a href="{% url 'login' %}"class="btn-get-started">
-                    Return to login
-                  
-                  </a>
-                </div>
-                --> 
               </form>
+              <div class="text-center">
+                <a href="adminHome.html">
+                  <button class="btn-get-started">Log in</button>
+                </a>
+              </div>
             </div>
             <!-- End Contact Form -->
           </div>
@@ -290,7 +222,6 @@
       </div>
     </footer>
     <!-- End Footer -->
-
     <a
       href="#"
       class="scroll-top d-flex align-items-center justify-content-center"

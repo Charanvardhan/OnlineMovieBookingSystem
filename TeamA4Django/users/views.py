@@ -1,6 +1,6 @@
 from base64 import urlsafe_b64encode
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout 
 from .forms import CustomUserCreationForm, OptionalInfoForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
@@ -12,7 +12,16 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.utils.encoding import force_str
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.contrib import messages
 
+
+def home_view(request):
+       return render(request, 'index.html')
+
+def logout_view(request):
+    logout(request) 
+    return redirect('index')
 
 def create_account_view(request):
     if request.method == "POST":
@@ -24,22 +33,25 @@ def create_account_view(request):
             user.save()
             profile = optional_info_form.save(commit=False)
             profile.user = user
+            profile.subscribe_to_promotions = optional_info_form.cleaned_data.get('subscribe_to_promotions', False)
             profile.save()
-
+  
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activate your SINABOOK ACCOUNT.'
+
             message = render_to_string('acc_active_email.html', {
             'user': user,
             'domain': current_site.domain,
             'uid': urlsafe_b64encode(force_bytes(user.pk)).decode(),
             'token': account_activation_token.make_token(user),
                 })
+            
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
                     mail_subject, message, to=[to_email]
-            )
+                )
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration') #replace with html HERE
+            return render(request, 'emailverification.html')
 
         else:
             print(form.errors, optional_info_form.errors)
@@ -91,3 +103,4 @@ def activate(request, uidb64, token):
         return redirect('registrationconfirmation')
     else:
         return HttpResponse('Activation link is invalid!')
+    

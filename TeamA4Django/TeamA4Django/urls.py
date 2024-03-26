@@ -16,15 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from users import views as users
 
 
 from django.views.generic.base import TemplateView  # new
 
 urlpatterns = [
+
+    path('', users.home_view, name='index'),  # Add this line for the root URL
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # Include default auth URLs
-
-   
+    path('accounts/', include('django.contrib.auth.urls')), 
 
 ]

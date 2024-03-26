@@ -76,28 +76,16 @@
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a href="/users/index">Home</a></li>
-            <!-- <li><a href="about.html">About</a></li> -->
-            <!-- <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              <li><a href="gallery.html">Nature</a></li>
-              <li><a href="gallery.html">People</a></li>
-              <li><a href="gallery.html">Architecture</a></li>
-              <li><a href="gallery.html">Animals</a></li>
-              <li><a href="gallery.html">Sports</a></li>
-              <li><a href="gallery.html">Travel</a></li>
-              <li class="dropdown"><a href="#"><span>Sub Menu</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                <ul>
-                  <li><a href="#">Sub Menu 1</a></li>
-                  <li><a href="#">Sub Menu 2</a></li>
-                  <li><a href="#">Sub Menu 3</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li> -->
-            <!-- <li><a href="services.html">Services</a></li> -->
-            <li><a href="/users/login" class="active">Log in</a></li>
-            <li><a href="/users/profile">Profile</a></li>
+            {% if request.user.is_authenticated %}
+            <!-- Displayed only if user is logged in -->
+            <li><a href="{% url 'logout' %}">Log out</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            {% else %}
+            <!-- Displayed only if user is not logged in -->
+            <li><a href="{% url 'login' %}">Log in</a></li>
+            {% endif %}
+             <!-- Add more links as needed -->
+       
           </ul>
         </nav>
         <!-- .navbar -->
@@ -134,7 +122,7 @@
           <div class="row justify-content-center mt-4">
             <div class="loginWindow">
 
-              <form method="POST">
+              <form method="POST" action="">
                 {% csrf_token %}
                 <!--{{ form }}-->
                 {% if form.errors %}
@@ -161,7 +149,6 @@
               <br />
               <br />
         
-
                 <div class="text-center">
                   <button type="submit" class="btn-get-started">Login</button>
                   <br />
@@ -169,13 +156,13 @@
                   <div class="text-center">
                
             
-              <form
+    <!--       <form
                 action="forms/contact.php"
                 method="post"
                 role="form"
                 class="php-email-form"
               >
-              
+    -->   
                 
                 <div class="my-3">
                   <div class="loading">Loading</div>
@@ -187,12 +174,12 @@
                 </div>
                   <p>
                     Don't have an account?
-                    <a href="/users/createAccount"> Create Account</a>
+                    <a href="{% url 'createAccount' %}"> Create Account</a>
                   </p>
                   <br />
                   <a href="adminlogin.html">Admin Login</a>
                 </div>
-  
+                <a href="{% url 'logout' %}">logout</a>
               
             </div>
             <!-- End Contact Form -->
