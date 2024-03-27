@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+##Need a module with the credit card name
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'widget_tweaks',
+    
 ]
 
 MIDDLEWARE = [

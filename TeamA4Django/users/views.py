@@ -2,7 +2,7 @@ from base64 import urlsafe_b64encode
 from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
-from .forms import OptionalInfoForm, CustomUserCreationForm, EditProfileForm
+from .forms import CreditCardForm, UserProfileForm
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
 from django.http import HttpResponse
 from django.core.mail import EmailMessage
@@ -40,47 +40,50 @@ def logout_view(request):
     logout(request) 
     return redirect('index')
 
-def create_account_view(request):
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        optional_info_form = OptionalInfoForm(request.POST)
-        if form.is_valid() and optional_info_form.is_valid():
-            user = form.save(commit=False) 
-            user.is_active = False  # User should not be active until they confirm their email
-            # first_name = form.save(first_name)
-            user.save()
-            profile = optional_info_form.save(commit=False)
-            profile.user = user
-            profile.subscribe_to_promotions = optional_info_form.cleaned_data.get('subscribe_to_promotions', False)
-            profile.save()
-  
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your SINABOOK ACCOUNT.'
+# Original Code
+# def create_account_view(request):
+#     if request.method == "POST":
+#         form = CustomUserCreationForm(request.POST)
+#         optional_info_form = OptionalInfoForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(commit=False) 
+#             user.is_active = False  # User should not be active until they confirm their email
+#             # first_name = form.save(first_name)
+#             user.save()  
+#             current_site = get_current_site(request)
+#             mail_subject = 'Activate your SINABOOK ACCOUNT.'
 
-            message = render_to_string('acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_b64encode(force_bytes(user.pk)).decode(),
-            'token': account_activation_token.make_token(user),
-                })
+#             message = render_to_string('acc_active_email.html', {
+#             'user': user,
+#             'domain': current_site.domain,
+#             'uid': urlsafe_b64encode(force_bytes(user.pk)).decode(),
+#             'token': account_activation_token.make_token(user),
+#                 })
             
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                    mail_subject, message, to=[to_email]
-                )
-            email.send()
-            return render(request, 'emailverification.html')
+#             to_email = form.cleaned_data.get('email')
+#             email = EmailMessage(
+#                     mail_subject, message, to=[to_email]
+#                 )
+#             email.send()
+#             if optional_info_form.is_valid():
+#                 profile = optional_info_form.save(commit=False)
+#                 profile.user = user
+#                 profile.subscribe_to_promotions = optional_info_form.cleaned_data.get('subscribe_to_promotions', False)
+#                 profile.save()
+#                 #create cc object
 
-        else:
-            print(form.errors, optional_info_form.errors)
-    else:
-        form = CustomUserCreationForm()
-        optional_info_form = OptionalInfoForm()
+#             return render(request, 'emailverification.html')
 
-    return render(request, "createAccount.html", {
-        "form": form,
-        "optional_info_form": optional_info_form
-    })
+#         else:
+#             print(form.errors, optional_info_form.errors)
+#     else:
+#         form = CustomUserCreationForm()
+#         optional_info_form = OptionalInfoForm()
+
+#     return render(request, "createAccount.html", {
+#         "form": form,
+#         "optional_info_form": optional_info_form
+#     })
 
 def index_view(request):
    return render(request, 'index.html')
@@ -141,4 +144,57 @@ def activate(request, uidb64, token):
         return redirect('registrationconfirmation')
     else:
         return HttpResponse('Activation link is invalid!')
+    
+
+
+def meg_create_account(request):
+    if request.method == 'POST':
+        user_profile_form = UserProfileForm(request.POST)
+        credit_card_form = CreditCardForm(request.POST)
+
+        print("is user profile form valid: ", user_profile_form.is_valid())
+        if not user_profile_form.is_valid():
+            print(user_profile_form.errors)
+
+        if user_profile_form.is_valid():
+            user = user_profile_form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your SINABOOK ACCOUNT.'
+            
+            message = render_to_string('acc_active_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_b64encode(force_bytes(user.pk)).decode(),
+            'token': account_activation_token.make_token(user),
+                })
+            
+            to_email = user_profile_form.cleaned_data.get('email')
+            email = EmailMessage(
+                    mail_subject, message, to=[to_email]
+                )
+            email.send()
+
+            if credit_card_form.is_valid() and credit_card_form.cleaned_data:
+                credit_card = credit_card_form.save(commit=False)
+                credit_card.user = user
+                credit_card.save()
+                # profile = optional_info_form.save(commit=False)
+                # profile.user = user
+                # profile.subscribe_to_promotions = optional_info_form.cleaned_data.get('subscribe_to_promotions', False)
+                # profile.save()
+
+            return render(request, 'emailverification.html')  # Redirect to account created page or any other page
+            
+
+        else:
+            print(user_profile_form.errors, credit_card_form.errors)
+
+    else:
+        user_profile_form = UserProfileForm()
+        credit_card_form = CreditCardForm()
+
+    return render(request, 'createAccount.html', {'user_profile_form': user_profile_form, 'credit_card_form': credit_card_form})
+
     
