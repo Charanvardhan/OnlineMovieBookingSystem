@@ -64,7 +64,7 @@
         class="nav-container d-flex align-items-center justify-content-between"
       >
         <a
-          href="users/index"
+        href="/"
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
@@ -87,6 +87,7 @@
               {% else %}
               <!-- Displayed only if user is not logged in -->
               <li><a href="{% url 'login' %}">Log in</a></li>
+              
               {% endif %}
                <!-- Add more links as needed -->
           </ul>

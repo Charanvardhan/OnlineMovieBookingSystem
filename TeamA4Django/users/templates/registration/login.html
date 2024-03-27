@@ -65,7 +65,7 @@
         class="nav-container d-flex align-items-center justify-content-between"
       >
         <a
-          href="users/index"
+          href="/"
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
@@ -78,11 +78,12 @@
           <ul>
             {% if request.user.is_authenticated %}
             <!-- Displayed only if user is logged in -->
-            <li><a href="{% url 'logout' %}">Log out</a></li>
+            <li><a href="{% url 'log-out' %}">Log out</a></li>
             <li><a href="{% url 'profile' %}">Profile</a></li>
             {% else %}
             <!-- Displayed only if user is not logged in -->
             <li><a href="{% url 'login' %}">Log in</a></li>
+            <li><a href="{% url 'admin-login' %}">Admin Log in</a></li>
             {% endif %}
              <!-- Add more links as needed -->
        
@@ -122,6 +123,16 @@
           <div class="row justify-content-center mt-4">
             <div class="loginWindow">
 
+              <div class="container">
+
+                {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
               <form method="POST" action="">
                 {% csrf_token %}
                 <!--{{ form }}-->
@@ -133,8 +144,8 @@
                  {% endif %}
 
                 <div class="form-group mt-3">
-                <p>User Name:</p>
-                {% render_field form.username class="form-control" placeholder="user name" %}
+                <p>Email:</p>
+                {% render_field form.username class="form-control" placeholder="Email Address" %}
                 {% if form.username.errors %}
                     <div class="error">{{ form.username.errors.as_text }}</div>
                 {% endif %}
@@ -143,9 +154,10 @@
                   <p>Password:</p>
                   {% render_field form.password class="form-control" placeholder="Password" %}
                   {% if form.password.errors %}
-                      <div class="error">{{ form.password.errors }}</div>
+                      <div class="error">{{ form.password.errors.as_text }}</div>
                   {% endif %}
               </div>
+            </div>
               <br />
               <br />
         
@@ -163,12 +175,7 @@
                 class="php-email-form"
               >
     -->   
-                
-                <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">You are now logged in!</div>
-                </div>
+              
             
                     <a href="{% url 'password_reset' %}">Forgot Password?</a>
                 </div>
@@ -177,9 +184,9 @@
                     <a href="{% url 'createAccount' %}"> Create Account</a>
                   </p>
                   <br />
-                  <a href="adminlogin.html">Admin Login</a>
+                  <a href="{% url 'admin-login' %}">Admin Login</a>
                 </div>
-                <a href="{% url 'logout' %}">logout</a>
+                
               
             </div>
             <!-- End Contact Form -->

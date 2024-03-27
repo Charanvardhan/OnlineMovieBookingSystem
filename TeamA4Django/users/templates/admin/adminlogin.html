@@ -1,3 +1,5 @@
+{% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,8 +11,8 @@
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-    <link href="{% static 'assets/img/ticketLogo1.png'%}"rel="icon" />
-    <link href="{% static 'assets/img/apple-touch-icon.png'%}"rel="apple-touch-icon" />
+    <link href="{% static 'assets/img/ticketLogo1.png'%}" rel="icon" />
+    <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,11 +43,11 @@
       href="{% static 'assets/vendor/glightbox/css/glightbox.min.css'%}"
       rel="stylesheet"
     />
-    <link href="{% static 'assets/vendor/aos/aos.css'%}"rel="stylesheet" />
+    <link href="{% static 'assets/vendor/aos/aos.css'%}" rel="stylesheet" />
 
     <!-- Template Main CSS File -->
-    <link href="{% static 'assets/css/main.css'%}"rel="stylesheet" />
-    <link href="{% static 'assets/css/custom.css'%}"rel="stylesheet" />
+    <link href="{% static 'assets/css/main.css'%}" rel="stylesheet" />
+    <link href="{% static 'assets/css/custom.css'%}" rel="stylesheet" />
 
     <!-- =======================================================
   * Template Name: PhotoFolio
@@ -67,33 +69,24 @@
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="{% static 'assets/img/logo.png'%}"alt=""> -->
-          <img src="{% static 'assets/img/ticketLogo1.png'%}"alt="" />
+          <!-- <img src="{% static 'assets/img/logo.png'%}" alt=""> -->
+          <img src="{% static 'assets/img/ticketLogo1.png'%}" alt="" />
           <h1>SINABOOK</h1>
         </a>
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <!-- <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              <li><a href="gallery.html">Nature</a></li>
-              <li><a href="gallery.html">People</a></li>
-              <li><a href="gallery.html">Architecture</a></li>
-              <li><a href="gallery.html">Animals</a></li>
-              <li><a href="gallery.html">Sports</a></li>
-              <li><a href="gallery.html">Travel</a></li>
-              <li class="dropdown"><a href="#"><span>Sub Menu</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                <ul>
-                  <li><a href="#">Sub Menu 1</a></li>
-                  <li><a href="#">Sub Menu 2</a></li>
-                  <li><a href="#">Sub Menu 3</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li> -->
-            <!-- <li><a href="services.html">Services</a></li> -->
-            <li><a href="login.html" class="active">Log in</a></li>
+            {% if request.user.is_authenticated %}
+            <!-- Displayed only if user is logged in -->
+            <li><a href="{% url 'log-out' %}">Log out</a></li>
+            
+            {% else %}
+            <!-- Displayed only if user is not logged in -->
+            <li><a href="{% url 'admin-login' %}">Admin Log in</a></li>
+            <li><a href="{% url 'login' %}"> User Log in</a></li>
+            {% endif %}
+             <!-- Add more links as needed -->
+       
           </ul>
         </nav>
         <!-- .navbar -->
@@ -160,48 +153,57 @@
               </div>
             </div> -->
             <!-- End Info Item -->
+
+        <div class="row justify-content-center mt-4">
+            <div class="container">
+              <!-- Display Django messages (e.g., "Unauthorized: You are not an admin") -->
+              {% if messages %}
+                  <div class="alert alert-danger" role="alert">
+                      {% for message in messages %}
+                          {{ message }}
+                      {% endfor %}
+                  </div>
+              {% endif %}
+              <div class="row justify-content-center mt-4">
+                  <div class="col-lg-9">
+                      <form method="POST" action="">
+                          {% csrf_token %}
+                          <!-- Display form-specific errors (e.g., "This field is required") -->
+                          {% if form.non_field_errors %}
+                              <div class="alert alert-danger">
+                                  <strong>Errors:</strong>
+                                  {% for error in form.non_field_errors %}
+                                      <div>{{ error }}</div>
+                                  {% endfor %}
+                              </div>
+                          {% endif %}
+          
+                          <div class="form-group mt-3">
+                              <p>Username:</p>
+                              {% render_field form.username class="form-control" placeholder="Username" %}
+                              {% if form.username.errors %}
+                                  <div class="alert alert-danger">{{ form.username.errors.as_text }}</div>
+                              {% endif %}
+                          </div>
+          
+                          <div class="form-group mt-3">
+                              <p>Password:</p>
+                              {% render_field form.password class="form-control" placeholder="Password" %}
+                              {% if form.password.errors %}
+                                  <div class="alert alert-danger">{{ form.password.errors.as_text }}</div>
+                              {% endif %}
+                          </div>
+                      
+                          <div class="text-center">
+                              <button type="submit" class="btn-get-started">Log in</button>
+                          </div>
+                      </form>
+                  </div>
+                  <!-- End Contact Form -->
+              </div>
           </div>
 
-          <div class="row justify-content-center mt-4">
-            <div class="col-lg-9">
-              <form
-                action="forms/contact.php"
-                method="post"
-                role="form"
-                class="php-email-form"
-              >
-                <p>Email:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Email"
-                  />
-                </div>
-                <p>Password:</p>
-                <div class="form-group mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Password"
-                  />
-                </div>
-              </form>
-              <div class="text-center">
-                <a href="adminHome.html">
-                  <button class="btn-get-started">Log in</button>
-                </a>
-              </div>
-            </div>
-            <!-- End Contact Form -->
-          </div>
-        </div>
-      </section>
-      <!-- End Contact Section -->
+    
     </main>
     <!-- End #main -->
 

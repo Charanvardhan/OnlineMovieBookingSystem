@@ -65,7 +65,7 @@
         class="container-fluid d-flex align-items-center justify-content-between"
       >
         <a
-          href="index.html"
+        href="/"
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
@@ -135,7 +135,9 @@
       <!-- ======= Contact Section ======= -->
       <section id="contact" class="contact">
         <div class="login-container">
-          <div class="row gy-4 justify-content-center">
+            <div class="row gy-4 justify-content-center">
+
+   
             <!-- <div class="col-lg-3">
               <div class="info-item d-flex">
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
@@ -172,10 +174,17 @@
 
           <div class="row justify-content-center mt-4">
             <div class="loginWindow">
-              
-            <!-- used django widget tweaks to combine html/css and django -->
-
-              <form action="{% url 'createAccount' %}" method="POST" >
+                <div class="container">
+            
+                  {% if messages %}
+                  <div class="error" role="alert">
+                      {% for message in messages %}
+                          {{ message }}
+                      {% endfor %}
+                  </div>
+              {% endif %}
+    
+              <form action="{% url 'createAccount' %}" method="POST">
                 {% csrf_token %}
 
                 {% if form.errors %}
@@ -186,100 +195,88 @@
                  {% endif %}
 
                 <div class="form-group mt-3">
-                  p>Username:</p>
-                    <div class="form-group mt-3">
-                      {% render_field form.username|add_class:"form-control" placeholder="@Username" %}
-                      {% if form.username.errors %}
-                            <div class="error">{{ form.username.errors.as_text }}</div>
-                        {% endif %}
-                    </div>
-
-                    <p>First Name:</p>
-                    <div class="form-group mt-3">
-                      {% render_field form.first_name|add_class:"form-control" placeholder="First Name" %}
-                      {% if form.first_name.errors %}
-                            <div class="error">{{ form.first_names.errors.as_text }}</div>
-                        {% endif %}
-                    </div>
-
-                    <p>Last Name:</p>
-                    <div class="form-group mt-3">
-                      {% render_field form.last_name|add_class:"form-control" placeholder="Last Name" %}
-                      {% if form.last_name.errors %}
-                            <div class="error">{{ form.last_names.errors.as_text }}</div>
-                        {% endif %}
-                    </div>
-
-                    <p>Email:</p>
-                    <div class="form-group mt-3">
-                        {% render_field form.email|add_class:"form-control" placeholder="Email" %}
-                        {% if form.email.errors %}
-                            <div class="error">{{ form.email.errors }}</div>
-                        {% endif %}
-                    </div>
-                
-                    <p>Password:</p>
-                    <div class="form-group mt-3">
-                        {{ form.password1|add_class:"form-control" }}
-                        {% if form.password1.errors %}
-                            <div class="error">{{ form.password1.errors }}</div>
-                        {% endif %}
-                    </div>
-                
-                    <p>Confirm Password:</p>
-                    <div class="form-group mt-3">
-                        {{ form.password2|add_class:"form-control" }}
-                        {% if form.password2.errors %}
-                            <div class="error">{{ form.password2.errors }}</div>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <br />
-                <br />
-                <br />
-                <br />
+                  <label>Email:</label>
+                  {% render_field form.email class="form-control" placeholder="Email" %}
+                  {% if form.email.errors %}
+                      <div class="error">{{ form.email.errors.as_text }}</div>
+                  {% endif %}
+              </div>
           
-                  <h5>Address information</h5>
-                  <p class="createAccountOptional">(optional)</p>
+                <div class="form-group mt-3">
+                  <label>First Name:</label>
+                  {% render_field form.first_name class="form-control" placeholder="First Name" %}
+                  {% if form.first_name.errors %}
+                      <div class="error">{{ form.first_name.errors.as_text }}</div>
+                  {% endif %}
+              </div>
+
+                <div class="form-group mt-3">
+                  <label>Last Name:</label>
+                  {% render_field form.last_name class="form-control" placeholder="Last Name" %}
+                  {% if form.last_name.errors %}
+                      <div class="error">{{ form.last_name.errors.as_text  }}</div>
+                  {% endif %}
+              </div>
+
+
+              <div class="form-group mt-3">
+                <label>Password:</label>
+                {% render_field form.password1 class="form-control" %}
+                {% if form.password1.errors %}
+                    <div class="error">{{ form.password1.errors.as_text }}</div>
+                {% endif %}
+            </div>
+                    
+
+              <div class="form-group mt-3">
+                <label>Confirm Password:</label>
+                {% render_field form.password2 class="form-control" %}
+                {% if form.password2.errors %}
+                    <div class="error">{{ form.password2.errors.as_text }}</div>
+                {% endif %}
+            </div> 
+                    
+                
+            <h5>Address information</h5>
+            <p class="createAccountOptional">(optional)</p>
           
                   <div class="form-group mt-3">
                       <label for="{{ optional_info_form.address_line_1.id_for_label }}">Address Line 1:</label>
-                      {{ optional_info_form.address_line_1|add_class:"form-control" }}
+                      {% render_field  optional_info_form.address_line_1 class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
                       <label for="{{ optional_info_form.address_line_2.id_for_label }}">Address Line 2:</label>
-                      {{ optional_info_form.address_line_2|add_class:"form-control" }}
+                      {% render_field  optional_info_form.address_line_2 class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
                       <label for="{{ optional_info_form.apartment_suite.id_for_label }}">Apartment, Suite, etc:</label>
-                      {{ optional_info_form.apartment_suite|add_class:"form-control" }}
+                      {% render_field  optional_info_form.apartment_suite class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
                       <label for="{{ optional_info_form.city.id_for_label }}">City:</label>
-                      {{ optional_info_form.city|add_class:"form-control" }}
+                      {% render_field  optional_info_form.city class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
                       <label for="{{ optional_info_form.state_province.id_for_label }}">State / Province:</label>
-                      {{ optional_info_form.state_province|add_class:"form-control" }}
+                      {% render_field  optional_info_form.state_province class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
                       <label for="{{ optional_info_form.country.id_for_label }}">Country:</label>
-                      {{ optional_info_form.country|add_class:"form-control" }}
+                      {% render_field optional_info_form.country class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
                       <label for="{{ optional_info_form.zip_postal_code.id_for_label }}">Zip / Postal Code:</label>
-                      {{ optional_info_form.zip_postal_code|add_class:"form-control" }}
+                      {% render_field  optional_info_form.zip_postal_code class="form-control" %}
                   </div>
           
                   <h5>Payment information</h5>
-                  <p class="createAccountOptional">(optional)</p>
+                   <p class="createAccountOptional">(optional)</p>
           
   
                   <div class="form-group mt-3">
@@ -314,28 +311,7 @@
                 </div>
                 
 
-                  <!-- this button below is puttting the user into the database!-->
-                  <br />
-                  <div class="text-center">
-                    <button type="submit" class="btn-get-started">Create Account</button>
-                  </div>
-                  <!-- want to have a button to send email, not store in database-->
-                  <!-- then when they click link in email, it creates them in database-->
-         
-                  <br />
-              
-              </form>
-          </div>
-          
-                <!-- <div class="my-3">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">
-                    Look for a verification email in your inbox shortly!
-                  </div>
-                </div> -->
-                <br />
-                <br />
+
                 <div class="text-center">
                   <br />
                   <br />
@@ -344,21 +320,27 @@
                     <a href="login.html"> Log in</a>
                   </p>
                 </div>
-                <!-- <div class="form-group mt-3">
-                  <textarea
-                    class="form-control"
-                    name="message"
-                    rows="5"
-                    placeholder="Message"
-                    required
-                  ></textarea>
-                </div> -->
-              </form>
-            </div>
-            <!-- End Contact Form -->
-          </div>
-        </div>
-      </section>
+
+                  <!-- this button below is puttting the user into the database!-->
+                  <br />
+                  <div class="text-center mt-3">
+                      <button type="submit" class="btn-get-started">Create Account</button>
+                   </div>
+
+                     <!-- want to have a button to send email, not store in database-->
+                  <!-- then when they click link in email, it creates them in database-->
+                    </form>
+                </div> <!-- Closing div for .container -->
+            </div> <!-- Closing div for .loginWindow -->
+        </div> <!-- Closing div for .row -->
+    </div> <!-- Closing div for .login-container -->
+</section>
+
+
+                  <!-- want to have a button to send email, not store in database-->
+                  <!-- then when they click link in email, it creates them in database-->
+         
+
       <!-- End Contact Section -->
     </main>
     <!-- End #main -->

@@ -91,12 +91,12 @@ EMAIL_USE_SSL = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS' : {
-            'db': 'team4se',
-            'user': 'root',
-            'passwd': 'password',
-        }
-    } 
+        'NAME': 'team4se',  
+        'USER': 'root',     
+        'PASSWORD': 'password',  
+        'HOST': '127.0.0.1',     # MySQL server's host
+        'PORT': '3306',          # MySQL server's port
+    }
 }
 
 
