@@ -77,26 +77,19 @@
         <nav id="navbar" class="navbar">
           <ul>
             {% if request.user.is_authenticated %}
-            <!-- Displayed only if user is logged in -->
+            <!-- only if user is logged in -->
             <li><a href="{% url 'log-out' %}">Log out</a></li>
             
             {% else %}
-            <!-- Displayed only if user is not logged in -->
+            <!-- should display only if user is not logged in -->
             <li><a href="{% url 'admin-login' %}">Admin Log in</a></li>
             <li><a href="{% url 'login' %}"> User Log in</a></li>
             {% endif %}
-             <!-- Add more links as needed -->
+           
        
           </ul>
         </nav>
         <!-- .navbar -->
-
-        <!-- <div class="header-social-links">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div> -->
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
       </div>
@@ -121,42 +114,10 @@
       <section id="contact" class="contact">
         <div class="container">
           <div class="row gy-4 justify-content-center">
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h4>Location:</h4>
-                  <p>A108 Adam Street, New York, NY 535022</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
-
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h4>Email:</h4>
-                  <p>info@example.com</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
-
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-phone flex-shrink-0"></i>
-                <div>
-                  <h4>Call:</h4>
-                  <p>+1 5589 55488 55</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
 
         <div class="row justify-content-center mt-4">
             <div class="container">
-              <!-- Display Django messages (e.g., "Unauthorized: You are not an admin") -->
+              <!-- error messaging -->
               {% if messages %}
                   <div class="alert alert-danger" role="alert">
                       {% for message in messages %}
@@ -168,7 +129,7 @@
                   <div class="col-lg-9">
                       <form method="POST" action="">
                           {% csrf_token %}
-                          <!-- Display form-specific errors (e.g., "This field is required") -->
+                          <!-- Display form-specific errors  -->
                           {% if form.non_field_errors %}
                               <div class="alert alert-danger">
                                   <strong>Errors:</strong>
@@ -177,7 +138,7 @@
                                   {% endfor %}
                               </div>
                           {% endif %}
-          
+          <!-- user login form -->
                           <div class="form-group mt-3">
                               <p>Username:</p>
                               {% render_field form.username class="form-control" placeholder="Username" %}
@@ -197,6 +158,8 @@
                           <div class="text-center">
                               <button type="submit" class="btn-get-started">Log in</button>
                           </div>
+
+                  <!-- end of user login form -->         
                       </form>
                   </div>
                   <!-- End Contact Form -->

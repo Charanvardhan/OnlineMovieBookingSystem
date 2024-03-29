@@ -75,38 +75,13 @@
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a href="/users/index">Home</a></li>
-            <!-- <li><a href="about.html">About</a></li> -->
-            <!-- <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              <li><a href="gallery.html">Nature</a></li>
-              <li><a href="gallery.html">People</a></li>
-              <li><a href="gallery.html">Architecture</a></li>
-              <li><a href="gallery.html">Animals</a></li>
-              <li><a href="gallery.html">Sports</a></li>
-              <li><a href="gallery.html">Travel</a></li>
-              <li class="dropdown"><a href="#"><span>Sub Menu</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                <ul>
-                  <li><a href="#">Sub Menu 1</a></li>
-                  <li><a href="#">Sub Menu 2</a></li>
-                  <li><a href="#">Sub Menu 3</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li> -->
-            <!-- <li><a href="services.html">Services</a></li> -->
-            <li><a href="/users/login">Log in</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'log-out' %}">Log out</a></li>
             <!-- <li><a href="/users/profile">Profile</a></li> -->
           </ul>
         </nav>
         <!-- .navbar -->
 
-        <!-- <div class="header-social-links">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div> -->
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
       </div>
@@ -137,6 +112,8 @@
               alt="profile"
             />
             <div class="loginWindow">
+
+                 <!-- must come back to this and format it to connect with django - alexis
               <form
                 action="forms/contact.php"
                 method="post"
@@ -165,7 +142,7 @@
                     />
                   </div>
                 </div> 
-                <!-- <p>Full Name:</p>
+              <p>Full Name:</p>
                 <div class="form-group mt-3">
                   <input
                     type="text"
@@ -235,7 +212,7 @@
                 </div> 
 
 
-                <!-- <div class="form-group mt-3">
+                 <div class="form-group mt-3">
                   <textarea
                     class="form-control"
                     name="message"
@@ -247,6 +224,13 @@
                 <br />
               </form>
             </div>
+
+        <!--  
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              Display Decrypted Card Details 
+              <p>Card Number: {{ decrypted_card_number }}</p>
+              <p>CVV: {{ decrypted_cvv }}</p>
+          </form>
             <div>
               <form method="post">
                 {% csrf_token %}
@@ -255,6 +239,7 @@
                 <button type="submit" class="btn-get-started text-center">Save Changes</button>
               </form>
           </div>
+        -->
             <!-- <div class="text-center">
               <br />
               <br />
@@ -263,6 +248,56 @@
               <br />
             </div> -->
             <!-- End Contact Form -->
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="contact">
+        <div class="login-container">
+          <div class="row justify-content-center mt-4">
+            <div class="loginWindow">
+              <form method="post">
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% csrf_token %}
+
+           <!-- User info Change Form -->
+                <fieldset>
+                    <legend>User Information:</legend>
+                    {{ user_form.as_p }}
+                </fieldset>
+                <button type="submit" name="submit_user_form" class="btn btn-primary">Update User Info</button>
+            </form>
+            
+            <!-- Password Change Form -->
+            <form method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Password Change (Optional):</legend>
+                    {{ password_form.as_p }}
+                    <small class="text-muted">Leave blank if you do not wish to change your password.</small>
+                </fieldset>
+                <button type="submit" name="submit_password_form" class="btn btn-primary">Change Password</button>
+            </form>
+            
+            <!-- Credit Card Information Form -->
+            {% if credit_card_form %}
+            <form method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Payment Information:</legend>
+                    {{ credit_card_form.as_p }}
+                </fieldset>
+                <button type="submit" name="submit_credit_card_form" class="btn btn-primary">Update Payment Info</button>
+            </form>
+            {% endif %}
+            </div>
           </div>
         </div>
       </section>

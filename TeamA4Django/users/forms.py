@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import UserProfile, CreditCard
-
+from django.contrib.auth.forms import PasswordChangeForm
 
 class CustomPasswordResetForm(PasswordChangeForm):
     class Meta:
@@ -30,7 +30,7 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
-        
+ # delete later - alexis       
 class OptionalInfoForm(forms.ModelForm):
     subscribe_to_promotions = forms.BooleanField(required=False)
     class Meta:
@@ -41,37 +41,56 @@ class OptionalInfoForm(forms.ModelForm):
         
         
 ##Editable information on the profile.html page
+        
 class EditProfileForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=100, required=False)
+    last_name = forms.CharField(max_length=100, required=False)
+
     class Meta:
         model = UserProfile
-        exclude = ['user']  # Exclude the user field
+        fields = ['first_name', 'last_name', 'address_line_1', 'address_line_2', 'city', 'state_province', 'country', 'zip_postal_code', 'subscribe_to_promotions']
 
-        # fields = ['first_name', 'last_name', 'email', 'address_line_1', 'address_line_2', 'apartment_suite', 'city', 
-        #           'state_province', 'country', 'zip_postal_code', 'name_on_card', 
-        #           'card_number', 'expiration', 'cvv', 'billing_zip_postal_code', 'register_for_promotions']
-    def __init__(self, *args, **kwargs):
-        super(EditProfileForm, self).__init__(*args, **kwargs)
-        # Disable editing of email field
-        self.fields['email'].disabled = True
 
 
 class MovieSearchForm(forms.Form):
     title = forms.CharField(label='Search by Title', max_length=100)
 
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(label="Old Password", widget=forms.PasswordInput)
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = User
-        # exclude = ['user']  # Exclude the user field, as it's a OneToOneField
+        model = UserProfile
         fields = '__all__'
+        exclude = ['user']
+
+class UserProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = '__all__'  
+        exclude = ['user', 'email', 'password'] 
+        
 
 class CreditCardForm(forms.ModelForm):
     class Meta:
         model = CreditCard
-        fields = '__all__'  # Include all fields from the CreditCard model
+        fields = '__all__'  
+        exclude = ['user_profile']
+
+        widgets = {
+           'card_number': forms.TextInput(attrs={'required': False}),
+         }
+    
+    def __init__(self, *args, **kwargs):
+            super(CreditCardForm, self).__init__(*args, **kwargs)
+            for field in self.fields:
+                self.fields[field].required = False
 
 
 
+
+# meg- commmented out just incase 
 # class CustomUserCreationForm(UserCreationForm):
 #     email = forms.EmailField(required=True)
 

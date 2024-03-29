@@ -77,26 +77,17 @@
         <nav id="navbar" class="navbar">
           <ul>
             {% if request.user.is_authenticated %}
-            <!-- Displayed only if user is logged in -->
             <li><a href="{% url 'log-out' %}">Log out</a></li>
             <li><a href="{% url 'profile' %}">Profile</a></li>
             {% else %}
-            <!-- Displayed only if user is not logged in -->
             <li><a href="{% url 'login' %}">Log in</a></li>
             <li><a href="{% url 'admin-login' %}">Admin Log in</a></li>
             {% endif %}
-             <!-- Add more links as needed -->
-       
+      
           </ul>
         </nav>
         <!-- .navbar -->
 
-        <!-- <div class="header-social-links">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div> -->
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
       </div>
@@ -167,16 +158,7 @@
                   <br />
                   <div class="text-center">
                
-            
-    <!--       <form
-                action="forms/contact.php"
-                method="post"
-                role="form"
-                class="php-email-form"
-              >
-    -->   
-              
-            
+          
                     <a href="{% url 'password_reset' %}">Forgot Password?</a>
                 </div>
                   <p>

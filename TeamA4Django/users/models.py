@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
 
 
+#user profile model and fields
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) #username/id
     #need first, last name
@@ -29,11 +30,12 @@ class UserProfile(models.Model):
         return f"{self.user.username}'s profile"
 
 
-
+#credit card model 
 class CreditCard(models.Model):
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    card_number = models.CharField(max_length=16)
-    cvv = models.CharField(max_length=4)
+    name_on_card = models.CharField(max_length=100, blank=True)  
+    card_number = models.CharField(max_length=16, blank=True)
+    cvv = models.CharField(max_length=4,blank=True)
     expiration = models.CharField(max_length=5, blank=True)
     address_line_1 = models.CharField(max_length=255, blank=True)
     address_line_2 = models.CharField(max_length=255, blank=True)
@@ -42,11 +44,12 @@ class CreditCard(models.Model):
     state_province = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=50, blank=True)
     zip_postal_code = models.CharField(max_length=12, blank=True)
-    name_on_card = models.CharField(max_length=100, blank=True)  
+   
 
     def __str__(self):
         return f"Credit Card for {self.user_profile.user.username}"
 
+#movie card model
 class Movie(models.Model):
     GENRE_CHOICES = [
         ('none', 'None'), 

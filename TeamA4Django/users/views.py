@@ -3,7 +3,7 @@ from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
 from .forms import OptionalInfoForm, CustomUserCreationForm, EditProfileForm
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm
 from django.http import HttpResponse
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -14,13 +14,18 @@ from .tokens import account_activation_token
 from django.utils.encoding import force_str
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import Movie
+import base64
+from Crypto.Cipher import AES
+from django.conf import settings
+from .models import UserProfile
+from .models import Movie, UserProfile, CreditCard
 from .forms import MovieSearchForm
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
-from .forms import CustomPasswordResetForm
+from .forms import CustomPasswordResetForm, UserProfileForm, CreditCardForm, UserProfileEditForm
+from django.contrib.auth.decorators import login_required
 
 
 # @login_required
@@ -36,6 +41,21 @@ from .forms import CustomPasswordResetForm
 #     return render(request, 'edit_profile.html', {'form': form})
 
 
+def encrypt_card_info(card_number, cvv):
+    # Pad card_number and cvv to 16 bytes if needed
+    card_number = card_number.ljust(16)[:16]
+    cvv = cvv.ljust(4)[:4]
+
+    # Encode card_number and cvv
+    card_number_bytes = card_number.encode()
+    cvv_bytes = cvv.encode()
+    secret_key_bytes = settings.SECRET_KEY.encode()
+    # Encrypt card information using AES encryption
+    cipher = AES.new(secret_key_bytes[:32], AES.MODE_EAX)
+    ciphertext, tag = cipher.encrypt_and_digest(card_number_bytes + cvv_bytes)
+
+    # Return base64 encoded ciphertext and tag
+    return base64.b64encode(ciphertext).decode(), base64.b64encode(tag).decode()
 
 
 def custom_password_reset(request):
@@ -59,121 +79,170 @@ def logout_view(request):
 
 
 def admin_login_view(request):
-    # If the request is POST, try to pull out the relevant info.
     if request.method == 'POST':
-        # Create an instance of the form filled with the submitted data
         form = AuthenticationForm(request, data=request.POST)
         # Check if the form is valid:
         if form.is_valid():
-            # Get the username and password from the valid form
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-    
             user = authenticate(username=username, password=password)
-            # If we have a user 
             if user is not None:
-                # Check if user is an admin
                 if user.is_superuser:
-                    # Log the user in
                     login(request, user)
-                    # Redirect to the admin home page
-                    return redirect('admin-home')  # Make sure 'admin-home' is the correct path name in your urls.py
+                    return redirect('admin-home')  
                 else:
-                    # If the user exists but is not an admin, show an error message
                     messages.error(request, 'Login failed: You are not an admin.')
             else:
-                # No user returned by authenticate, show an error message
                 messages.error(request, 'Login failed: Invalid username or password.')
         else:
-            # Form is not valid, show an error message
             messages.error(request, 'Login failed: Invalid form input.')
     else:
-        # If the request is not POST, create a blank authentication form
         form = AuthenticationForm()
 
-    # Render the page with the login form (whether blank or with errors)
     return render(request, 'admin/adminlogin.html', {'form': form})
 
    
-
 
 def admin_home_view(request):
      return render(request, 'adminHome.html')
 
 
 def create_account_view(request):
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        optional_info_form = OptionalInfoForm(request.POST)
-        if form.is_valid() and optional_info_form.is_valid():
+    user_profile_form = UserProfileForm(request.POST or None)
+    credit_card_form = CreditCardForm(request.POST or None)
 
-            email = form.cleaned_data.get('email')  # or email if you're using email as the username
-            if User.objects.filter(username=email).exists():
-                messages.error(request, 'An account with this email already exists.')
-                return render(request, 'createAccount.html', {'form': form})
+    if request.method == 'POST':
+        if user_profile_form.is_valid():
+            user = User.objects.create_user(
+                username=user_profile_form.cleaned_data['email'],
+                email=user_profile_form.cleaned_data['email'],
+                is_active=False 
+            )
 
-
-            user = form.save(commit=False) 
-            user.is_active = False  # User should not be active until they confirm their email
-            # first_name = form.save(first_name)
+            password = request.POST['password1']
+            user.set_password(password)
             user.save()
-            profile = optional_info_form.save(commit=False)
-            profile.user = user
-            profile.subscribe_to_promotions = optional_info_form.cleaned_data.get('subscribe_to_promotions', False)
-            profile.save()
-  
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your SINABOOK ACCOUNT.'
+            user_profile = UserProfile(user=user, **user_profile_form.cleaned_data)
+            user_profile.save()
 
-            message = render_to_string('acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_b64encode(force_bytes(user.pk)).decode(),
-            'token': account_activation_token.make_token(user),
+            if credit_card_form.is_valid():
+                credit_card = credit_card_form.save(commit=False)
+                credit_card.user_profile = user_profile
+                credit_card.save()
+
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your SINABOOK account.'
+                message = render_to_string('acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_b64encode(force_bytes(user.pk)).decode(),
+                    'token': account_activation_token.make_token(user),
                 })
-            
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                    mail_subject, message, to=[to_email]
-                )
-            email.send()
-            return render(request, 'emailverification.html')
+                to_email = user_profile_form.cleaned_data.get('email')
+                email = EmailMessage(mail_subject, message, to=[to_email])
+                email.send()
 
+                messages.success(request, 'Please confirm your email address to complete the registration.')
+                return redirect('emailverifcation.html')  
+            else:
+                messages.error(request, 'Please correct the error in the credit card information.')
         else:
-            print(form.errors, optional_info_form.errors)
-    else:
-        form = CustomUserCreationForm()
-        optional_info_form = OptionalInfoForm()
+            messages.error(request, 'Please correct the error in the user profile information.')
 
-    return render(request, "createAccount.html", {
-        "form": form,
-        "optional_info_form": optional_info_form
+    return render(request, 'createAccount.html', {
+        'user_profile_form': user_profile_form,
+        'credit_card_form': credit_card_form
     })
 
+def safe_b64decode(data):
+    """Attempt to base64 decode with padding adjustments."""
+    try:
+        return base64.b64decode(data)
+    except Exception as e:
+        # Adjust padding and retry
+        padding = 4 - (len(data) % 4)
+        data += "=" * padding
+        try:
+            return base64.b64decode(data)
+        except Exception as e:
+            print(f"Failed to decode: {e}")
+            return None
+          
+def decrypt_card_info(encrypted_data):
+    secret_key_bytes = settings.SECRET_KEY.encode()[:32]
+    encrypted_data_bytes = base64.b64decode(encrypted_data)
+    nonce, ciphertext_tag = encrypted_data_bytes[:16], encrypted_data_bytes[16:]
+    
+    cipher = AES.new(secret_key_bytes, AES.MODE_EAX, nonce=nonce)
+    decrypted_data = cipher.decrypt(ciphertext_tag[:-16])
+
+    try:
+        cipher.verify(ciphertext_tag[-16:])
+        #decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
+        # Split the decrypted data into card_number and cvv
+        card_number = decrypted_data[:16].decode().strip()
+        cvv = decrypted_data[16:].decode().strip()
+        return card_number, cvv
+    except ValueError as e:
+        # Decryption failed
+        print("Decryption error:", str(e))
+        return None, None
+ 
+    
 def index_view(request):
    return render(request, 'index.html')
 
 #The instance of the user is displayed on profile.html with email being an uneditable field
 #I cannot check when user is logged out
+@login_required
 def profile_view(request):
-    if request.user.is_authenticated:
-        current_user = User.objects.get(id=request.user.id)
-        form = EditProfileForm(request.POST or None, instance = current_user)
-        optional_info_form = OptionalInfoForm(request.POST or None, instance = current_user)
-        if form.is_valid():
-             form.save()
-            #  messages.success(request, ("Your profile has been updated!"))
-    #    optional_info_form = OptionalInfoForm(request.user)
-        if optional_info_form.is_valid():
-            optional_info_form.save()
+    user = request.user
+    user_profile, _ = UserProfile.objects.get_or_create(user=user)
 
-        return render(request, 'profile.html', {'form': form,
-                                                "optional_info_form": optional_info_form}) 
+    decrypted_card_number, decrypted_cvv = decrypt_card_info(user_profile.card_number)
+
+    if 'submit_user_form' in request.POST:
+        #use userprofile edit form 
+        user_form = UserProfileEditForm(request.POST, instance=user_profile, prefix='user')
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+            return redirect('profile')
     else:
-    #    messages.success(request.POST, ("You must be logged in to view this page"))
-    #    return redirect ('login')
-        return HttpResponse('You must be logged in to view this page')
-   
+        user_form = UserProfileForm(instance=user_profile, prefix='user')
+    
+    if 'submit_password_form' in request.POST:
+        password_form = PasswordChangeForm(user, request.POST)
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password has been updated successfully!')
+            return redirect('profile')
+    else:
+        password_form = PasswordChangeForm(user)
+    
+    # Assuming a OneToOne relationship with CreditCard for simplicity
+    try:
+     credit_card = CreditCard.objects.filter(user_profile=user_profile).first()
+    except CreditCard.DoesNotExist:
+     credit_card = None
+    
+    if 'submit_credit_card_form' in request.POST and credit_card:
+        credit_card_form = CreditCardForm(request.POST, instance=credit_card, prefix='credit')
+        if credit_card_form.is_valid():
+            credit_card_form.save()
+            messages.success(request, 'Your credit card information has been updated successfully!')
+            return redirect('profile')
+    else:
+        credit_card_form = CreditCardForm(instance=credit_card, prefix='credit') if credit_card else None
+    
+    return render(request, 'profile.html', {
+        'user_form': user_form,
+        'password_form': password_form,
+        'credit_card_form': credit_card_form,
+        'decrypted_card_number': decrypted_card_number,
+        'decrypted_cvv': decrypted_cvv
+    })
 
 def login_view(request):
     if request.method == "POST":
@@ -184,15 +253,14 @@ def login_view(request):
             
             User = get_user_model()
             try:
-                user = User.objects.get(email=email)  # Get the user based on the email
-                user = authenticate(request, username=user.username, password=password)  # Authenticate with username
+                user = User.objects.get(email=email) 
+                user = authenticate(request, username=user.username, password=password)  
                 if user is not None:
                     login(request, user)
-                    return redirect('index')  # Redirect to a success page.
+                    return redirect('index')  
                 else:
                     return render(request, 'login.html', {'form': form, 'error': 'Invalid email or password.'})
             except User.DoesNotExist:
-                # No user was found, return invalid login error
                 return render(request, 'login.html', {'form': form, 'error': 'Invalid email or password.'})
     else:
         form = AuthenticationForm()  # Make sure to use your updated form
@@ -217,6 +285,22 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
     
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('index')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'changePwd.html', {
+        'form': form
+    })
     
 def search_movies(request):
     if request.method == 'GET':

@@ -74,9 +74,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'TeamA4Django.wsgi.application'
 
-
+#email configurations
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'aalexisadkinss@gmail.com'
 EMAIL_HOST_PASSWORD ='grgfhsahqmifbxok'

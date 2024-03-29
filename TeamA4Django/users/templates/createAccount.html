@@ -77,37 +77,12 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a href="{% url 'index' %}">Home</a></li>
-            <!-- <li><a href="about.html">About</a></li> -->
-            <!-- <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              <li><a href="gallery.html">Nature</a></li>
-              <li><a href="gallery.html">People</a></li>
-              <li><a href="gallery.html">Architecture</a></li>
-              <li><a href="gallery.html">Animals</a></li>
-              <li><a href="gallery.html">Sports</a></li>
-              <li><a href="gallery.html">Travel</a></li>
-              <li class="dropdown"><a href="#"><span>Sub Menu</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                <ul>
-                  <li><a href="#">Sub Menu 1</a></li>
-                  <li><a href="#">Sub Menu 2</a></li>
-                  <li><a href="#">Sub Menu 3</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li> -->
-            <!-- <li><a href="services.html">Services</a></li> -->
             <li><a href="{% url 'login' %}">Log in</a></li>
             <li><a href="{% url 'profile' %}">Profile</a></li>
           </ul>
         </nav>
         <!-- .navbar -->
 
-        <!-- <div class="header-social-links">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div> -->
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
       </div>
@@ -136,46 +111,12 @@
       <section id="contact" class="contact">
         <div class="login-container">
             <div class="row gy-4 justify-content-center">
-
-   
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h4>Location:</h4>
-                  <p>A108 Adam Street, New York, NY 535022</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
-
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h4>Email:</h4>
-                  <p>info@example.com</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
-
-            <!-- <div class="col-lg-3">
-              <div class="info-item d-flex">
-                <i class="bi bi-phone flex-shrink-0"></i>
-                <div>
-                  <h4>Call:</h4>
-                  <p>+1 5589 55488 55</p>
-                </div>
-              </div>
-            </div> -->
-            <!-- End Info Item -->
           </div>
 
           <div class="row justify-content-center mt-4">
             <div class="loginWindow">
                 <div class="container">
-            
+            <!-- error messages -->
                   {% if messages %}
                   <div class="error" role="alert">
                       {% for message in messages %}
@@ -183,10 +124,23 @@
                       {% endfor %}
                   </div>
               {% endif %}
-    
-              <form action="{% url 'createAccount' %}" method="POST">
-                {% csrf_token %}
+             <!-- form error messages-->
+              {% if user_profile_form.errors %}
+              <div class="alert alert-danger">
+                {{ user_profile_form.errors }}
+               </div>
+              {% endif %}
 
+            {% if credit_card_form.errors %}
+              <div class="alert alert-danger">
+                {{ credit_card_form.errors }}
+              </div>
+            {% endif %}
+
+            
+              <form action="{% url 'createAccount' %}" method="POST">
+                <!-- form error messages-->
+                {% csrf_token %}
                 {% if form.errors %}
                 <div class="alert alert-danger">
                     <strong>Errors:</strong>
@@ -194,141 +148,147 @@
                 </div>
                  {% endif %}
 
-                <div class="form-group mt-3">
+
+            <!-- user info -->
+                 <div class="form-group mt-3">
                   <label>Email:</label>
-                  {% render_field form.email class="form-control" placeholder="Email" %}
-                  {% if form.email.errors %}
-                      <div class="error">{{ form.email.errors.as_text }}</div>
+                  {{ user_profile_form.email|add_class:"form-control" }}
+                  {% if user_profile_form.email.errors %}
+                      <div class="error">{{ user_profile_form.email.errors|striptags }}</div>
                   {% endif %}
-              </div>
+                </div>
+                
           
                 <div class="form-group mt-3">
                   <label>First Name:</label>
-                  {% render_field form.first_name class="form-control" placeholder="First Name" %}
-                  {% if form.first_name.errors %}
-                      <div class="error">{{ form.first_name.errors.as_text }}</div>
+                  {{ user_profile_form.first_name|add_class:"form-control"  }}
+                  {% if user_profile_form.first_name.errors %}
+                      <div class="error">{{ user_profile_form.first_name.errors|striptags }}</div>
                   {% endif %}
-              </div>
+                </div>
 
                 <div class="form-group mt-3">
                   <label>Last Name:</label>
-                  {% render_field form.last_name class="form-control" placeholder="Last Name" %}
-                  {% if form.last_name.errors %}
-                      <div class="error">{{ form.last_name.errors.as_text  }}</div>
+                  {{ user_profile_form.last_name|add_class:"form-control"}}
+                  
+                  {% if user_profile_form.last_name.errors %}
+                      <div class="error">{{ user_profile_form.last_name.errors|striptags }}</div>
+                  {% endif %}
+                </div>
+                
+                <div class="form-group mt-3">
+                  <label for="id_password1">Password:</label>
+                  <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Password">
+                  {% if form.password1.errors %}
+                      <div class="error">{{ form.password1.errors|striptags }}</div>
                   {% endif %}
               </div>
-
-
+              
               <div class="form-group mt-3">
-                <label>Password:</label>
-                {% render_field form.password1 class="form-control" %}
-                {% if form.password1.errors %}
-                    <div class="error">{{ form.password1.errors.as_text }}</div>
-                {% endif %}
-            </div>
+                  <label for="id_password2">Confirm Password:</label>
+                  <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm Password">
+                  {% if form.password2.errors %}
+                      <div class="error">{{ form.password2.errors|striptags }}</div>
+                  {% endif %}
+              </div>
                     
+    <!-- end of user info -->
 
-              <div class="form-group mt-3">
-                <label>Confirm Password:</label>
-                {% render_field form.password2 class="form-control" %}
-                {% if form.password2.errors %}
-                    <div class="error">{{ form.password2.errors.as_text }}</div>
-                {% endif %}
-            </div> 
-                    
-                
+      <!-- optional user info -->
             <h5>Address information</h5>
             <p class="createAccountOptional">(optional)</p>
           
                   <div class="form-group mt-3">
-                      <label for="{{ optional_info_form.address_line_1.id_for_label }}">Address Line 1:</label>
-                      {% render_field  optional_info_form.address_line_1 class="form-control" %}
+                      <label for="{{ user_profile_form.address_line_1.id_for_label }}">Address Line 1:</label>
+                      {% render_field user_profile_form.address_line_1 class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
-                      <label for="{{ optional_info_form.address_line_2.id_for_label }}">Address Line 2:</label>
-                      {% render_field  optional_info_form.address_line_2 class="form-control" %}
+                      <label for="{{ user_profile_form.address_line_2.id_for_label }}">Address Line 2:</label>
+                      {% render_field  user_profile_form.address_line_2 class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
-                      <label for="{{ optional_info_form.apartment_suite.id_for_label }}">Apartment, Suite, etc:</label>
-                      {% render_field  optional_info_form.apartment_suite class="form-control" %}
+                      <label for="{{ user_profile_form.apartment_suite.id_for_label }}">Apartment, Suite, etc:</label>
+                      {% render_field  user_profile_form.apartment_suite class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
-                      <label for="{{ optional_info_form.city.id_for_label }}">City:</label>
-                      {% render_field  optional_info_form.city class="form-control" %}
+                      <label for="{{ user_profile_form.city.id_for_label }}">City:</label>
+                      {% render_field  user_profile_form.city class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
-                      <label for="{{ optional_info_form.state_province.id_for_label }}">State / Province:</label>
-                      {% render_field  optional_info_form.state_province class="form-control" %}
+                      <label for="{{ user_profile_form.state_province.id_for_label }}">State / Province:</label>
+                      {% render_field  user_profile_form.state_province class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
-                      <label for="{{ optional_info_form.country.id_for_label }}">Country:</label>
-                      {% render_field optional_info_form.country class="form-control" %}
+                      <label for="{{ user_profile_form.country.id_for_label }}">Country:</label>
+                      {% render_field user_profile_form.country class="form-control" %}
                   </div>
           
                   <div class="form-group mt-3">
-                      <label for="{{ optional_info_form.zip_postal_code.id_for_label }}">Zip / Postal Code:</label>
-                      {% render_field  optional_info_form.zip_postal_code class="form-control" %}
+                      <label for="{{ user_profile_form.zip_postal_code.id_for_label }}">Zip / Postal Code:</label>
+                      {% render_field  user_profile_form.zip_postal_code class="form-control" %}
                   </div>
           
+         <!-- end of optional user info -->         
+
+          <!--  user  payment info -->     
                   <h5>Payment information</h5>
                    <p class="createAccountOptional">(optional)</p>
           
   
-                  <div class="form-group mt-3">
-                      <label>Name on Card:</label>
-                      <input type="text" class="form-control" placeholder="Name on Card">
-                  </div>
-          
-                  <div class="form-group mt-3">
-                      <label>Card Number:</label>
-                      <input type="text" class="form-control" placeholder="Card Number">
-                  </div>
-          
-                  <div class="form-group mt-3">
-                      <label>Expiration (MM/YY):</label>
-                      <input type="text" class="form-control" placeholder="(MM/YY)">
-                  </div>
-          
-                  <div class="form-group mt-3">
-                      <label>CVV:</label>
-                      <input type="text" class="form-control" placeholder="CVV">
-                  </div>
-          
-                  <div class="form-group mt-3">
-                      <label>Zip / Postal Code:</label>
-                      <input type="text" class="form-control" placeholder="Zip / Postal Code">
-                  </div>
+                   <div class="form-group mt-3">
+                    <label for="{{ credit_card_form.name_on_card.id_for_label }}">Name on Card:</label>
+                    {% render_field  credit_card_form.name_on_card class="form-control" %} <!-- Assuming you have 'add_class' template filter -->
+                </div>
+                
+                <div class="form-group mt-3">
+                    <label for="{{ credit_card_form.card_number.id_for_label }}">Card Number:</label>
+                    {% render_field  credit_card_form.card_number class="form-control" %}
+                </div>
+                
+                <div class="form-group mt-3">
+                    <label for="{{ credit_card_form.expiration.id_for_label }}">Expiration (MM/YY):</label>
+                    {% render_field credit_card_form.expiration class="form-control" %}
+                </div>
+                
+                <div class="form-group mt-3">
+                    <label for="{{ credit_card_form.cvv.id_for_label }}">CVV:</label>
+                    {% render_field  credit_card_form.cvv class="form-control" %}
+                </div>
+                
+                <div class="form-group mt-3">
+                    <label for="{{ credit_card_form.zip_postal_code.id_for_label }}">Zip / Postal Code:</label>
+                    {% render_field  credit_card_form.zip_postal_code class="form-control" %}
+                </div>
+  <!-- end of  user payment info -->        
                   <br />
                   <br />
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="subscribePromotions" name="subscribePromotions">
                     <label class="form-check-label" for="subscribePromotions">Sign up for promotions</label>
                 </div>
-                
 
-
-                <div class="text-center">
-                  <br />
-                  <br />
-                  <p>
-                    Already have an account?
-                    <a href="login.html"> Log in</a>
-                  </p>
-                </div>
-
-                  <!-- this button below is puttting the user into the database!-->
+                   <!-- this button below is puttting the user into the database!-->
                   <br />
                   <div class="text-center mt-3">
                       <button type="submit" class="btn-get-started">Create Account</button>
                    </div>
+                     <!-- want to have a button to send email-->
+                  <!-- then when they click link in email, makes them active in database!!! -->
 
-                     <!-- want to have a button to send email, not store in database-->
-                  <!-- then when they click link in email, it creates them in database-->
+                  <div class="text-center">
+                    <br />
+                    <br />
+                    <p>
+                      Already have an account?
+                      <a href="{% url 'login' %}">Log in</a>
+                    </p>
+                  </div>
+
                     </form>
                 </div> <!-- Closing div for .container -->
             </div> <!-- Closing div for .loginWindow -->
@@ -337,9 +297,7 @@
 </section>
 
 
-                  <!-- want to have a button to send email, not store in database-->
-                  <!-- then when they click link in email, it creates them in database-->
-         
+            
 
       <!-- End Contact Section -->
     </main>
