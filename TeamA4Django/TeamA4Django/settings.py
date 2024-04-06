@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'team4se',  
         'USER': 'root',     
         'PASSWORD': 'password',  
-        'HOST': '127.0.0.1',     # MySQL server's host
+        'HOST': 'localhost',     # MySQL server's host
         'PORT': '3306',          # MySQL server's port
     }
 }
