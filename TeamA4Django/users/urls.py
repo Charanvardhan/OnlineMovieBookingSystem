@@ -12,6 +12,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='log-out'),
     path('profile/', views.profile_view, name='profile'), 
     path('createAccount/', views.create_account_view, name='createAccount'),
+    path('emailverification/', views.create_account_view, name = 'emailverification'),
     path('registrationconfirmation/', views.registration_confirmation, name = 'registrationconfirmation'),
     path('activate/<uidb64>/<token>/', views.activate, name='activate'), 
     path('change_password/', views.change_password, name='change_password'),
