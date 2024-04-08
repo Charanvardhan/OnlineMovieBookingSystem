@@ -143,7 +143,7 @@ def create_account_view(request):
                 email.send()
 
                 messages.success(request, 'Please confirm your email address to complete the registration.')
-                return redirect('emailverification')  
+                return redirect('emailverification.html')  
             else:
                 messages.error(request, 'Please correct the error in the credit card information.')
         else:
@@ -168,28 +168,35 @@ def safe_b64decode(data):
             print(f"Failed to decode: {e}")
             return None
           
-def decrypt_card_info(encrypted_data):
-    secret_key_bytes = settings.SECRET_KEY.encode()[:32]
-    encrypted_data_bytes = base64.b64decode(encrypted_data)
-    nonce, ciphertext_tag = encrypted_data_bytes[:16], encrypted_data_bytes[16:]
+# def decrypt_card_info(encrypted_data):
+#     secret_key_bytes = settings.SECRET_KEY.encode()[:32]
+#     encrypted_data_bytes = base64.b64decode(encrypted_data)
+#     nonce, ciphertext_tag = encrypted_data_bytes[:16], encrypted_data_bytes[16:]
     
-    cipher = AES.new(secret_key_bytes, AES.MODE_EAX, nonce=nonce)
-    decrypted_data = cipher.decrypt(ciphertext_tag[:-16])
+#     cipher = AES.new(secret_key_bytes, AES.MODE_EAX, nonce=nonce)
+#     decrypted_data = cipher.decrypt(ciphertext_tag[:-16])
 
-    try:
-        cipher.verify(ciphertext_tag[-16:])
-        #decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
-        # Split the decrypted data into card_number and cvv
-        card_number = decrypted_data[:16].decode().strip()
-        cvv = decrypted_data[16:].decode().strip()
-        return card_number, cvv
-    except ValueError as e:
-        # Decryption failed
-        print("Decryption error:", str(e))
-        return None, None
+#     try:
+#         cipher.verify(ciphertext_tag[-16:])
+#         #decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
+#         # Split the decrypted data into card_number and cvv
+#         card_number = decrypted_data[:16].decode().strip()
+#         cvv = decrypted_data[16:].decode().strip()
+#         return card_number, cvv
+#     except ValueError as e:
+#         # Decryption failed
+#         print("Decryption error:", str(e))
+#         return None, None
  
-    
+
+#Home Page
+        #if user is logged in, displays the now playing and coming soon movies
+        #if not logged in, go to login page
+        #have seperate row for movies of status.nowPlaying and status.ComingSoon 
+@login_required    
 def index_view(request):
+   
+
    return render(request, 'index.html')
 
 #The instance of the user is displayed on profile.html with email being an uneditable field
@@ -199,7 +206,7 @@ def profile_view(request):
     user = request.user
     user_profile, _ = UserProfile.objects.get_or_create(user=user)
 
-    decrypted_card_number, decrypted_cvv = decrypt_card_info(user_profile.card_number)
+    # decrypted_card_number, decrypted_cvv = decrypt_card_info(user_profile.card_number)
 
     if 'submit_user_form' in request.POST:
         #use userprofile edit form 
@@ -240,8 +247,8 @@ def profile_view(request):
         'user_form': user_form,
         'password_form': password_form,
         'credit_card_form': credit_card_form,
-        'decrypted_card_number': decrypted_card_number,
-        'decrypted_cvv': decrypted_cvv
+        # 'decrypted_card_number': decrypted_card_number,
+        # 'decrypted_cvv': decrypted_cvv
     })
 
 def login_view(request):
