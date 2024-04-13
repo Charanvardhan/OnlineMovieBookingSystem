@@ -1,8 +1,10 @@
+from xml.dom import ValidationErr
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
+import uuid
 
 
 
@@ -107,6 +109,7 @@ class Movie(models.Model):
         ('romance', 'Romance'),
         ('sci-fi', 'Science Fiction'),
     ]
+    
     title = models.CharField(max_length=100)
     description = models.TextField()
     release_date = models.DateField()
@@ -114,6 +117,9 @@ class Movie(models.Model):
     trailer_url = models.URLField(blank=True)
     image = models.ImageField(upload_to='movie_images/', null=True, blank=True)
     genre = models.CharField(max_length=100, choices=GENRE_CHOICES, default='none')
+    
+    def __str__(self):
+        return self.title   
     #Note: Movie missing cast information (good to have)
 
 
@@ -142,17 +148,6 @@ class Ticket(models.Model):
     ticket_number = models.IntegerField() #idk if this should be here, added to remove error 
 
 
-
-class Showtimes(models.Model):
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-
-    def updateShowtimes(self):
-        pass
-
-    def seatSelection(self):
-        pass
-
 class Admin(models.Model):
     user_id = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
@@ -176,18 +171,78 @@ class Promotions(models.Model):
 
     def status(self):
         pass
+    
+class Showroom(models.Model):
+    seats = models.IntegerField()
+    showroom_number = models.IntegerField(unique=True)
 
+
+    def get_seats(self):
+        return self.seats
+
+    def update_movie_showing(self, show_id, new_movie_id):
+        pass  # Assuming system-wide operation
+
+
+class Showtimes(models.Model):
+    
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    showroom = models.ForeignKey(Showroom, on_delete=models.CASCADE,  default=1)
+
+    def updateShowtimes(self, new_start_time, new_end_time):
+        # Simple update logic
+        self.start_time = new_start_time
+        self.end_time = new_end_time
+        self.save()
+
+    def get_formatted_showtimes(self):
+        return f"{self.start_time.strftime('%Y-%m-%d %H:%M')} to {self.end_time.strftime('%Y-%m-%d %H:%M')}"
+    
+    def seatSelection(self):
+        # This would likely involve interaction with a reservation or booking system.
+        pass
+    
+    
 class Show(models.Model):
     #showtime (use foreign key)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, default=1)
+    showroom = models.ForeignKey(Showroom, on_delete=models.CASCADE, default=1)
+    showtime = models.ForeignKey(Showtimes, on_delete=models.CASCADE, default=1)
     show_id = models.IntegerField(unique=True)
     date = models.DateField()
     duration = models.IntegerField()
 
-    def assignShowtime(self):
-        pass
+    def assignShowtime(self, showtime_id):
+        # Attempt to find the showtime
+        try:
+            showtime = Showtimes.objects.get(id=showtime_id)
+            # Check for scheduling conflicts
+            if not self.check_showtime_conflict(showtime):
+                self.showtime = showtime
+                self.save()
+            else:
+                raise ValidationErr("Showtime conflict detected.")
+        except Showtimes.DoesNotExist:
+            raise ValidationErr("Showtime ID does not exist.")
 
-    def assignShowroom(self):
-        pass
+    def assignShowroom(self, showroom_id):
+        # Attempt to find the showroom
+        try:
+            showroom = Showroom.objects.get(id=showroom_id)
+            self.showroom = showroom
+            self.save()
+        except Showroom.DoesNotExist:
+            raise ValidationErr("Showroom ID does not exist.")
+
+    def check_showtime_conflict(self, new_showtime):
+        # Check for any show in the same showroom with overlapping times
+        overlapping_shows = Show.objects.filter(
+            showroom=self.showroom,
+            showtime__start_time__lt=new_showtime.end_time,
+            showtime__end_time__gt=new_showtime.start_time
+        )
+        return overlapping_shows.exists()
 
 class TicketPrices(models.Model):
     adult_tickets = models.IntegerField()
@@ -200,12 +255,4 @@ class TicketPrices(models.Model):
     def applyShowtime(self):
         pass
 
-class Showroom(models.Model):
-    seats = models.IntegerField()
-    showroom_number = models.IntegerField(unique=True)
 
-    def updateMovieShowing(self):
-        pass
-
-    def retrieveSeats(self):
-        pass

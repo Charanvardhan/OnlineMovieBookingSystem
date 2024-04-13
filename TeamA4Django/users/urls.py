@@ -17,6 +17,7 @@ urlpatterns = [
     path('activate/<uidb64>/<token>/', views.activate, name='activate'), 
     path('change_password/', views.change_password, name='change_password'),
     path('search/', views.search_movies, name='search_movies'),
+    path('showTime/<int:id>/', views.show, name='show')
 
     #path('adminlogin/')
 ]

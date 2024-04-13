@@ -224,3 +224,25 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(userInput);
   });
 });
+
+// Function to fetch data from a Django URL
+function fetchData(movieId) {
+  // Construct the URL to fetch from, including the movie ID
+  var url = `/showTime/${movieId}/`; // Update with your actual URL path
+  
+  // Use the Fetch API to get data from the server
+  fetch(url)
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json(); // Assuming the server returns JSON data
+  })
+  .then(data => {
+      // Handle the data you get back
+      console.log(data); // Example: Log data to console
+  })
+  .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+  });
+}
