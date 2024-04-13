@@ -228,7 +228,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // Function to fetch data from a Django URL
 function fetchData(movieId) {
   // Construct the URL to fetch from, including the movie ID
-  var url = `/showTime/${movieId}/`; // Update with your actual URL path
+  var url = `users/show/${movieId}/`; // Update with your actual URL path
+
+  console.log(url)
   
   // Use the Fetch API to get data from the server
   fetch(url)
@@ -241,8 +243,35 @@ function fetchData(movieId) {
   .then(data => {
       // Handle the data you get back
       console.log(data); // Example: Log data to console
+      updateUI(data);
   })
   .catch(error => {
       console.error('There was a problem with the fetch operation:', error);
   });
+}
+
+function updateUI(data) {
+  const show = data.show;
+  const showtimes = data.showtimes;
+
+  // Update modal title and synopsis
+  document.querySelector(".modal-body h2").textContent = "Movie Title"; // Replace with actual title if available in response
+  document.querySelector(".modal-body .movieSynopsis p").textContent = "Movie synopsis here..."; // Replace with actual synopsis
+
+  // Update showtimes dropdown
+  const showtimeSelect = document.getElementById("movie");
+  showtimeSelect.innerHTML = "<option value='0'>Select here</option>"; // Reset dropdown
+  showtimes.forEach(time => {
+      let option = document.createElement("option");
+      option.value = time;
+      option.textContent = time; // Format as needed
+      showtimeSelect.appendChild(option);
+  });
+
+  // Update showroom details if necessary
+  document.querySelector("#exampleModal .modal-body .showroom-number").textContent = `Showroom Number: ${show.showroom.showroom_number}`;
+  document.querySelector("#exampleModal .modal-body .seats").textContent = `Seats Available: ${show.showroom.seats}`;
+  
+  // Update formatted showtimes
+  document.querySelector("#exampleModal .modal-body .formatted-times").textContent = show.showtime.formatted_times;
 }
