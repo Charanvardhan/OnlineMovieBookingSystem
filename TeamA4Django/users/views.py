@@ -205,7 +205,7 @@ def index_view(request):
     # coming_soon = call_command('populate_coming_soon_movies')
     # print("Coming Soon : ", coming_soon[0].title)
     movies = Movie.objects.all()
-    print ("movies : ", movies[0].title )
+    
     context = {"movies": movies}
     return render(request, 'index.html', context )
     # now_playing_movies = Movie.objects.filter(status='nowPlaying')
@@ -218,7 +218,7 @@ def index_view(request):
 def show_movie_details(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     context = {"movie": movie}
-    return render(request, "")
+    return render(request, 'm_detail.html', context)
 
 
 
