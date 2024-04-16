@@ -73,7 +73,7 @@ class Movie(models.Model):
         ('nowPlaying', 'Now Playing'),
         ('comingSoon', 'Coming Soon')
     ]
-    title = models.CharField(max_length=100, unique = True)
+    title = models.CharField(max_length=100, unique = True) #cant be a CharField
     description = models.TextField(max_length=100, default='None')
     cast = models.TextField(max_length=100, default='None')
     producer = models.TextField(max_length=100, default='None')
@@ -82,7 +82,8 @@ class Movie(models.Model):
     release_date = models.DateField()
     duration = models.IntegerField()  # Duration in minutes, helpful for scheduling
     trailer_url = models.URLField(blank=True)
-    image = models.ImageField(upload_to='movie_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='static/assets/img/gallery', null=True, blank=True) 
+    # image = models.URLField(max_length = 200, default = 'none')
     genre = models.CharField(max_length=100, choices=GENRE_CHOICES, default='none')
     rating = models.CharField(max_length=100, choices=RATING, default='none')
     status = models.CharField(max_length=100, choices=STATUS, default='nowPlaying')

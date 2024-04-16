@@ -1,8 +1,9 @@
 from django.urls import path
 from . import views 
 from django.contrib.auth import views as auth_views
+from .views import filter_movies
 
-#url configuration
+#url configuration for users
 urlpatterns = [
 
     path('index/', views.index_view, name = 'index'),
@@ -16,7 +17,7 @@ urlpatterns = [
     path('registrationconfirmation/', views.registration_confirmation, name = 'registrationconfirmation'),
     path('activate/<uidb64>/<token>/', views.activate, name='activate'), 
     path('change_password/', views.change_password, name='change_password'),
-    path('search/', views.search_movies, name='search_movies'),
+    path('search/', views.filter_movies, name='search_movies'),
 
     #path('adminlogin/')
 ]
