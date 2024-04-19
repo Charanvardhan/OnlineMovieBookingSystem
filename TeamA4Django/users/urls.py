@@ -7,6 +7,8 @@ from .views import filter_movies, show_movie_details
 #url configuration for users
 urlpatterns = [
 
+
+
     path('index/', views.index_view, name = 'index'),
     path("index/<int:pk>/", show_movie_details, name = 'm_detail'),
     path('login/', views.login_view, name='login'),

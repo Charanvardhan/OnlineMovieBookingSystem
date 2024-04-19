@@ -75,8 +75,12 @@ def custom_password_reset(request):
         form = CustomPasswordResetForm(user=request.user)
     return render(request, 'registration/password_reset_confirm.html', {'form': form})
 
+##do login check not here, but in index.html!
 def home_view(request):
-       return render(request, 'index.html')
+    movies = Movie.objects.all()
+    
+    context = {"movies": movies}
+    return render(request, 'index.html', context)
 
 def logout_view(request):
     logout(request) 
@@ -198,7 +202,8 @@ def safe_b64decode(data):
         #if user is logged in, displays the now playing and coming soon movies
         #if not logged in, go to login page
         #have seperate row for movies of status.nowPlaying and status.ComingSoon 
-@login_required    
+# @login_required    
+        ##do login check
 def index_view(request):
    # Call the management command
     # now_playing = call_command('populate_running_movies') ##This prepopulates the db for the first time, the index.html will need to refer to the db not this file
@@ -214,11 +219,12 @@ def index_view(request):
     # print("Coming Soon : ", coming_soon_movies[0].title)
 
 #This function shows Title, Description, Trailer, Cast, etc of a movie
-#It is called when 'Book Now' is clicked. EEEEHH idk if i want to do this?? I will try it 
+#It is called when 'View Details' is clicked. EEEEHH idk if i want to do this?? I will try it 
 def show_movie_details(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     context = {"movie": movie}
     return render(request, 'm_detail.html', context)
+
 
 
 

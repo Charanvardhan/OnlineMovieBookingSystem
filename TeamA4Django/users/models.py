@@ -74,11 +74,11 @@ class Movie(models.Model):
         ('comingSoon', 'Coming Soon')
     ]
     title = models.CharField(max_length=100, unique = True) #cant be a CharField
-    description = models.TextField(max_length=100, default='None')
+    description = models.TextField(max_length=200, default='None')
     cast = models.TextField(max_length=100, default='None')
     producer = models.TextField(max_length=100, default='None')
     director = models.TextField(max_length=100, default='None')
-    review = models.TextField(max_length=100, default='None')
+    review = models.TextField(max_length=200, default='None')
     release_date = models.DateField()
     duration = models.IntegerField()  # Duration in minutes, helpful for scheduling
     trailer_url = models.URLField(blank=True)
@@ -90,11 +90,16 @@ class Movie(models.Model):
     # isPlaying = models.BooleanField
     def __str__(self):
         return f"{self.title}"
+    
+    ## define YoutubeProxy function
+
+    ##define API
 # Create your models here.
     
 
 ##Showtimes model 
 #does scheduling, 
+    ##Movie will a fk to showtime, if its now palying
     
     
 
@@ -102,3 +107,4 @@ class Movie(models.Model):
     #fk to user, 
     #tickets
     #fk to showing (need class show)
+
