@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'widget_tweaks',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,8 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/' 
+STATIC_ROOT = '/users/'
+
 
 
 

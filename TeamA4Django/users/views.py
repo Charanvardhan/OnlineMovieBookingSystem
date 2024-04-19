@@ -1,6 +1,6 @@
 from base64 import urlsafe_b64encode
 from pyexpat.errors import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout 
 from .forms import OptionalInfoForm, CustomUserCreationForm, EditProfileForm
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm
@@ -27,6 +27,11 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import CustomPasswordResetForm, UserProfileForm, CreditCardForm, UserProfileEditForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import MovieForm
+# from flask import Flask, render_template
+from django.core.management import call_command
+from .filters import MovieFilter
+
+
 
 
 # @login_required
@@ -71,8 +76,12 @@ def custom_password_reset(request):
         form = CustomPasswordResetForm(user=request.user)
     return render(request, 'registration/password_reset_confirm.html', {'form': form})
 
+##do login check not here, but in index.html!
 def home_view(request):
-       return render(request, 'index.html')
+    movies = Movie.objects.all()
+    
+    context = {"movies": movies}
+    return render(request, 'index.html', context)
 
 def logout_view(request):
     logout(request) 
@@ -155,7 +164,7 @@ def create_account_view(request):
                 email.send()
 
                 messages.success(request, 'Please confirm your email address to complete the registration.')
-                return redirect('emailverification')  
+                return redirect('emailverification.html')  
             else:
                 messages.error(request, 'Please correct the error in the credit card information.')
         else:
@@ -180,29 +189,57 @@ def safe_b64decode(data):
             print(f"Failed to decode: {e}")
             return None
           
-def decrypt_card_info(encrypted_data):
-    secret_key_bytes = settings.SECRET_KEY.encode()[:32]
-    encrypted_data_bytes = base64.b64decode(encrypted_data)
-    nonce, ciphertext_tag = encrypted_data_bytes[:16], encrypted_data_bytes[16:]
+# def decrypt_card_info(encrypted_data):
+#     secret_key_bytes = settings.SECRET_KEY.encode()[:32]
+#     encrypted_data_bytes = base64.b64decode(encrypted_data)
+#     nonce, ciphertext_tag = encrypted_data_bytes[:16], encrypted_data_bytes[16:]
     
-    cipher = AES.new(secret_key_bytes, AES.MODE_EAX, nonce=nonce)
-    decrypted_data = cipher.decrypt(ciphertext_tag[:-16])
+#     cipher = AES.new(secret_key_bytes, AES.MODE_EAX, nonce=nonce)
+#     decrypted_data = cipher.decrypt(ciphertext_tag[:-16])
 
-    try:
-        cipher.verify(ciphertext_tag[-16:])
-        #decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
-        # Split the decrypted data into card_number and cvv
-        card_number = decrypted_data[:16].decode().strip()
-        cvv = decrypted_data[16:].decode().strip()
-        return card_number, cvv
-    except ValueError as e:
-        # Decryption failed
-        print("Decryption error:", str(e))
-        return None, None
+#     try:
+#         cipher.verify(ciphertext_tag[-16:])
+#         #decrypted_data = cipher.decrypt_and_verify(ciphertext, tag)
+#         # Split the decrypted data into card_number and cvv
+#         card_number = decrypted_data[:16].decode().strip()
+#         cvv = decrypted_data[16:].decode().strip()
+#         return card_number, cvv
+#     except ValueError as e:
+#         # Decryption failed
+#         print("Decryption error:", str(e))
+#         return None, None
  
-    
+
+#Home Page
+        #if user is logged in, displays the now playing and coming soon movies
+        #if not logged in, go to login page
+        #have seperate row for movies of status.nowPlaying and status.ComingSoon 
+# @login_required    
+        ##do login check
 def index_view(request):
-   return render(request, 'index.html')
+   # Call the management command
+    # now_playing = call_command('populate_running_movies') ##This prepopulates the db for the first time, the index.html will need to refer to the db not this file
+    # coming_soon = call_command('populate_coming_soon_movies')
+    # print("Coming Soon : ", coming_soon[0].title)
+    movies = Movie.objects.all()
+    
+    context = {"movies": movies}
+    return render(request, 'index.html', context )
+    # now_playing_movies = Movie.objects.filter(status='nowPlaying')
+    # print("Now Playing : ", now_playing_movies[0].title)
+    # coming_soon_movies = Movie.objects.filter(status='comingSoon')
+    # print("Coming Soon : ", coming_soon_movies[0].title)
+
+#This function shows Title, Description, Trailer, Cast, etc of a movie
+#It is called when 'View Details' is clicked. EEEEHH idk if i want to do this?? I will try it 
+def show_movie_details(request, pk):
+    movie = get_object_or_404(Movie, pk=pk)
+    context = {"movie": movie}
+    return render(request, 'm_detail.html', context)
+
+
+
+
 
 #The instance of the user is displayed on profile.html with email being an uneditable field
 #I cannot check when user is logged out
@@ -211,7 +248,7 @@ def profile_view(request):
     user = request.user
     user_profile, _ = UserProfile.objects.get_or_create(user=user)
 
-    decrypted_card_number, decrypted_cvv = decrypt_card_info(user_profile.card_number)
+    # decrypted_card_number, decrypted_cvv = decrypt_card_info(user_profile.card_number)
 
     if 'submit_user_form' in request.POST:
         #use userprofile edit form 
@@ -252,8 +289,8 @@ def profile_view(request):
         'user_form': user_form,
         'password_form': password_form,
         'credit_card_form': credit_card_form,
-        'decrypted_card_number': decrypted_card_number,
-        'decrypted_cvv': decrypted_cvv
+        # 'decrypted_card_number': decrypted_card_number,
+        # 'decrypted_cvv': decrypted_cvv
     })
 
 def login_view(request):
@@ -314,17 +351,19 @@ def change_password(request):
         'form': form
     })
     
-def search_movies(request):
-    if request.method == 'GET':
-        form = MovieSearchForm(request.GET)
-        if form.is_valid():
-            title = form.cleaned_data.get('title')
-            movies = Movie.objects.filter(title__icontains=title)
-            return render(request, 'search_results.html', {'movies': movies, 'form': form})
-    else:
-        form = MovieSearchForm()
-    print(form)
-    return render(request, 'search_movie.html', {'form': form})
+##This takes input from the search bar, searches the movie database, and returns the movie that matches    
+# def search_movies(request):
+#     ##Changed from 'GET' to POST
+#     if request.method == 'POST':
+#         form = MovieSearchForm(request.GET)
+#         if form.is_valid():
+#             title = form.cleaned_data.get('title')
+#             movies = Movie.objects.filter(title__icontains=title)
+#             return render(request, 'search_results.html', {'movies': movies, 'form': form})
+#     else:
+#         form = MovieSearchForm()
+#     print(form)
+#     return render(request, 'search_movie.html', {'form': form})
 
 def add_movie(request):
     if request.method == 'POST':
@@ -346,3 +385,24 @@ def manage_movies_view(request):
 
 def unauthorized_view(request):
     return render(request, 'unauthorized.html')
+
+def search_movies_view(request):
+    query = request.GET.get('query')
+    movies = Movie.objects.all()
+    if query:
+        movies = movies.filter(title__icontains=query)
+
+    context = {
+        'movies': movies,
+        'query': query,
+        #'category': category,
+    }
+    return render(request, 'search_results.html', context)
+
+def filter_movies(request):
+    movies = MovieFilter(request.GET, queryset = Movie.objects.all())
+    context = {
+        'movies': movies,
+        'form': movies.form
+    }
+    return render(request, 'search_movie.html', context)

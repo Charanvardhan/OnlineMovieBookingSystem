@@ -97,6 +97,8 @@ class CreditCard(models.Model):
         return f"Credit Card for {self.user_profile.user.username}"
 
 #movie card model
+#movie title, category, cast, director, producer, synopsis, reviews, trailer picture and video
+#MPAA-US film rating code [1], and show dates and times (done in showtimes, not Bookings)
 class Movie(models.Model):
     GENRE_CHOICES = [
         ('none', 'None'), 
@@ -107,13 +109,38 @@ class Movie(models.Model):
         ('romance', 'Romance'),
         ('sci-fi', 'Science Fiction'),
     ]
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    RATING = [
+        ('none', 'None'), 
+        ('g', 'G'),
+        ('pg', 'PG'),
+        ('pg13', 'PG13'),
+        ('r', 'R')
+    ]
+    STATUS = [
+        ('nowPlaying', 'Now Playing'),
+        ('comingSoon', 'Coming Soon')
+    ]
+    title = models.CharField(max_length=100, unique = True) #cant be a CharField
+    description = models.TextField(max_length=200, default='None')
+    cast = models.TextField(max_length=100, default='None')
+    producer = models.TextField(max_length=100, default='None')
+    director = models.TextField(max_length=100, default='None')
+    review = models.TextField(max_length=200, default='None')
     release_date = models.DateField()
-    duration = models.IntegerField()  # Duration in minutes
+    duration = models.IntegerField()  # Duration in minutes, helpful for scheduling
     trailer_url = models.URLField(blank=True)
-    image = models.ImageField(upload_to='movie_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='static/assets/img/gallery', null=True, blank=True) 
+    # image = models.URLField(max_length = 200, default = 'none')
     genre = models.CharField(max_length=100, choices=GENRE_CHOICES, default='none')
+    rating = models.CharField(max_length=100, choices=RATING, default='none')
+    status = models.CharField(max_length=100, choices=STATUS, default='nowPlaying')
+    # isPlaying = models.BooleanField
+    def __str__(self):
+        return f"{self.title}"
+    
+    ## define YoutubeProxy function
+
+    ##define API
     #Note: Movie missing cast information (good to have)
 
 
@@ -208,3 +235,16 @@ class Showroom(models.Model):
 
     def retrieveSeats(self):
         pass
+    
+
+##Showtimes model 
+#does scheduling, 
+    ##Movie will a fk to showtime, if its now palying
+    
+    
+
+#Booking model 
+    #fk to user, 
+    #tickets
+    #fk to showing (need class show)
+
