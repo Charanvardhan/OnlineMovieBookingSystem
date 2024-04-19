@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
+from django.forms import ValidationError
 from django.utils import timezone
 import uuid
 
@@ -172,77 +173,70 @@ class Promotions(models.Model):
     def status(self):
         pass
     
+    
+from django.db import models
+from django.core.exceptions import ValidationError
+import datetime
+
+class TimeSlot(models.TextChoices):
+    MORNING = 'Morning', '09:00-12:00'
+    AFTERNOON = 'Afternoon', '12:00-15:00'
+    EVENING = 'Evening', '15:00-18:00'
+    NIGHT = 'Night', '18:00-21:00'
+
 class Showroom(models.Model):
     seats = models.IntegerField()
     showroom_number = models.IntegerField(unique=True)
 
-
     def get_seats(self):
         return self.seats
 
-    def update_movie_showing(self, show_id, new_movie_id):
-        pass  # Assuming system-wide operation
-
+    def __str__(self):
+        return f"Showroom {self.showroom_number}"
 
 class Showtimes(models.Model):
-    
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    showroom = models.ForeignKey(Showroom, on_delete=models.CASCADE,  default=1)
+    date = models.DateField(default=timezone.now)
+    time_slot = models.CharField(max_length=15, choices=TimeSlot.choices, default=TimeSlot.MORNING)
+    showroom = models.ForeignKey('Showroom', on_delete=models.CASCADE, default=1)
 
-    def updateShowtimes(self, new_start_time, new_end_time):
-        # Simple update logic
-        self.start_time = new_start_time
-        self.end_time = new_end_time
-        self.save()
+    class Meta:
+        unique_together = ('date', 'time_slot', 'showroom')
 
     def get_formatted_showtimes(self):
-        return f"{self.start_time.strftime('%Y-%m-%d %H:%M')} to {self.end_time.strftime('%Y-%m-%d %H:%M')}"
-    
-    def seatSelection(self):
-        # This would likely involve interaction with a reservation or booking system.
-        pass
-    
-    
+        time_range = TimeSlot.labels[TimeSlot.values.index(self.time_slot)]
+        return f"{self.date} {time_range}"
+
+    def __str__(self):
+        return self.get_formatted_showtimes()
+
 class Show(models.Model):
-    #showtime (use foreign key)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, default=1)
-    showroom = models.ForeignKey(Showroom, on_delete=models.CASCADE, default=1)
-    showtime = models.ForeignKey(Showtimes, on_delete=models.CASCADE, default=1)
+    movie = models.ForeignKey('Movie', on_delete=models.CASCADE, default=1)
+    showroom = models.ForeignKey('Showroom', on_delete=models.CASCADE, default=1)
+    showtime = models.ForeignKey('Showtimes', on_delete=models.CASCADE, default=1)
     show_id = models.IntegerField(unique=True)
-    date = models.DateField()
-    duration = models.IntegerField()
 
-    def assignShowtime(self, showtime_id):
-        # Attempt to find the showtime
-        try:
-            showtime = Showtimes.objects.get(id=showtime_id)
-            # Check for scheduling conflicts
-            if not self.check_showtime_conflict(showtime):
-                self.showtime = showtime
-                self.save()
-            else:
-                raise ValidationErr("Showtime conflict detected.")
-        except Showtimes.DoesNotExist:
-            raise ValidationErr("Showtime ID does not exist.")
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:  # Check if this is a new record
+    #         self.assignShowtime(self.showtime.id)
+    #     super().save(*args, **kwargs)
 
-    def assignShowroom(self, showroom_id):
-        # Attempt to find the showroom
-        try:
-            showroom = Showroom.objects.get(id=showroom_id)
-            self.showroom = showroom
-            self.save()
-        except Showroom.DoesNotExist:
-            raise ValidationErr("Showroom ID does not exist.")
+    # def assignShowtime(self, showtime_id):
+    #     new_showtime = Showtimes.objects.get(id=showtime_id)
+    #     conflicting_show = Show.objects.filter(
+    #         showroom=new_showtime.showroom,
+    #         showtime__date=new_showtime.date,
+    #         showtime__time_slot=new_showtime.time_slot
+    #     ).exclude(id=self.id).exists()  # Exclude self for updates
 
-    def check_showtime_conflict(self, new_showtime):
-        # Check for any show in the same showroom with overlapping times
-        overlapping_shows = Show.objects.filter(
-            showroom=self.showroom,
-            showtime__start_time__lt=new_showtime.end_time,
-            showtime__end_time__gt=new_showtime.start_time
-        )
-        return overlapping_shows.exists()
+    #     if conflicting_show:
+    #         raise ValidationError("This time slot in the selected showroom is already booked.")
+
+    #     self.showtime = new_showtime
+
+    def __str__(self):
+        return f"{self.movie} at {self.showtime}"
+
+
 
 class TicketPrices(models.Model):
     adult_tickets = models.IntegerField()

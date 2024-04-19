@@ -2,8 +2,9 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile, CreditCard
+from .models import UserProfile, CreditCard, Show, Showtimes
 from django.contrib.auth.forms import PasswordChangeForm
+from django.core.exceptions import ValidationError
 
 class CustomPasswordResetForm(PasswordChangeForm):
     class Meta:
@@ -136,6 +137,30 @@ class CreditCardForm(forms.ModelForm):
 
 
 
+class ShowAdminForm(forms.ModelForm):
+    class Meta:
+        model = Show
+        fields = '__all__'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        showtime_id = cleaned_data.get('showtime').id
+        showroom = cleaned_data.get('showroom')
+
+        # Validate showtime assignment
+        new_showtime = Showtimes.objects.get(id=showtime_id)
+        conflicting_show = Show.objects.filter(
+            showroom=showroom,
+            showtime__date=new_showtime.date,
+            showtime__time_slot=new_showtime.time_slot
+        ).exclude(id=self.instance.id).exists()
+
+        if conflicting_show:
+            raise ValidationError({
+                'showtime': "This time slot in the selected showroom is already booked."
+            })
+
+        return cleaned_data
 
 
 
