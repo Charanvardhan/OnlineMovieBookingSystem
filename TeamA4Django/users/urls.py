@@ -26,6 +26,7 @@ urlpatterns = [
     path('adminmovies/', views.manage_movies_view, name='manage-movies'),
     # In your urls.py
 
+    path('show/<int:id>/', views.show, name='show')
 
     #path('adminlogin/')
 ]

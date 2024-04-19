@@ -1,4 +1,5 @@
 from base64 import urlsafe_b64encode
+import json
 from pyexpat.errors import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout 
@@ -9,16 +10,21 @@ from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
+from django.core.serializers import serialize
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.utils.encoding import force_str
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.core import serializers
+from dateutil import parser
+import datetime
 import base64
 from Crypto.Cipher import AES
 from django.conf import settings
-from .models import UserProfile
-from .models import Movie, UserProfile, CreditCard
+from .models import UserProfile, Promotions
+from .models import Movie, UserProfile, CreditCard, Show, Showtimes
 from .forms import MovieSearchForm
 from django.core.mail import send_mail
 from django.contrib import messages
@@ -32,6 +38,8 @@ from django.core.management import call_command
 from .filters import MovieFilter
 
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # @login_required
@@ -406,3 +414,73 @@ def filter_movies(request):
         'form': movies.form
     }
     return render(request, 'search_movie.html', context)
+
+        form = MovieSearchForm()
+    print(form)
+    return render(request, 'search_movie.html', {'form': form})
+
+
+def show(request, id):
+    if not id:
+        return JsonResponse({'error': 'Show ID not provided'}, status=400)
+
+    try:
+        show = Show.objects.select_related('showtime', 'showroom').get(id=id)
+    except Show.DoesNotExist:
+        return JsonResponse({'error': 'Show not found'}, status=404)
+
+    
+    show_data = {
+        'show_id': show.show_id,
+        'movie_id': show.movie.id,
+        'date': show.date,
+        'duration': show.duration,
+        'showroom': {
+            'showroom_number': show.showroom.showroom_number,
+            'seats': show.showroom.get_seats()
+            
+        },
+        'showtime': {
+            'start_time': show.showtime.start_time,
+            'end_time': show.showtime.end_time,
+            'formatted_times': show.showtime.get_formatted_showtimes()
+            # 'showroom': show.showtime.
+        }
+    }
+
+    # Fetch all showtimes on the same date
+    date_as_datetime = show.date
+    showtimes = Showtimes.objects.filter(
+        start_time__year=date_as_datetime.year,
+        start_time__month=date_as_datetime.month,
+        start_time__day=date_as_datetime.day
+    )
+
+    print(type(showtimes))
+    # Serialize the showtimes queryset
+    showtimes_data = serialize('json', showtimes)
+    print(type(showtimes_data), "before hsilfhaofhj")
+    
+    showtimes_data = json.loads(showtimes_data)
+
+    # Use dateutil.parser to handle ISO format with 'Z'
+    times_only = [parser.isoparse(item['fields']['start_time']).time().isoformat() for item in showtimes_data]
+
+    print(type(times_only))
+    # Serialize the list of times back to JSON
+    # showtimes_data = json.dumps(times_only)
+    # print(type(showtimes_data))
+
+    return JsonResponse({'show': show_data, 'showtimes': times_only})
+
+
+@receiver(post_save, sender=Promotions)
+def send_promotion_email(sender, instance, created, **kwargs):
+    if created and instance.is_available:
+        subject = "New Promotion Available!"
+        message = f"Hello! A new promotion with code {instance.code} is now available. Enjoy discounts on your next purchase!"
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [user.email for user in UserProfile.objects.filter(subscribe_to_promotions=True)]
+        
+        # Send email to all subscribed users
+        send_mail(subject, message, from_email, recipient_list)   

@@ -1,8 +1,11 @@
+from xml.dom import ValidationErr
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
+from django.forms import ValidationError
 from django.utils import timezone
+import uuid
 
 
 
@@ -168,17 +171,6 @@ class Ticket(models.Model):
     ticket_number = models.IntegerField() #idk if this should be here, added to remove error 
 
 
-
-class Showtimes(models.Model):
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-
-    def updateShowtimes(self):
-        pass
-
-    def seatSelection(self):
-        pass
-
 class Admin(models.Model):
     user_id = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
@@ -202,18 +194,71 @@ class Promotions(models.Model):
 
     def status(self):
         pass
+    
+    
+from django.db import models
+from django.core.exceptions import ValidationError
+import datetime
+
+class TimeSlot(models.TextChoices):
+    MORNING = 'Morning', '09:00-12:00'
+    AFTERNOON = 'Afternoon', '12:00-15:00'
+    EVENING = 'Evening', '15:00-18:00'
+    NIGHT = 'Night', '18:00-21:00'
+
+class Showroom(models.Model):
+    seats = models.IntegerField()
+    showroom_number = models.IntegerField(unique=True)
+
+    def get_seats(self):
+        return self.seats
+
+    def __str__(self):
+        return f"Showroom {self.showroom_number}"
+
+class Showtimes(models.Model):
+    date = models.DateField(default=timezone.now)
+    time_slot = models.CharField(max_length=15, choices=TimeSlot.choices, default=TimeSlot.MORNING)
+    showroom = models.ForeignKey('Showroom', on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        unique_together = ('date', 'time_slot', 'showroom')
+
+    def get_formatted_showtimes(self):
+        time_range = TimeSlot.labels[TimeSlot.values.index(self.time_slot)]
+        return f"{self.date} {time_range}"
+
+    def __str__(self):
+        return self.get_formatted_showtimes()
 
 class Show(models.Model):
-    #showtime (use foreign key)
+    movie = models.ForeignKey('Movie', on_delete=models.CASCADE, default=1)
+    showroom = models.ForeignKey('Showroom', on_delete=models.CASCADE, default=1)
+    showtime = models.ForeignKey('Showtimes', on_delete=models.CASCADE, default=1)
     show_id = models.IntegerField(unique=True)
-    date = models.DateField()
-    duration = models.IntegerField()
 
-    def assignShowtime(self):
-        pass
+    # def save(self, *args, **kwargs):
+    #     if not self.pk:  # Check if this is a new record
+    #         self.assignShowtime(self.showtime.id)
+    #     super().save(*args, **kwargs)
 
-    def assignShowroom(self):
-        pass
+    # def assignShowtime(self, showtime_id):
+    #     new_showtime = Showtimes.objects.get(id=showtime_id)
+    #     conflicting_show = Show.objects.filter(
+    #         showroom=new_showtime.showroom,
+    #         showtime__date=new_showtime.date,
+    #         showtime__time_slot=new_showtime.time_slot
+    #     ).exclude(id=self.id).exists()  # Exclude self for updates
+
+    #     if conflicting_show:
+    #         raise ValidationError("This time slot in the selected showroom is already booked.")
+
+    #     self.showtime = new_showtime
+
+    def __str__(self):
+        return f"{self.movie} at {self.showtime}"
+
+
 
 class TicketPrices(models.Model):
     adult_tickets = models.IntegerField()
@@ -226,25 +271,4 @@ class TicketPrices(models.Model):
     def applyShowtime(self):
         pass
 
-class Showroom(models.Model):
-    seats = models.IntegerField()
-    showroom_number = models.IntegerField(unique=True)
-
-    def updateMovieShowing(self):
-        pass
-
-    def retrieveSeats(self):
-        pass
-    
-
-##Showtimes model 
-#does scheduling, 
-    ##Movie will a fk to showtime, if its now palying
-    
-    
-
-#Booking model 
-    #fk to user, 
-    #tickets
-    #fk to showing (need class show)
 
