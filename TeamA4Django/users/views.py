@@ -25,7 +25,8 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
 from .forms import CustomPasswordResetForm, UserProfileForm, CreditCardForm, UserProfileEditForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import MovieForm
 
 
 # @login_required
@@ -91,7 +92,9 @@ def admin_login_view(request):
                     login(request, user)
                     return redirect('admin-home')  
                 else:
-                    messages.error(request, 'Login failed: You are not an admin.')
+                   login(request, user)  # Log in the user
+                   messages.error(request, 'Access Denied: You are not an admin.')
+                   return redirect('index')  # Redirect to a non-admin page
             else:
                 messages.error(request, 'Login failed: Invalid username or password.')
         else:
@@ -102,9 +105,18 @@ def admin_login_view(request):
     return render(request, 'admin/adminlogin.html', {'form': form})
 
    
+# Helper function to check if user is an admin
+def is_admin(user):
+    return user.is_authenticated and user.is_superuser
+
+@login_required(login_url='/login/')  # Redirects to login page if not logged in
+@user_passes_test(is_admin, login_url='/login/', redirect_field_name=None)
+def admin_home_view(request):
+    return render(request, 'adminHome.html')
 
 def admin_home_view(request):
      return render(request, 'adminHome.html')
+
 
 
 def create_account_view(request):
@@ -313,3 +325,24 @@ def search_movies(request):
         form = MovieSearchForm()
     print(form)
     return render(request, 'search_movie.html', {'form': form})
+
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-home')  # Redirect to the movie list page or another appropriate page
+    else:
+        form = MovieForm()
+
+    return render(request, 'add_movie.html', {'form': form})
+
+@login_required(login_url='/login/')  # Redirects to login if not logged in
+@user_passes_test(is_admin, login_url='/unauthorized/')  # Redirect if not admin
+def manage_movies_view(request):
+    movies = Movie.objects.all()  # Fetch all movies from the database
+    return render(request, 'adminmovies.html', {'movies': movies})  
+
+
+def unauthorized_view(request):
+    return render(request, 'unauthorized.html')

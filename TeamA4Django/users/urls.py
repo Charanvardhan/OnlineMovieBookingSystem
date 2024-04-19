@@ -17,6 +17,10 @@ urlpatterns = [
     path('activate/<uidb64>/<token>/', views.activate, name='activate'), 
     path('change_password/', views.change_password, name='change_password'),
     path('search/', views.search_movies, name='search_movies'),
+    path('add_movie/', views.add_movie, name='add-movie'),
+    path('adminmovies/', views.manage_movies_view, name='manage-movies'),
+    # In your urls.py
+
 
     #path('adminlogin/')
 ]
