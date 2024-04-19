@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile, CreditCard
+from .models import UserProfile, CreditCard, Movie
 from django.contrib.auth.forms import PasswordChangeForm
 
 class CustomPasswordResetForm(PasswordChangeForm):
@@ -87,6 +87,26 @@ class CreditCardForm(forms.ModelForm):
             for field in self.fields:
                 self.fields[field].required = False
 
+
+class MovieForm(forms.ModelForm):
+    class Meta:
+        model = Movie
+        fields = ['title', 'description', 'release_date', 'duration', 'trailer_url', 'image', 'genre']
+        labels = {
+            'title': 'Title',
+            'description': 'Description',
+           
+        }
+
+        widgets = {
+            'release_date': forms.DateInput(attrs={'type': 'date'}),  # Ensures a date-picker is used in HTML
+        }
+
+    def clean_duration(self):
+        duration = self.cleaned_data.get('duration')
+        if duration <= 0:
+            raise forms.ValidationError("Duration must be a positive number of minutes.")
+        return duration
 
 
 

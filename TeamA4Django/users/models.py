@@ -118,7 +118,6 @@ class Movie(models.Model):
 
 
 
-
 class Bookings(models.Model):
     #customer_id = 
     #promotion_id =

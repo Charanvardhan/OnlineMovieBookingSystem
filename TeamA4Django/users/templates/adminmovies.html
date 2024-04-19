@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Admin Home</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
+    <title>SINABOOK | Admin Movies</title>
+    <meta content=" name="description" />
+    <meta content=" name="keywords" />
 
     <!-- Favicons -->
      <link href="{% static 'assets/img/ticketLogo1.png'%}" rel="icon" />
@@ -64,13 +64,13 @@
         class="container-fluid d-flex align-items-center justify-content-between"
       >
         <a
-           href="/"
+          href="index.html"
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png'%}" alt=""> -->
+          <!-- <img src="assets/img/logo.png'%}" alt="> -->
           <!-- <i class="bi bi-camera"></i> -->
-          <img src="{% static 'assets/img/ticketLogo1.png'%}" alt="" />
+          <img src="{% static 'assets/img/ticketLogo1.png'%}" alt=" />
           <h1>SINABOOK</h1>
         </a>
 
@@ -132,42 +132,169 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class= "text-center">
-            <h3><span>Admin Home</span></h3>     
+            <h3><span>Manage Movies</span></h3>
+            <p>Handle Functions Related to Movies and Movie Details
+            </p>
           </div>
+
+<div class="container">
+    <h2>Manage Movies</h2>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                {% if movie.image %}
+                <img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.description }}</p>
+                   
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No movies found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="row gy-4 justify-content-center">
+            <!--Gallery Item-->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="gallery-item h-100">
+                <img
+                  src="{% static 'assets/img/gallery/barbie.png'%}"
+                  class="img-fluid"
+                  alt="
+                />
+                <div
+                  class="gallery-links d-flex align-items-center justify-content-center"
+                >
+                  <a href="{% static 'assets/img/gallery/barbie.png'%}" title="Gallery 1">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
+                </div>
+              </div>
+              <div class="container">
+                <a href="admineditmovie.html" class="btn-get-started">Edit</a>
+                <br>
+                <br>
+                <a href="#main " class="btn-get-started">Delete</a>
+              </div>
+            </div>
+            <!-- End Gallery Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="gallery-item h-100">
+                <img
+                  src="{% static 'assets/img/gallery/oppenheimer.png'%}"
+                  class="img-fluid"
+                  alt="
+                />
+                <div
+                  class="gallery-links d-flex align-items-center justify-content-center"
+                >
+                  <a
+                    href="{% static 'assets/img/gallery/oppenheimer.png'%}"
+                    title="Gallery 2"
+                  >
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
+                </div>
+              </div>
+              <div class="container">
+              <a href="admineditmovie.html" class="btn-get-started">Edit</a>
+              <br>
+              <br>
+              <a href="#main " class="btn-get-started">Delete</a>
+            </div>
+            </div>
+            <!-- End Gallery Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="gallery-item h-100">
+                <img
+                  src="{% static 'assets/img/gallery/avatar.png'%}"
+                  class="img-fluid"
+                  alt="
+                />
+                <div
+                  class="gallery-links d-flex align-items-center justify-content-center"
+                >
+                  <a href="{% static 'assets/img/gallery/avatar.png'%}" title="Gallery 3">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
+                </div>
+              </div>
+              <div class="container">
+                <a href="admineditmovie.html" class="btn-get-started">Edit</a>
+                <br>
+                <br>
+                <a href="#main " class="btn-get-started">Delete</a>
+              </div>
+            </div>
+            <!-- End Gallery Item -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="gallery-item h-100">
+                <img
+                  class="userProfile"
+                  src="{% static 'assets/img/addSymbol.png'%}"
+                  class="img-fluid"
+                  alt="
+                />
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div
+                  class="gallery-links d-flex align-items-center justify-content-center"
+                >
+                  <a href="{% static 'assets/img/addSymbol.png'%}" title="Gallery 0">
+                  </a>
+                  <a href="gallery-single.html" class=" "> </a>
+                </div>
+              </div>
+            </div>
+            <div>
         </div>
       </div>
-    </section>
-    <!-- End Hero Section -->
-    <div class="container">
-      <ul>
-        <li class="dropdown">
-          <a href="{% url 'manage-movies' %}">Manage Movie</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="#">Schedule Movies</a></li>
-                <li><a href="{% url 'add-movie' %}">Add Movie</a></li>
-                <li><a href="#">Edit Movies</a></li>
-                <li><a href="#">Delete Movies</a></li>
-            </ul>
-            <a href="adminusers.html"> Manage Users</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="#">Delete User</a></li>
-                <li><a href="#">Suspend User</a></li>
-                <li><a href="#">Edit User Details</a></li>
-                <li><a href=#>Add New Adminstator</a></li>
-            </ul>
-            <a href="adminpromotions.html"> Manage Promotions</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="#">Add Promotions</a></li>
-            </ul>
-        </li>
-    </ul>
+      </div>
     </div>
+    </section>
 
-                
-
+    <!-- End Hero Section -->
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
       <div class="container">
