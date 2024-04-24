@@ -34,6 +34,7 @@ from django.db.models.signals import post_save
 from django.contrib.admin.views.decorators import user_passes_test
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
+from django.db.models import Q
 
 
 
@@ -401,8 +402,7 @@ def filter_movies(request):
     query = request.GET.get('q')
     print("Received query parameter:", query)  # Add this line to print the received query parameter
     if query:
-        movies = Movie.objects.filter(title__icontains=query)
-        
+        movies = Movie.objects.filter(Q(title__icontains=query) | Q(genre__icontains=query))
     else:
         movies = Movie.objects.none()  # Return an empty queryset if no query is provided
 
@@ -414,7 +414,6 @@ def filter_movies(request):
 
     context = {
         'movies': movies,
-        # 'form': movies_filter.form,
         'query': query  # Pass the query to the template for display
     }
     
