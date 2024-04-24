@@ -28,7 +28,14 @@ from .forms import CustomPasswordResetForm, UserProfileForm, CreditCardForm, Use
 from django.contrib.auth.decorators import login_required
 # from flask import Flask, render_template
 from django.core.management import call_command
+import django_filters
 from .filters import MovieFilter
+from django.db.models.signals import post_save
+from django.contrib.admin.views.decorators import user_passes_test
+from django.contrib.auth import get_user_model
+from django.dispatch import receiver
+
+
 
 
 
@@ -365,7 +372,7 @@ def add_movie(request):
     return render(request, 'add_movie.html', {'form': form})
 
 @login_required(login_url='/login/')  # Redirects to login if not logged in
-@user_passes_test(is_admin, login_url='/unauthorized/')  # Redirect if not admin
+# @user_passes_test(is_admin, login_url='/unauthorized/')  # Redirect if not admin
 def manage_movies_view(request):
     movies = Movie.objects.all()  # Fetch all movies from the database
     return render(request, 'adminmovies.html', {'movies': movies})  
@@ -374,37 +381,51 @@ def manage_movies_view(request):
 def unauthorized_view(request):
     return render(request, 'unauthorized.html')
 
+
+# def search_movies_view(request):
+#     query = request.GET.get('query')
+#     print("the item searched was: ", query)
+#     movies = Movie.objects.all()
+#     if query:
+#         movies = movies.filter(title__icontains=query)
+
+#     context = {
+#         'movies': movies,
+#         'query': query,
+#         #'category': category,
+#     }
+#     return render(request, 'search_movie', context)
+
 ##Current
-def search_movies_view(request):
-    query = request.GET.get('query')
-    print("the item searched was: ", query)
-    movies = Movie.objects.all()
-    if query:
-        movies = movies.filter(title__icontains=query)
-
-    context = {
-        'movies': movies,
-        'query': query,
-        #'category': category,
-    }
-    return render(request, 'search_movie.html', context)
-
-
 def filter_movies(request):
-    movies = MovieFilter(request.GET, queryset = Movie.objects.all())
-    # paginator = Paginator(movies.qs, 10)
+    query = request.GET.get('q')
+    print("Received query parameter:", query)  # Add this line to print the received query parameter
+    if query:
+        movies = Movie.objects.filter(title__icontains=query)
+        
+    else:
+        movies = Movie.objects.none()  # Return an empty queryset if no query is provided
+
+    # movies_filter = MovieFilter(request.GET, queryset=Movie.objects.all())
+    # movies = movies_filter.qs  # Access the filtered queryset
+    print("in filter_movies, query was: ", query)
+    print("the filtered movies are: ", movies)
+        
 
     context = {
         'movies': movies,
-        'form': movies.form
+        # 'form': movies_filter.form,
+        'query': query  # Pass the query to the template for display
     }
-    query = request.GET.get('q')
+    
+    print("SQL query:", movies.query)
+
     # if query:
     #     movies = Movie.objects.filter(title__icontains=query)
     #     # You can also filter by genre, rating, etc. as needed
     # else:
     #     movies = None
-    return render(request, 'users/search_movie.html', {'movies': movies, 'query': query})
+    return render(request, 'search_movie.html', context)
 
 def show(request, id):
     if not id:
@@ -460,13 +481,13 @@ def show(request, id):
     return JsonResponse({'show': show_data, 'showtimes': times_only})
 
 
-@receiver(post_save, sender=Promotions)
-def send_promotion_email(sender, instance, created, **kwargs):
-    if created and instance.is_available:
-        subject = "New Promotion Available!"
-        message = f"Hello! A new promotion with code {instance.code} is now available. Enjoy discounts on your next purchase!"
-        from_email = settings.EMAIL_HOST_USER
-        recipient_list = [user.email for user in UserProfile.objects.filter(subscribe_to_promotions=True)]
+# @receiver(post_save, sender=Promotions)
+# def send_promotion_email(sender, instance, created, **kwargs):
+#     if created and instance.is_available:
+#         subject = "New Promotion Available!"
+#         message = f"Hello! A new promotion with code {instance.code} is now available. Enjoy discounts on your next purchase!"
+#         from_email = settings.EMAIL_HOST_USER
+#         recipient_list = [user.email for user in UserProfile.objects.filter(subscribe_to_promotions=True)]
         
-        # Send email to all subscribed users
-        send_mail(subject, message, from_email, recipient_list)   
+#         # Send email to all subscribed users
+#         send_mail(subject, message, from_email, recipient_list)   

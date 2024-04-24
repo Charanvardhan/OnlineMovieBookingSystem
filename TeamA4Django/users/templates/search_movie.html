@@ -71,7 +71,7 @@
           <!-- <img src="assets/img/logo.png' %}" alt=""> -->
           <!-- <i class="bi bi-camera"></i> -->
           <img src="{% static 'assets/img/ticketLogo1.png' %}" alt="" />
-          <h1>THISISSEARCH MOVIES PAGE</h1>
+          <h1>SINABOOK</h1>
         </a>
 
         <nav id="navbar" class="navbar">
@@ -141,23 +141,35 @@
     <main id="main" data-aos="fade" data-aos-delay="1500">
       <!-- ======= Currently Running Section ======= -->
       <section id="gallery" class="gallery">
-        <div class="container-fluid">
-          <div class="row gy-4 justify-content-center">
-            <div class="col-xl-3 col-lg-4 col-md-6">
-              <div class="gallery-item h-100">
+              <div class = "text-center">
                 {% if query %}
                   <h2>Search Results for "{{ query }}"</h2>
                   {% if movies %}
                     <ul>
-                    {% for movie in movies %}
-                      <li>{{ movie.title }}</li>
-                      <!-- Display other movie details as needed -->
-                    {% endfor %}
+                      <div class = "row row-cols-5">
+                        {% for movie in movies%}
+                          <div class = "db-card-for-movie card">
+                              <img src = "{{ movie.image.url}}" alt = "every db movie img" class = "card-img-top"> 
+                                <div class="text-center card-body">
+                                  <h1 class = "card-title"> {{movie.title}}</h1>
+                                  <a href="{% url 'm_detail' movie.pk%}"class="btn-book" data-toggle="modal" data-target="#movieModal{{ movie.id }}">
+                                  View Details</a>
+                        
+                                </div>
+          
+                                <!-- Add in coming Soon -->
+                              </div>
+                          {% endfor %}
+                        </div>
+                  
+                        
                     </ul>
+                    
                   {% else %}
                     <p>No movies found.</p>
-                  {% endif %}
                 {% endif %}
+              {% endif %}
+                
 
               </div>
             </div>
@@ -175,10 +187,7 @@
                           Done
                         </button>
                       </div> -->
-                    </div>
-                  </div>
-                </div>
-              </div>
+                   
             </div>
             <!-- End Gallery Item -->
           </div>
