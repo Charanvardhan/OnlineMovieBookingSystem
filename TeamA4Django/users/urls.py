@@ -24,6 +24,7 @@ urlpatterns = [
     path('search_movie/', views.filter_movies, name='search_movie'),
     path('add_movie/', views.add_movie, name='add-movie'),
     path('adminmovies/', views.manage_movies_view, name='manage-movies'),
+    path('orderSummary/<int:pk>/', views.order_summary_view, name='orderSummary'),
     # In your urls.py
 
     path('show/<int:id>/', views.show, name='show')

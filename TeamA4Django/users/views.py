@@ -227,7 +227,7 @@ def index_view(request):
     # print("Coming Soon : ", coming_soon_movies[0].title)
 
 #This function shows Title, Description, Trailer, Cast, etc of a movie
-#It is called when 'View Details' is clicked. EEEEHH idk if i want to do this?? I will try it 
+#It is called when 'View Details' is clicked. 
 def show_movie_details(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     context = {"movie": movie}
@@ -383,20 +383,6 @@ def unauthorized_view(request):
     return render(request, 'unauthorized.html')
 
 
-# def search_movies_view(request):
-#     query = request.GET.get('query')
-#     print("the item searched was: ", query)
-#     movies = Movie.objects.all()
-#     if query:
-#         movies = movies.filter(title__icontains=query)
-
-#     context = {
-#         'movies': movies,
-#         'query': query,
-#         #'category': category,
-#     }
-#     return render(request, 'search_movie', context)
-
 ##Current
 def filter_movies(request):
     query = request.GET.get('q')
@@ -490,3 +476,11 @@ def show(request, id):
         
 #         # Send email to all subscribed users
 #         send_mail(subject, message, from_email, recipient_list)   
+
+
+def order_summary_view(request, pk):
+    movie = get_object_or_404(Movie, pk=pk)
+    context = {"movie": movie}
+    return render(request, 'orderSummary.html', context)
+
+   
