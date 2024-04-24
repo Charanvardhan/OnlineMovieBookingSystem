@@ -353,8 +353,31 @@ def change_password(request):
 #     print(form)
 #     return render(request, 'search_movie.html', {'form': form})
 
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-home')  # Redirect to the movie list page or another appropriate page
+    else:
+        form = MovieForm()
+
+    return render(request, 'add_movie.html', {'form': form})
+
+@login_required(login_url='/login/')  # Redirects to login if not logged in
+@user_passes_test(is_admin, login_url='/unauthorized/')  # Redirect if not admin
+def manage_movies_view(request):
+    movies = Movie.objects.all()  # Fetch all movies from the database
+    return render(request, 'adminmovies.html', {'movies': movies})  
+
+
+def unauthorized_view(request):
+    return render(request, 'unauthorized.html')
+
+##Current
 def search_movies_view(request):
     query = request.GET.get('query')
+    print("the item searched was: ", query)
     movies = Movie.objects.all()
     if query:
         movies = movies.filter(title__icontains=query)
@@ -364,12 +387,86 @@ def search_movies_view(request):
         'query': query,
         #'category': category,
     }
-    return render(request, 'search_results.html', context)
+    return render(request, 'search_movie.html', context)
+
 
 def filter_movies(request):
     movies = MovieFilter(request.GET, queryset = Movie.objects.all())
+    # paginator = Paginator(movies.qs, 10)
+
     context = {
         'movies': movies,
         'form': movies.form
     }
-    return render(request, 'search_movie.html', context)
+    query = request.GET.get('q')
+    # if query:
+    #     movies = Movie.objects.filter(title__icontains=query)
+    #     # You can also filter by genre, rating, etc. as needed
+    # else:
+    #     movies = None
+    return render(request, 'users/search_movie.html', {'movies': movies, 'query': query})
+
+def show(request, id):
+    if not id:
+        return JsonResponse({'error': 'Show ID not provided'}, status=400)
+
+    try:
+        show = Show.objects.select_related('showtime', 'showroom').get(id=id)
+    except Show.DoesNotExist:
+        return JsonResponse({'error': 'Show not found'}, status=404)
+
+    
+    show_data = {
+        'show_id': show.show_id,
+        'movie_id': show.movie.id,
+        'date': show.date,
+        'duration': show.duration,
+        'showroom': {
+            'showroom_number': show.showroom.showroom_number,
+            'seats': show.showroom.get_seats()
+            
+        },
+        'showtime': {
+            'start_time': show.showtime.start_time,
+            'end_time': show.showtime.end_time,
+            'formatted_times': show.showtime.get_formatted_showtimes()
+            # 'showroom': show.showtime.
+        }
+    }
+
+    # Fetch all showtimes on the same date
+    date_as_datetime = show.date
+    showtimes = Showtimes.objects.filter(
+        start_time__year=date_as_datetime.year,
+        start_time__month=date_as_datetime.month,
+        start_time__day=date_as_datetime.day
+    )
+
+    print(type(showtimes))
+    # Serialize the showtimes queryset
+    showtimes_data = serialize('json', showtimes)
+    print(type(showtimes_data), "before hsilfhaofhj")
+    
+    showtimes_data = json.loads(showtimes_data)
+
+    # Use dateutil.parser to handle ISO format with 'Z'
+    times_only = [parser.isoparse(item['fields']['start_time']).time().isoformat() for item in showtimes_data]
+
+    print(type(times_only))
+    # Serialize the list of times back to JSON
+    # showtimes_data = json.dumps(times_only)
+    # print(type(showtimes_data))
+
+    return JsonResponse({'show': show_data, 'showtimes': times_only})
+
+
+@receiver(post_save, sender=Promotions)
+def send_promotion_email(sender, instance, created, **kwargs):
+    if created and instance.is_available:
+        subject = "New Promotion Available!"
+        message = f"Hello! A new promotion with code {instance.code} is now available. Enjoy discounts on your next purchase!"
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [user.email for user in UserProfile.objects.filter(subscribe_to_promotions=True)]
+        
+        # Send email to all subscribed users
+        send_mail(subject, message, from_email, recipient_list)   

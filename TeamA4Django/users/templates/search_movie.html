@@ -71,7 +71,7 @@
           <!-- <img src="assets/img/logo.png' %}" alt=""> -->
           <!-- <i class="bi bi-camera"></i> -->
           <img src="{% static 'assets/img/ticketLogo1.png' %}" alt="" />
-          <h1>SINABOOK</h1>
+          <h1>THISISSEARCH MOVIES PAGE</h1>
         </a>
 
         <nav id="navbar" class="navbar">
@@ -145,187 +145,24 @@
           <div class="row gy-4 justify-content-center">
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
-                <img
-                  src="{% static 'assets/img/gallery/eeaao.png' %}"
-                  class="img-fluid"
-                  alt=""
-                />
-                <div
-                  class="gallery-links d-flex align-items-center justify-content-center"
-                >
-                  <a href="{% static 'assets/img/gallery/eeaao.png' %}" title="Gallery 1">
-                  </a>
-                  <a href="gallery-single.html" class=" "> </a>
-                </div>
+                {% if query %}
+                  <h2>Search Results for "{{ query }}"</h2>
+                  {% if movies %}
+                    <ul>
+                    {% for movie in movies %}
+                      <li>{{ movie.title }}</li>
+                      <!-- Display other movie details as needed -->
+                    {% endfor %}
+                    </ul>
+                  {% else %}
+                    <p>No movies found.</p>
+                  {% endif %}
+                {% endif %}
+
               </div>
-              <div class="text-center">
-                <!-- <button type="submit">Book Movie</button> -->
-                <!-- Button trigger modal -->
-                <button
-                  class="btn-book"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  Book Movie
-                </button>
-
-                <!-- Modal -->
-                <div
-                  class="modal fade"
-                  id="exampleModal"
-                  tabindex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div class="modal-dialog modal-dialog-scrollable modal-xl">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <!-- <h5 class="modal-title" id="exampleModalLabel">
-                          Everything Everywhere All At Once
-                        </h5> -->
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div class="modal-body">
-                        <h2>Everything Everywhere All At Once</h2>
-                        <div class="movieSynopsis">
-                          <p>
-                            A middle-aged Chinese immigrant is swept up into an
-                            insane adventure in which she alone can save
-                            existence by exploring other universes and
-                            connecting with the lives she could have led.
-                          </p>
-                        </div>
-                        <br />
-                        <iframe
-                          width="1000"
-                          height="550"
-                          src="https://www.youtube.com/embed/wxN1T1uxQ2g"
-                        >
-                        </iframe>
-                        <br />
-                        <br />
-                        <h3>Select number of tickets:</h3>
-                        <label for="quantity"></label>
-                        <input
-                          type="number"
-                          id="quantity"
-                          name="quantity"
-                          min="1"
-                          max="5"
-                        />
-                        <br />
-                        <br />
-                        <h3>Select age:</h3>
-                        <input type="checkbox" name="child" checked />
-                        <label for="child">Child</label>
-                        <input type="checkbox" name="adult" />
-                        <label for="adult">Adult</label>
-                        <input type="checkbox" name="senior" />
-                        <label for="senior">Senior</label>
-                        <br />
-                        <div class="movie-container">
-                          <h3>Select a showtime:</h3>
-                          <select id="movie">
-                            <option value="0">Select here</option>
-                            <option value="12">10:00am</option>
-                            <option value="12">2:00pm</option>
-                            <option value="14">4:30pm</option>
-                            <option value="16">8:00pm</option>
-                          </select>
-                          <h3>Select seats:</h3>
-                          <ul class="showcase">
-                            <li>
-                              <div class="seat"></div>
-                              <small>N/A</small>
-                            </li>
-                            <li>
-                              <div class="seat selected"></div>
-                              <small>Selected</small>
-                            </li>
-                            <li>
-                              <div class="seat occupied"></div>
-                              <small>Occupied</small>
-                            </li>
-                          </ul>
-
-                          <div class="seatsContainer">
-                            <div class="screen"></div>
-
-                            <div class="row">
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                            </div>
-                            <div class="row">
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat occupied"></div>
-                              <div class="seat occupied"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                            </div>
-                            <div class="row">
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat occupied"></div>
-                              <div class="seat occupied"></div>
-                            </div>
-                            <div class="row">
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                            </div>
-                            <div class="row">
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat occupied"></div>
-                              <div class="seat occupied"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                            </div>
-                            <div class="row">
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat"></div>
-                              <div class="seat occupied"></div>
-                              <div class="seat occupied"></div>
-                              <div class="seat occupied"></div>
-                              <div class="seat"></div>
-                            </div>
-
-                            <p class="text">
-                              You have selected <span id="count">0</span> seats
-                              for the total price of $
-                              <span id="total">0</span>
-                            </p>
-                          </div>
-                        </div>
-                        <br />
-                      </div>
+            </div>
+          <br />
+      </div>
                       <!-- <div class="modal-footer">
                         <button
                           type="button"

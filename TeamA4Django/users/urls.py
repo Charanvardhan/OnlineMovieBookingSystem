@@ -21,7 +21,12 @@ urlpatterns = [
     path('registrationconfirmation/', views.registration_confirmation, name = 'registrationconfirmation'),
     path('activate/<uidb64>/<token>/', views.activate, name='activate'), 
     path('change_password/', views.change_password, name='change_password'),
-    path('search/', views.filter_movies, name='search_movies'),
+    path('search_movie/', views.filter_movies, name='search_movie'),
+    path('add_movie/', views.add_movie, name='add-movie'),
+    path('adminmovies/', views.manage_movies_view, name='manage-movies'),
+    # In your urls.py
+
+    path('show/<int:id>/', views.show, name='show')
 
     #path('adminlogin/')
 ]

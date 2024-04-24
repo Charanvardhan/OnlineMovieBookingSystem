@@ -63,10 +63,11 @@ class Command(BaseCommand):
             
 
             if created:
-                self.stdout.write(self.style.SUCCESS(f'Successfully added movie: {title}'))
+                success_message = f'Successfully added movie: {title}'
+                self.stdout.write(self.style.SUCCESS(success_message))
             else:
-                self.stdout.write(self.style.WARNING(f'Movie already exists: {title}'))
-
-        return populate_running_movies
+                warning_message = f'Movie already exists: {title}'
+                self.stdout.write(self.style.WARNING(warning_message))
+        
 
     #return movies 
