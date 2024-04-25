@@ -166,7 +166,7 @@
               {% for movie in movies%}
                 {% if movie.status == "nowPlaying"%}
                   <div class = "db-card-for-movie card">
-                    <img src = "{{ movie.image.url}}" alt = "every db movie img" class = "card-img-top"> 
+                    <img src = "{{ movie.image.url}}" alt = "every db movie img" class = "card-img-top">
                       <div class="text-center card-body">
                         <h1 class = "card-title"> {{movie.title}}</h1>
                         <a href="{% url 'm_detail' movie.pk%}"class="btn-book" data-toggle="modal" data-target="#movieModal{{ movie.id }}">
@@ -179,9 +179,6 @@
               {% endfor %}
           </div>
 
-
-              
-             
             
             <div class = "container-fluid">
               <div class = "row row-cols-5">

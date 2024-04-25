@@ -8,8 +8,6 @@ from django.utils import timezone
 import uuid
 
 
-
-
 #To-DO
 #Showroom, show, showtime and booking
 

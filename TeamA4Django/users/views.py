@@ -15,7 +15,6 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.utils.encoding import force_str
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core import serializers
 from dateutil import parser
@@ -127,7 +126,7 @@ def is_admin(user):
     return user.is_authenticated and user.is_superuser
 
 @login_required(login_url='/login/')  # Redirects to login page if not logged in
-@user_passes_test(is_admin, login_url='/login/', redirect_field_name=None)
+@user_passes_test(is_admin, login_url='/login/')
 def admin_home_view(request):
     return render(request, 'adminHome.html')
 
@@ -314,7 +313,11 @@ def login_view(request):
                 user = authenticate(request, username=user.username, password=password)  
                 if user is not None:
                     login(request, user)
-                    return redirect('index')  
+                    if user.is_superuser or user.is_staff:
+                        return redirect('admin-home')  # Redirect to admin home page
+                    else:
+                        return redirect('index')  # Redirect to standard user page  
+
                 else:
                     return render(request, 'login.html', {'form': form, 'error': 'Invalid email or password.'})
             except User.DoesNotExist:
@@ -360,18 +363,18 @@ def change_password(request):
     })
     
 ##This takes input from the search bar, searches the movie database, and returns the movie that matches    
-# def search_movies(request):
-#     ##Changed from 'GET' to POST
-#     if request.method == 'POST':
-#         form = MovieSearchForm(request.GET)
-#         if form.is_valid():
-#             title = form.cleaned_data.get('title')
-#             movies = Movie.objects.filter(title__icontains=title)
-#             return render(request, 'search_results.html', {'movies': movies, 'form': form})
-#     else:
-#         form = MovieSearchForm()
-#     print(form)
-#     return render(request, 'search_movie.html', {'form': form})
+def search_movies(request):
+    ##Changed from 'GET' to POST
+    if request.method == 'POST':
+        form = MovieSearchForm(request.GET)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            movies = Movie.objects.filter(title__icontains=title)
+            return render(request, 'search_results.html', {'movies': movies, 'form': form})
+    else:
+        form = MovieSearchForm()
+    print(form)
+    return render(request, 'search_movie.html', {'form': form})
 
 def add_movie(request):
     if request.method == 'POST':
@@ -415,9 +418,7 @@ def filter_movies(request):
     }
     return render(request, 'search_movie.html', context)
 
-        form = MovieSearchForm()
-    print(form)
-    return render(request, 'search_movie.html', {'form': form})
+
 
 
 def show(request, id):
