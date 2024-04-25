@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Admin Home</title>
+    <title>SINABOOK | Manage Users</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -64,7 +64,7 @@
         class="container-fluid d-flex align-items-center justify-content-between"
       >
         <a
-           href="{% url 'index' %}" 
+          href="index.html"
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
@@ -73,27 +73,6 @@
           <img src="{% static 'assets/img/ticketLogo1.png'%}" alt="" />
           <h1>SINABOOK</h1>
         </a>
-
-        <nav id="navbar" class="navbar">
-          <ul>
-              <li><a href="index" class="active">Home</a></li>
-              <!-- Uncomment and update href attributes as needed for other links -->
-              <!-- <li><a href="/about/">About</a></li> -->
-              
-
-              {% if request.user.is_authenticated %}
-              <!-- Displayed only if user is logged in -->
-              <li><a href="{% url 'log-out' %}">Log out</a></li>
-             
-        
-              {% else %}
-              <!-- Displayed only if user is not logged in -->
-              <li><a href="{% url 'admin-login' %}">Log in</a></li>
-              <a href="{% url 'createAccount' %}"> Create Account</a>
-              {% endif %}
-               <!-- Add more links as needed -->
-          </ul>
-      </nav>
 
        <!-- <nav id="navbar" class="navbar">
           <ul>
@@ -153,39 +132,15 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class= "text-center">
-            <h3><span>Admin Home</span></h3>     
+            <h3><span>Manage Users</span></h3>
+            <p>Handle Functions Related to Users and Administrators
+            </p>
           </div>
         </div>
       </div>
     </section>
     <!-- End Hero Section -->
-    <div class="container">
-      <ul>
-        <li class="dropdown">
-          <a href="{% url 'manage-movies' %}">Manage Movie</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="#">Schedule Movies</a></li>
-                <li><a href="{% url 'add-movie' %}">Add Movie</a></li>
-                <li><a href="#">Edit Movies</a></li>
-                <li><a href="#">Delete Movies</a></li>
-            </ul>
-            <a href="{% url 'admin-users' %}"> Manage Users</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="#">Delete User</a></li>
-                <li><a href="#">Suspend User</a></li>
-                <li><a href="#">Edit User Details</a></li>
-                <li><a href=#>Add New Adminstator</a></li>
-            </ul>
-            <a href="adminpromotions.html"> Manage Promotions</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="{% url 'promotions' %}">Add Promotions</a></li>
-            </ul>
-        </li>
-    </ul>
-    </div>
+    
 
                 
 

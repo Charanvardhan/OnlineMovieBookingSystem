@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile, CreditCard, Movie, Show, Showtimes
+from .models import UserProfile, CreditCard, Movie, Show, Showtimes, Promotions
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import ValidationError
 
@@ -100,7 +100,7 @@ class MovieForm(forms.ModelForm):
         }
 
         widgets = {
-            'release_date': forms.DateInput(attrs={'type': 'date'}),  # Ensures a date-picker is used in HTML
+            'release_date': forms.DateInput(attrs={'type': 'date'}), 
         }
 
     def clean_duration(self):
@@ -109,7 +109,10 @@ class MovieForm(forms.ModelForm):
             raise forms.ValidationError("Duration must be a positive number of minutes.")
         return duration
 
-
+class PromotionsForm(forms.ModelForm):
+    class Meta:
+        model = Promotions
+        fields = ['code', 'percentage', 'start_date', 'end_date', 'show', 'is_available']
 
 # meg- commmented out just incase 
 # class CustomUserCreationForm(UserCreationForm):

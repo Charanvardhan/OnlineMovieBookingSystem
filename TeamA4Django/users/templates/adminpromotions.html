@@ -1,16 +1,17 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Admin Home</title>
+    <title>SINABOOK | Admin Promotions</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
     <!-- Favicons -->
-     <link href="{% static 'assets/img/ticketLogo1.png'%}" rel="icon" />
+    <link href="{% static 'assets/img/ticketLogo1.png'%}" rel="icon" />
     <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
@@ -64,7 +65,7 @@
         class="container-fluid d-flex align-items-center justify-content-between"
       >
         <a
-           href="{% url 'index' %}" 
+          href="{%url 'admin-home' %}"
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
@@ -74,32 +75,11 @@
           <h1>SINABOOK</h1>
         </a>
 
-        <nav id="navbar" class="navbar">
-          <ul>
-              <li><a href="index" class="active">Home</a></li>
-              <!-- Uncomment and update href attributes as needed for other links -->
-              <!-- <li><a href="/about/">About</a></li> -->
-              
-
-              {% if request.user.is_authenticated %}
-              <!-- Displayed only if user is logged in -->
-              <li><a href="{% url 'log-out' %}">Log out</a></li>
-             
-        
-              {% else %}
-              <!-- Displayed only if user is not logged in -->
-              <li><a href="{% url 'admin-login' %}">Log in</a></li>
-              <a href="{% url 'createAccount' %}"> Create Account</a>
-              {% endif %}
-               <!-- Add more links as needed -->
-          </ul>
-      </nav>
-
-       <!-- <nav id="navbar" class="navbar">
+        <!-- <nav id="navbar" class="navbar">
           <ul>
             <li><a href="index.html" class="active">Home</a></li>
             <li><a href="about.html">About</a></li> -->
-            <!-- <li class="dropdown">
+        <!-- <li class="dropdown">
               <a href="#"
                 ><span>Gallery</span>
                 <i class="bi bi-chevron-down dropdown-indicator"></i
@@ -124,11 +104,11 @@
                 </li>
               </ul>
             </li> -->
-           <!-- <li><a href="login.html">Log in</a></li> -->
-            <!-- <li><a href="services.html">Services</a></li>
+        <!-- <li><a href="login.html">Log in</a></li> -->
+        <!-- <li><a href="services.html">Services</a></li>
             <li><a href="contact.html">Contact</a></li> -->
-          </ul>
-        </nav>
+        <!-- </ul> -->
+        <!-- </nav> -->
         <!-- .navbar -->
 
         <!-- <div class="header-social-links">
@@ -144,50 +124,99 @@
     <!-- End Header -->
 
     <!-- ======= Hero Section ======= -->
-    <section
-      id="hero"
-      class="hero d-flex flex-column justify-content-center align-items-center"
-      data-aos="fade"
-      data-aos-delay="1500"
-    >
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class= "text-center">
-            <h3><span>Admin Home</span></h3>     
+    <main id="main" data-aos="fade" data-aos-delay="1500">
+      <section
+        id="hero"
+        class="hero d-flex flex-column justify-content-center align-items-center"
+        data-aos="fade"
+        data-aos-delay="1500"
+      >
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="text-center">
+              <h3><span>Manage Promotions</span></h3>
+              <p>Send Email Promotions to Subscribed Users</p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- End Hero Section -->
-    <div class="container">
-      <ul>
-        <li class="dropdown">
-          <a href="{% url 'manage-movies' %}">Manage Movie</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="#">Schedule Movies</a></li>
-                <li><a href="{% url 'add-movie' %}">Add Movie</a></li>
-                <li><a href="#">Edit Movies</a></li>
-                <li><a href="#">Delete Movies</a></li>
-            </ul>
-            <a href="{% url 'admin-users' %}"> Manage Users</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="#">Delete User</a></li>
-                <li><a href="#">Suspend User</a></li>
-                <li><a href="#">Edit User Details</a></li>
-                <li><a href=#>Add New Adminstator</a></li>
-            </ul>
-            <a href="adminpromotions.html"> Manage Promotions</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="{% url 'promotions' %}">Add Promotions</a></li>
-            </ul>
-        </li>
-    </ul>
-    </div>
+      </section>
+      <!-- End Hero Section -->
+      <div class="container">
+        <div class="text-center">
 
-                
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group mt-3">
+              <p>Code:</p>
+              {{ form.code|add_class:"form-control" }}
+              {% if form.code.errors %}
+                  <div class="error">{{ form.code.errors|striptags }}</div>
+              {% endif %}
+          </div>
+
+          <div class="form-group mt-3">
+              <p>Percentage:</p>
+              {{ form.percentage|add_class:"form-control" }}
+              {% if form.percentage.errors %}
+                  <div class="error">{{ form.percentage.errors|striptags }}</div>
+              {% endif %}
+          </div>
+
+          <div class="form-group mt-3">
+              <p>Start Date:</p>
+              {{ form.start_date|add_class:"form-control" }}
+              {% if form.start_date.errors %}
+                  <div class="error">{{ form.start_date.errors|striptags }}</div>
+              {% endif %}
+          </div>
+
+          <div class="form-group mt-3">
+              <p>End Date:</p>
+              {{ form.end_date|add_class:"form-control" }}
+              {% if form.end_date.errors %}
+                  <div class="error">{{ form.end_date.errors|striptags }}</div>
+              {% endif %}
+          </div>
+
+          <div class="form-group mt-3">
+              <p>Show:</p>
+              {{ form.show|add_class:"form-control" }}
+              {% if form.show.errors %}
+                  <div class="error">{{ form.show.errors|striptags }}</div>
+              {% endif %}
+          </div>
+
+          <div class="form-group mt-3">
+              <p>Is Available:</p>
+              {{ form.is_available|add_class:"form-check-input"}}
+              {% if form.is_available.errors %}
+                  <div class="error">{{ form.is_available.errors|striptags }}</div>
+              {% endif %}
+          </div>
+   
+            
+            
+            <button class="btn-get-started">Add New Promotion</button>
+        </form>
+        
+         
+        </div>
+        <br />
+        <br />
+        <div class="textarea">
+
+
+          <form>
+            <textarea id="w3review" rows="4" cols="50">
+Welcome to SINABOOK! We are offering a special deal to our loyal customers. 
+        10% off any movie showing if you bring 5 guests with you.</textarea
+            >
+            <br />
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+    </main>
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">

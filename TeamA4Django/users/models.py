@@ -6,8 +6,9 @@ from django.db.models.deletion import CASCADE
 from django.forms import ValidationError
 from django.utils import timezone
 import uuid
-
-
+from django.db import models
+from django.core.exceptions import ValidationError
+import datetime
 
 
 #To-DO
@@ -24,8 +25,9 @@ import uuid
 
 #user profile model and fields
 class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) #username/id
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     #need first, last name
+    # Other fields remain unchanged
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -97,7 +99,8 @@ class CreditCard(models.Model):
         pass
    
     def __str__(self):
-        return f"Credit Card for {self.user_profile.user.username}"
+     return f"Credit Card for {self.customer.first_name} {self.customer.last_name}"
+
 
 #movie card model
 #movie title, category, cast, director, producer, synopsis, reviews, trailer picture and video
@@ -186,7 +189,7 @@ class Promotions(models.Model):
     percentage = models.IntegerField()
     start_date = models.DateField()
     end_date = models.DateField()
-    show = models.CharField(max_length=100)
+    show = models.CharField(max_length=100, null=True, blank=True) 
     is_available = models.BooleanField(default=False)
 
     def validatePromoCode(self):
@@ -195,10 +198,7 @@ class Promotions(models.Model):
     def status(self):
         pass
     
-    
-from django.db import models
-from django.core.exceptions import ValidationError
-import datetime
+
 
 class TimeSlot(models.TextChoices):
     MORNING = 'Morning', '09:00-12:00'

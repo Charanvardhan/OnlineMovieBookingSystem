@@ -25,7 +25,9 @@ urlpatterns = [
     path('add_movie/', views.add_movie, name='add-movie'),
     path('adminmovies/', views.manage_movies_view, name='manage-movies'),
     path('orderSummary/<int:pk>/', views.order_summary_view, name='orderSummary'),
-    # In your urls.py
+    path('adminpromotions/', views.promotions_view, name='promotions'),
+    path('adminusers/', views.admin_users_view, name='admin-users'),
+
 
     path('show/<int:id>/', views.show, name='show')
 
