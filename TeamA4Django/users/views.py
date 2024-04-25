@@ -520,3 +520,9 @@ def send_promotion_email(sender, instance, created, **kwargs):
         
         # Send email to all subscribed users
         send_mail(subject, message, from_email, recipient_list)   
+        
+        
+def order_summary_view(request, pk):
+    movie = get_object_or_404(Movie, pk=pk)
+    context = {"movie": movie}
+    return render(request, 'orderSummary.html', context)
