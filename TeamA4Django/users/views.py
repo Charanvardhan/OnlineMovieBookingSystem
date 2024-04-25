@@ -3,7 +3,7 @@ import json
 from pyexpat.errors import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout 
-from .forms import OptionalInfoForm, CustomUserCreationForm, EditProfileForm
+from .forms import OptionalInfoForm, CustomUserCreationForm, EditProfileForm, PromotionsForm
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm
 from django.http import HttpResponse
 from django.core.mail import EmailMessage
@@ -103,7 +103,7 @@ def home_view(request):
 
 def logout_view(request):
     logout(request) 
-    return redirect('index')
+    return render(request, 'index.html')
 
 
 def admin_login_view(request):
@@ -182,7 +182,7 @@ def create_account_view(request):
                 email.send()
 
                 messages.success(request, 'Please confirm your email address to complete the registration.')
-                return redirect('emailverification.html')  
+                return redirect('emailverification')  
             else:
                 messages.error(request, 'Please correct the error in the credit card information.')
         else:
@@ -288,9 +288,12 @@ def profile_view(request):
     else:
         password_form = PasswordChangeForm(user)
     
-    # Assuming a OneToOne relationship with CreditCard for simplicity
     try:
      credit_card = CreditCard.objects.filter(user_profile=user_profile).first()
+     #credit_card = CreditCard.objects.filter(customer=user_profile.customer).first()
+
+     
+
     except CreditCard.DoesNotExist:
      credit_card = None
     
@@ -526,3 +529,17 @@ def order_summary_view(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     context = {"movie": movie}
     return render(request, 'orderSummary.html', context)
+
+def promotions_view(request):
+     if request.method == 'POST':
+        form = PromotionsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-home') 
+     else:
+        form = PromotionsForm()
+     return render(request, 'adminpromotions.html', {'form': form})
+    
+def admin_users_view(request):
+
+     return render(request, 'adminusers.html')   
