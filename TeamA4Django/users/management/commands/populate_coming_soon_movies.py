@@ -17,9 +17,9 @@ class Command(BaseCommand):
                 'review': 'Critics are praising Margot Robbie\'s performance as Barbie and the film\'s captivating storyline. It\'s a delightful family-friendly movie that everyone will enjoy!',
                 'release_date': '2024-07-01',
                 'duration': 130,
-                'trailer_url': 'https://www.youtube.com/embed/your-trailer-url',
+                'trailer_url': 'https://www.youtube.com/embed/pBk4NYhWNMM?si=iyTyekcqm2yeu5ix', #must be embedded!
                 'genre': 'Adventure, Fantasy',
-                'image': 'static/assets/img/gallery/barbie_margot_robbie.png',
+                'image': 'static/assets/img/gallery/barbie.png',
                 'rating': 'pg13',
                 'status': 'comingSoon',
             },
@@ -32,9 +32,9 @@ class Command(BaseCommand):
                 'review': 'Critics are hailing "Oppenheimer" as a masterpiece, praising Christopher Nolan\'s direction and the stellar performances of the cast. It offers a gripping portrayal of one of the most significant events in modern history.',
                 'release_date': '2024-10-15',
                 'duration': 160,
-                'trailer_url': 'https://www.youtube.com/embed/your-trailer-url',
+                'trailer_url': 'https://www.youtube.com/embed/uYPbbksJxIg?si=TG8-9l44i2RZGcvn',
                 'genre': 'Biography, Drama, History',
-                'image': 'assets/img/gallery/oppenheimer.png',
+                'image': 'static/assets/img/gallery/oppenheimer.png',
                 'rating': 'R',
                 'status': 'comingSoon',
             },
@@ -48,10 +48,12 @@ class Command(BaseCommand):
             
 
             if created:
-                self.stdout.write(self.style.SUCCESS(f'Successfully added movie: {title}'))
+                success_message = f'Successfully added movie: {title}'
+                self.stdout.write(self.style.SUCCESS(success_message))
             else:
-                self.stdout.write(self.style.WARNING(f'Movie already exists: {title}'))
+                warning_message = f'Movie already exists: {title}'
+                self.stdout.write(self.style.WARNING(warning_message))
 
-        return populate_coming_soon_movies
+       
 
     #return movies 

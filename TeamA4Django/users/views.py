@@ -35,7 +35,17 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import MovieForm
 # from flask import Flask, render_template
 from django.core.management import call_command
+import django_filters
 from .filters import MovieFilter
+from django.db.models.signals import post_save
+from django.contrib.admin.views.decorators import user_passes_test
+from django.contrib.auth import get_user_model
+from django.dispatch import receiver
+from django.db.models import Q
+
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 from django.db.models.signals import post_save
@@ -239,7 +249,7 @@ def index_view(request):
     # print("Coming Soon : ", coming_soon_movies[0].title)
 
 #This function shows Title, Description, Trailer, Cast, etc of a movie
-#It is called when 'View Details' is clicked. EEEEHH idk if i want to do this?? I will try it 
+#It is called when 'View Details' is clicked. 
 def show_movie_details(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     context = {"movie": movie}
@@ -394,25 +404,55 @@ def manage_movies_view(request):
 def unauthorized_view(request):
     return render(request, 'unauthorized.html')
 
-def search_movies_view(request):
-    query = request.GET.get('query')
-    movies = Movie.objects.all()
-    if query:
-        movies = movies.filter(title__icontains=query)
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-home')  # Redirect to the movie list page or another appropriate page
+    else:
+        form = MovieForm()
 
-    context = {
-        'movies': movies,
-        'query': query,
-        #'category': category,
-    }
-    return render(request, 'search_results.html', context)
+    return render(request, 'add_movie.html', {'form': form})
 
+@login_required(login_url='/login/')  # Redirects to login if not logged in
+@user_passes_test(is_admin, login_url='/unauthorized/')  # Redirect if not admin
+def manage_movies_view(request):
+    movies = Movie.objects.all()  # Fetch all movies from the database
+    return render(request, 'adminmovies.html', {'movies': movies})  
+
+
+def unauthorized_view(request):
+    return render(request, 'unauthorized.html')
+
+
+##Current
 def filter_movies(request):
-    movies = MovieFilter(request.GET, queryset = Movie.objects.all())
+    query = request.GET.get('q')
+    print("Received query parameter:", query)  # Add this line to print the received query parameter
+    if query:
+        movies = Movie.objects.filter(Q(title__icontains=query) | Q(genre__icontains=query))
+    else:
+        movies = Movie.objects.none()  # Return an empty queryset if no query is provided
+
+    # movies_filter = MovieFilter(request.GET, queryset=Movie.objects.all())
+    # movies = movies_filter.qs  # Access the filtered queryset
+    print("in filter_movies, query was: ", query)
+    print("the filtered movies are: ", movies)
+        
+
     context = {
         'movies': movies,
-        'form': movies.form
+        'query': query  # Pass the query to the template for display
     }
+    
+    print("SQL query:", movies.query)
+
+    # if query:
+    #     movies = Movie.objects.filter(title__icontains=query)
+    #     # You can also filter by genre, rating, etc. as needed
+    # else:
+    #     movies = None
     return render(request, 'search_movie.html', context)
 
 
