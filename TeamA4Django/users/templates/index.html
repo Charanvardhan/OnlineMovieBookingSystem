@@ -137,16 +137,28 @@
     <div class="container">
       <div class="row height d-flex justify-content-center align-items-center">
         <div class="col-md-6">
-          <div class="form">
+          <form action="{% url 'search_movie' %}" method="get">
+            {{form.as_q}}
             <i class="fa fa-search"></i>
             <input
               type="text"
               class="form-control form-input"
               placeholder="Search for a movie..."
               id="movieSearchInput"
+              name = "q"
+              
             />
+            
+              <!-- <form method = "get">
+                {{moviefilter.form.as_p}}
+                <input type = "submit"/>
+              </form>
+              { %for movie in moviefilter.qs %}
+                {{movie.name}} <br/>
+              { %endfor% }
+             -->
             <span class="left-pan"><i class="fa fa-microphone"></i></span>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -181,24 +193,27 @@
 
             
             <div class = "container-fluid">
+              <h4>Coming Soon:</h4>
+              <hr>
               <div class = "row row-cols-5">
-                <h4>Coming Soon:</h4>
-                <hr>
+                
+                
                 {%for movie in movies%}
-                {% if movie.status == "comingSoon"%}
-                <div class = "db-card-for-movie card">
-                  <img src = "{{ movie.image.url}}" alt = "every db movie img" class = "card-img-top"> 
-                    <div class="text-center card-body">
-                      <h1 class = "card-title"> {{movie.title}}</h1>
-                    <a href="{% url 'm_detail' movie.pk%}"class="btn-book" data-toggle="modal" data-target="#movieModal{{ movie.id }}">
-                      View Details</a>
+                  {% if movie.status == "comingSoon"%}
+                    <div class = "db-card-for-movie card">
+                      <img src = "{{ movie.image.url}}" alt = "every db movie img" class = "card-img-top"> 
+                      <div class="text-center card-body">
+                        <h1 class = "card-title"> {{movie.title}}</h1>
+                        <a href="{% url 'm_detail' movie.pk%}"class="btn-book" data-toggle="modal" data-target="#movieModal{{ movie.id }}">
+                        View Details</a>
 
-                      <!-- Add in coming Soon -->
-                    </div>
-                  </div>
-                </div>
-              {%endif%}
-              {%endfor%}
+                        <!-- Add in coming Soon -->
+                        </div>
+                      </div>
+                    
+                  {%endif%}
+                {%endfor%}
+              </div>
             </div>
 
             </div>

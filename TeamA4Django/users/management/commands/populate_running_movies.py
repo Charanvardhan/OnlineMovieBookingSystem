@@ -32,7 +32,7 @@ class Command(BaseCommand):
                 'review': 'Critics praised its ambitious storytelling, visuals, performances, and Hans Zimmers musical score. However, some criticized its lengthy runtime and complex plot. ',
                 'release_date': '2024-01-05',
                 'duration': 180,
-                'trailer_url': 'https://www.youtube  .com/embed/32RAq6JzY-w',
+                'trailer_url': 'https://www.youtube.com/embed/32RAq6JzY-w?si=EFXY-P4adBGniW88',
                 'genre': 'sci-fi',
                 'image': 'static/assets/img/gallery/fastx.png',
                 'rating': 'pg13',
@@ -48,7 +48,7 @@ class Command(BaseCommand):
                 'review': 'Critics praised its groundbreaking visual effects and immersive world-building. However, opinions on the film\'s story and characters have been more mixed.',
                 'release_date': '2024-01-09',
                 'duration': 195,
-                'trailer_url': 'https://www.youtube.com/embed/d9MyW72ELq0',
+                'trailer_url': 'https://www.youtube.com/embed/d9MyW72ELq0', #needs to be embedded!
                 'genre': 'Action, Adventure, Sci-Fi',
                 'image': 'static/assets/img/gallery/avatar.png',
                 'rating': 'PG-13',
@@ -63,10 +63,11 @@ class Command(BaseCommand):
             
 
             if created:
-                self.stdout.write(self.style.SUCCESS(f'Successfully added movie: {title}'))
+                success_message = f'Successfully added movie: {title}'
+                self.stdout.write(self.style.SUCCESS(success_message))
             else:
-                self.stdout.write(self.style.WARNING(f'Movie already exists: {title}'))
-
-        return populate_running_movies
+                warning_message = f'Movie already exists: {title}'
+                self.stdout.write(self.style.WARNING(warning_message))
+        
 
     #return movies 
