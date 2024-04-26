@@ -25,7 +25,7 @@ urlpatterns = [
     path('search_movie/', views.filter_movies, name='search_movie'),
     path('add_movie/', views.add_movie, name='add-movie'),
     path('adminmovies/', views.manage_movies_view, name='manage-movies'),
-    path('show/<int:pk>/', views.order_summary_view, name='show'),
+    path('show/<int:id>/', views.show, name='show'),
     path('adminpromotions/', views.promotions_view, name='promotions'),
     path('adminusers/', views.admin_users_view, name='admin-users'),
 

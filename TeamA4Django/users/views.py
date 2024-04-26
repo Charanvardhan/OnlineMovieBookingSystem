@@ -464,55 +464,34 @@ def show(request, id):
         return JsonResponse({'error': 'Show ID not provided'}, status=400)
 
     try:
-        show = Show.objects.select_related('showtime', 'showroom').get(id=id)
-    except Show.DoesNotExist:
-        return JsonResponse({'error': 'Show not found'}, status=404)
+        shows = Show.objects.select_related('showtime', 'showroom').filter(movie_id=id)
+        
+        if not shows.exists():
+            return JsonResponse({'error': 'No shows found for this movie'}, status=404)
+
+        show_data = []
+        for show in shows:
+            show_data.append({
+                'show_id': show.show_id,
+                'movie_id': show.movie.id,
+                'showroom_number': show.showroom.showroom_number,
+                'seats': show.showroom.get_seats(),
+                'dates': show.showtime.date,
+                'start_time': show.showtime.time_slot,
+                # 'end_time': show.showtime.end_time,
+            })
+        
+        return render(request, 'showBooking.html', {'shows': show_data})
+    except Exception as e:
+        print("hello")
+        return JsonResponse({'error': str(e)}, status=500)
+
 
     
-    show_data = {
-        'show_id': show.show_id,
-        'movie_id': show.movie.id,
-        'date': show.date,
-        'duration': show.duration,
-        'showroom': {
-            'showroom_number': show.showroom.showroom_number,
-            'seats': show.showroom.get_seats()
-            
-        },
-        'showtime': {
-            'start_time': show.showtime.start_time,
-            'end_time': show.showtime.end_time,
-            'formatted_times': show.showtime.get_formatted_showtimes()
-            # 'showroom': show.showtime.
-        }
-    }
 
-    # Fetch all showtimes on the same date
-    date_as_datetime = show.date
-    showtimes = Showtimes.objects.filter(
-        start_time__year=date_as_datetime.year,
-        start_time__month=date_as_datetime.month,
-        start_time__day=date_as_datetime.day
-    )
-
-    print(type(showtimes))
-    # Serialize the showtimes queryset
-    showtimes_data = serialize('json', showtimes)
-    print(type(showtimes_data), "before hsilfhaofhj")
     
-    showtimes_data = json.loads(showtimes_data)
-
-    # Use dateutil.parser to handle ISO format with 'Z'
-    times_only = [parser.isoparse(item['fields']['start_time']).time().isoformat() for item in showtimes_data]
-
-    print(type(times_only))
-    # Serialize the list of times back to JSON
-    # showtimes_data = json.dumps(times_only)
-    # print(type(showtimes_data))
-
-    return JsonResponse({'show': show_data, 'showtimes': times_only})
-
-
+    
+ 
 @receiver(post_save, sender=Promotions)
 def send_promotion_email(sender, instance, created, **kwargs):
     if created and instance.is_available:
