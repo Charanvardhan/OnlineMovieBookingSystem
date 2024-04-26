@@ -81,9 +81,10 @@
             {% if movie.status == "nowPlaying" %}
                 <!-- <h1> should be now playing, show button</h1> -->
                 <!-- Go to booking page and select seats -->
-                <a href = "{ % url 'orderSummary' movie.pk %}"
+                <a href = "{ % url 'show' movie.pk %}"
                     class="btn-book"
-                    data-bs-toggle="modal">
+                    {% comment %} data-bs-toggle="modal"> {% endcomment %}
+                >
                     Book Movie
 
                 </a>

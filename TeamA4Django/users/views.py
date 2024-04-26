@@ -543,3 +543,7 @@ def promotions_view(request):
 def admin_users_view(request):
 
      return render(request, 'adminusers.html')   
+
+
+def admin_redirect(request):
+    return redirect('/admin/')
