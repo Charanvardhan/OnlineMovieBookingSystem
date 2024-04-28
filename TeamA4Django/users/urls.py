@@ -28,7 +28,7 @@ urlpatterns = [
     path('show/<int:id>/', views.show, name='show'),
     path('adminpromotions/', views.promotions_view, name='promotions'),
     path('adminusers/', views.admin_users_view, name='admin-users'),
-
+    #path('ordersummary/', views.order_summary_view, name='order-summary'),
 
     # path('show/<int:id>/', views.show, name='show')
 
