@@ -201,10 +201,10 @@ class Promotions(models.Model):
 
 
 class TimeSlot(models.TextChoices):
-    MORNING = 'Morning', '09:00-12:00'
-    AFTERNOON = 'Afternoon', '12:00-15:00'
-    EVENING = 'Evening', '15:00-18:00'
-    NIGHT = 'Night', '18:00-21:00'
+    MORNING = 'Morning 09:00-12:00', '09:00-12:00'
+    AFTERNOON = 'Afternoon 12:00-15:00', '12:00-15:00'
+    EVENING = 'Evening 15:00-18:00', '15:00-18:00'
+    NIGHT = 'Night 18:00-21:00', '18:00-21:00'
 
 class Showroom(models.Model):
     seats = models.IntegerField()
@@ -218,15 +218,17 @@ class Showroom(models.Model):
 
 class Showtimes(models.Model):
     date = models.DateField(default=timezone.now)
-    time_slot = models.CharField(max_length=15, choices=TimeSlot.choices, default=TimeSlot.MORNING)
+    time_slot = models.CharField(max_length=40, choices=TimeSlot.choices, default=TimeSlot.MORNING)
     showroom = models.ForeignKey('Showroom', on_delete=models.CASCADE, default=1)
 
     class Meta:
         unique_together = ('date', 'time_slot', 'showroom')
 
     def get_formatted_showtimes(self):
-        time_range = TimeSlot.labels[TimeSlot.values.index(self.time_slot)]
-        return f"{self.date} {time_range}"
+        for choice in TimeSlot.choices:
+            if choice[0] == self.time_slot:
+                return f"{choice[0]} {choice[1]}"
+        return ""
 
     def __str__(self):
         return self.get_formatted_showtimes()
