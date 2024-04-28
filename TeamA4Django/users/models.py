@@ -9,8 +9,8 @@ import uuid
 from django.db import models
 from django.core.exceptions import ValidationError
 import datetime
-
-
+from cryptography.fernet import Fernet
+import os
 #To-DO
 #Showroom, show, showtime and booking
 
@@ -40,14 +40,41 @@ class UserProfile(models.Model):
     country = models.CharField(max_length=50, blank=True)
     zip_postal_code = models.CharField(max_length=12, blank=True)
     name_on_card = models.CharField(max_length=100, blank=True)
-    card_number = models.CharField(max_length=16, blank=True)  
+    card_number = models.CharField(max_length=255, blank=True)  
     expiration = models.CharField(max_length=5, blank=True)  
-    cvv = models.CharField(max_length=4, blank=True)
+    cvv = models.CharField(max_length=255, blank=True)
     billing_zip_postal_code = models.CharField(max_length=12, blank=True)
     subscribe_to_promotions = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user.username}'s profile"
+
+    # def decrypt_card_info(self):
+    #     if self.card_number and self.cvv:
+    #         key = os.environ.get('FERNET_KEY')
+    #         fernet = Fernet(key)
+    #         x = self.card_number
+    #         decrypted_card_number = fernet.decrypt(x).decode()
+    #         decrypted_cvv = fernet.decrypt(x).decode()
+    #         return decrypted_card_number, decrypted_cvv
+    #     else:
+    #         return None, None
+
+    def save(self, *args, **kwargs):
+        print("Arguments (*args):", args)
+        print("Keyword arguments (**kwargs):", kwargs)
+        if self.card_number:
+            self.card_number = self.encrypt_data(self.card_number)
+             # Clear the original card number after encryption
+        if self.cvv:
+            self.cvv = self.encrypt_data(self.cvv)
+              # Clear the original CVV after encryption
+        super().save(*args, **kwargs)
+
+    def encrypt_data(self, data):
+        key = settings.FERNET_KEY.encode()
+        fernet = Fernet(key)
+        return fernet.encrypt(data.encode())
 
 
 class Status(models.TextChoices):

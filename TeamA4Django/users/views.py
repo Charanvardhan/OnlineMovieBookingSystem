@@ -42,8 +42,8 @@ from django.contrib.admin.views.decorators import user_passes_test
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
 from django.db.models import Q
-
-
+from cryptography.fernet import Fernet
+import os
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -52,17 +52,17 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-# @login_required
-# def edit_profile(request):
-#     if request.method == 'POST':
-#         form = EditProfileForm(request.POST, instance=request.user)
-#         if form.is_valid():
-#             form.save()
-#             # Optionally, add a success message
-#             return redirect('profile')  # Redirect to profile page after editing
-#     else:
-#         form = EditProfileForm(instance=request.user)
-#     return render(request, 'edit_profile.html', {'form': form})
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            # Optionally, add a success message
+            return redirect('profile')  # Redirect to profile page after editing
+    else:
+        form = EditProfileForm(instance=request.user)
+    return render(request, 'edit_profile.html', {'form': form})
 
 
 def encrypt_card_info(card_number, cvv):
@@ -258,60 +258,50 @@ def show_movie_details(request, pk):
 
 
 
-
-#The instance of the user is displayed on profile.html with email being an uneditable field
-#I cannot check when user is logged out
 @login_required
 def profile_view(request):
     user = request.user
-    user_profile, _ = UserProfile.objects.get_or_create(user=user)
-
-    # decrypted_card_number, decrypted_cvv = decrypt_card_info(user_profile.card_number)
-
-    if 'submit_user_form' in request.POST:
-        #use userprofile edit form 
-        user_form = UserProfileEditForm(request.POST, instance=user_profile, prefix='user')
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'Your profile has been updated successfully!')
-            return redirect('profile')
-    else:
-        user_form = UserProfileForm(instance=user_profile, prefix='user')
-    
-    if 'submit_password_form' in request.POST:
-        password_form = PasswordChangeForm(user, request.POST)
-        if password_form.is_valid():
-            user = password_form.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, 'Your password has been updated successfully!')
-            return redirect('profile')
-    else:
-        password_form = PasswordChangeForm(user)
-    
     try:
-     credit_card = CreditCard.objects.filter(user_profile=user_profile).first()
-     #credit_card = CreditCard.objects.filter(customer=user_profile.customer).first()
+        user_profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile.objects.create(user=user, email=user.email)
 
-     
-
-    except CreditCard.DoesNotExist:
-     credit_card = None
+    # password_form = PasswordChangeForm(user=request.user)
     
-    if 'submit_credit_card_form' in request.POST and credit_card:
-        credit_card_form = CreditCardForm(request.POST, instance=credit_card, prefix='credit')
-        if credit_card_form.is_valid():
-            credit_card_form.save()
-            messages.success(request, 'Your credit card information has been updated successfully!')
-            return redirect('profile')
+    
+    if request.method == 'POST':
+        if 'submit_user_form' in request.POST:
+            user_form = UserProfileEditForm(request.POST, instance=user_profile, prefix='user')
+            # print(user_form)
+            if user_form.is_valid():
+                user_form.save()
+                print("near save ------------------------")
+                messages.success(request, 'Your profile has been updated successfully!')
+                return redirect('index')
+        elif 'submit_password_form' in request.POST:
+            password_form = PasswordChangeForm(user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Your password has been updated successfully!')
+                return redirect('profile')
     else:
-        credit_card_form = CreditCardForm(instance=credit_card, prefix='credit') if credit_card else None
-    
+        # Initialize form with decrypted data
+        user_form = UserProfileEditForm(instance=user_profile, prefix='user')
+        decrypted_card_number = user_form.clean_card_number()
+        decrypted_cvv = user_form.clean_cvv()
+        initial_data = {'card_number': decrypted_card_number, 'cvv': decrypted_cvv}
+        user_form = UserProfileEditForm(instance=user_profile, initial=initial_data, prefix='user')
+        password_form = PasswordChangeForm(user)
+        # return render(request, 'profile.html', {'user_form': user_form, 'password_form': password_form})
+        
+        
     return render(request, 'profile.html', {
         'user_form': user_form,
         'password_form': password_form,
-        'credit_card_form': credit_card_form,
+        # 'credit_card_form': credit_card_form,
         # 'decrypted_card_number': decrypted_card_number,
-        # 'decrypted_cvv': decrypted_cvv
+        #  'decrypted_cvv': decrypted_cvv
     })
 
 def login_view(request):
@@ -334,6 +324,7 @@ def login_view(request):
                 return render(request, 'login.html', {'form': form, 'error': 'Invalid email or password.'})
     else:
         form = AuthenticationForm()  # Make sure to use your updated form
+    
     return render(request, 'login.html', {'form': form})
 
 
@@ -383,7 +374,7 @@ def search_movies(request):
             return render(request, 'search_results.html', {'movies': movies, 'form': form})
     else:
         form = MovieSearchForm()
-    print(form)
+    # print(form)
     return render(request, 'search_movie.html', {'form': form})
 
 def add_movie(request):

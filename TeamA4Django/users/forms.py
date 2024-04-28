@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 from .models import UserProfile, CreditCard, Movie, Show, Showtimes, Promotions
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import ValidationError
+import os
+from cryptography.fernet import Fernet
+from cryptography.fernet import InvalidToken
+
 
 class CustomPasswordResetForm(PasswordChangeForm):
     class Meta:
@@ -66,11 +70,11 @@ class UserProfileForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['user']
 
-class UserProfileEditForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = '__all__'  
-        exclude = ['user', 'email', 'password'] 
+# class UserProfileEditForm(forms.ModelForm):
+#     class Meta:
+#         model = UserProfile
+#         fields = '__all__'  
+#         exclude = ['user', 'email', 'password'] 
         
 
 class CreditCardForm(forms.ModelForm):
@@ -186,4 +190,45 @@ class ShowAdminForm(forms.ModelForm):
         return cleaned_data
 
 
+from django import forms
+from .models import UserProfile
 
+class UserProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['first_name', 'last_name', 'email', 'address_line_1', 'address_line_2', 'apartment_suite', 'city', 
+                  'state_province', 'country', 'zip_postal_code', 'name_on_card', 
+                  'card_number', 'expiration', 'cvv', 'billing_zip_postal_code', 'subscribe_to_promotions']
+    
+    def __init__(self, *args, **kwargs):
+        super(UserProfileEditForm, self).__init__(*args, **kwargs)
+        # Add any custom initialization code here
+
+    def clean_card_number(self):
+        card_number = self.initial.get('card_number', '')  # Get initial value of card_number
+        if card_number:
+            card_number = card_number.strip()[2:-1]
+            key = os.environ.get('FERNET_KEY')
+            fernet = Fernet(key)
+            try:
+                decrypted_card_number = fernet.decrypt(card_number.encode()).decode()
+            except InvalidToken:
+                decrypted_card_number = "Invalid Card Number"
+        else:
+            decrypted_card_number = ""
+        return decrypted_card_number
+
+
+    def clean_cvv(self):
+        cvv = self.initial.get('cvv', '')  # Get initial value of cvv
+        if cvv:
+            cvv = cvv.strip()[2:-1]
+            key = os.environ.get('FERNET_KEY')
+            fernet = Fernet(key)
+            try:
+                decrypted_cvv = fernet.decrypt(cvv.encode()).decode()
+            except InvalidToken:
+                decrypted_cvv = "Invalid CVV"
+        else:
+            decrypted_cvv = ""
+        return decrypted_cvv
