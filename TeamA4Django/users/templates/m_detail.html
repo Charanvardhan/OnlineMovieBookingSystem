@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>SINABOOK | Search Results</title>
+    <title>SINABOOK | Movie Details </title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -77,24 +77,39 @@
 
 
         <!-- Book now button needs user to be logged in. If user is not logged in, toggle it to be inactive -->
-            <div class = "book-now-button">
-            {% if movie.status == "nowPlaying" %}
-                <!-- <h1> should be now playing, show button</h1> -->
-                <!-- Go to booking page and select seats -->
-                <a href = "{% url 'show' movie.pk %}"
-                    class="btn-book"
-                    {% comment %} data-bs-toggle="modal"> {% endcomment %}
-                >
-                    Book Movie
-
-                </a>
-                </div>
                 
+        {% if request.user.is_authenticated %}
+            {% if movie.status == "nowPlaying" %}
+              <div class = "book-bow-button">
+                <a href = "{% url 'show' movie.pk %}" class="btn-book" data-bs-toggle="modal"> Book Movie </a>
+              </div>
             {% else %}
-                    <h1> This movie isn't playing yet check back later.</h1>
-                    <button type="button" class="btn btn-book disabled">Book Movie</button>
-
+              <div>
+                <div class = "book-now-button">
+                  <h1> This movie isn't playing yet check back later.</h1>
+                  <button type="button" class="btn btn-book disabled">Book Movie</button>
+                </div>
+              </div>
             {% endif %}
+        {% else %}
+          <div class = "log-in">
+            <a href = "{% url 'login' %}" class="btn-book" data-bs-toggle="modal"> Log in to Book </a>
+            <a href="{% url 'createAccount' %}"> Create Account</a>
+          </div>
+        {% endif %}
+              
+              
+                        
+
+
+          
+
+            
+                    
+                    
+
+            
+        </div>
         
         </div>
 
