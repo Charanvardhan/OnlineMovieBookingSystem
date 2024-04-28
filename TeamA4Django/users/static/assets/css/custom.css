@@ -328,7 +328,7 @@ p.orderSummarytext span {
 
 p.text {
     margin: 40px 0;
-    color: #3e3e3e;
+    color: #ffffff;
 }
 
 p.text span {
@@ -388,4 +388,34 @@ span {
     padding-right: calc(var(--bs-gutter-x)* .5);
     padding-left: calc(var(--bs-gutter-x)* .5);
     margin-top: var(--bs-gutter-y);
+}
+
+.card-title {
+    margin-bottom: var(--bs-card-title-spacer-y);
+    color: var(--bs-card-title-color);
+    font-size: 20px;
+}
+
+img,
+svg {
+    vertical-align: middle;
+    width: 300px;
+}
+
+.moviecontainer,
+.moviecontainer-fluid,
+.moviecontainer-lg,
+.moviecontainer-md,
+.moviecontainer-sm,
+.moviecontainer-xl,
+.moviecontainer-xxl {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 60%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 20px;
+    padding-bottom: 40px;
 }
