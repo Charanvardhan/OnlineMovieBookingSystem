@@ -311,7 +311,7 @@ def login_view(request):
             email = form.cleaned_data.get('username')  
             password = form.cleaned_data.get('password')
             
-            User = get_user_model()
+            # User = get_user_model()
             try:
                 user = User.objects.get(email=email) 
                 user = authenticate(request, username=user.username, password=password)  
@@ -327,6 +327,11 @@ def login_view(request):
     
     return render(request, 'login.html', {'form': form})
 
+@login_required(login_url='/login/')  # Redirects to login if not logged in
+def booking_history_view(request):
+    customer = request.user.customer  # Assuming authenticated user has a related Customer object
+    booking_histories = customer.booking_history()
+    return render(request, 'booking_history.html', {'booking_histories': booking_histories})
 
 def registration_confirmation(request):
     return render(request, 'registrationconfirmation.html')
@@ -517,3 +522,4 @@ def admin_users_view(request):
 
 def admin_redirect(request):
     return redirect('/admin/')
+

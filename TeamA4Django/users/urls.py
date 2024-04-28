@@ -28,6 +28,7 @@ urlpatterns = [
     path('show/<int:id>/', views.show, name='show'),
     path('adminpromotions/', views.promotions_view, name='promotions'),
     path('adminusers/', views.admin_users_view, name='admin-users'),
+    path('booking_history/', views.booking_history_view, name='booking_history'),
 
 
     # path('show/<int:id>/', views.show, name='show')
