@@ -146,7 +146,7 @@ USE_TZ = True
 STATIC_URL = '/static/' 
 STATIC_ROOT = '/users/'
 
-FERNET_KEY = os.environ.get('FERNET_KEY')
+FERNET_KEY = os.getenv('FERNET_KEY')
 
 FERNET_KEY_BYTES = FERNET_KEY.encode()
 

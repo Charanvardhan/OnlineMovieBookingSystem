@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>SINABOOK | Home</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/ticketLogo1.png'%}" rel="icon" />
+    <link href="{% static 'assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}"
+      rel="stylesheet"
+    />
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" />
+
+    <!-- =======================================================
+  * Template Name: PhotoFolio
+  * Updated: Jan 29 2024 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/photofolio-bootstrap-photography-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+      <div
+        class="nav-container d-flex align-items-center justify-content-between"
+      >
+        <a
+        href="/"
+          class="logo d-flex align-items-center me-auto me-lg-0"
+        >
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="assets/img/logo.png'%}" alt=""> -->
+          <!-- <i class="bi bi-camera"></i> -->
+          <img src="{% static 'assets/img/ticketLogo1.png'%}" alt="" />
+          <h1>SINABOOK ORDER HISTORY</h1>
+        </a>
+
+        <nav id="navbar" class="navbar">
+          <ul>
+              <li><a href="/" class="active">Home</a></li>
+              <!-- Uncomment and update href attributes as needed for other links -->
+              <!-- <li><a href="/about/">About</a></li> -->
+              
+
+              {% if request.user.is_authenticated %}
+              <!-- Displayed only if user is logged in -->
+              <li><a href="{% url 'logout' %}">Log out</a></li>
+              <li><a href="{% url 'index' %}">Home</a></li>
+              
+              
+            
+              {% else %}
+              <!-- Displayed only if user is not logged in -->
+              <li><a href="{% url 'login' %}">Log in</a></li>
+              <a href="{% url 'createAccount' %}"> Create Account</a>
+              {% endif %}
+               <!-- Add more links as needed -->
+          </ul>
+      </nav>
+
+        <!-- <div class="header-social-links">
+        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+         -->
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section
+      id="hero"
+      class="hero d-flex flex-column justify-content-center align-items-center"
+      data-aos="fade"
+      data-aos-delay="1500"
+    >
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+
+            <!-- should show name of user when logged in -->
+            {% if user.is_authenticated %}
+            <p>Hello {{ user.first_name }}!</p>
+                 {% else %}
+            <p>Hello, Guest!</p>
+           {% endif %}
+            <h2><span>WELCOME TO SINABOOK!</span></h2>
+            <p>Browse, book, and benefit!</p>
+            <a href="#main" class="btn-get-started">View Current Movies</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Hero Section -->
+    <div class="container">
+      <div class="row height d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+          <form action="{% url 'search_movie' %}" method="get">
+            {{form.as_q}}
+            <i class="fa fa-search"></i>
+            <input
+              type="text"
+              class="form-control form-input"
+              placeholder="Search for a movie..."
+              id="movieSearchInput"
+              name = "q"
+              
+            />
+            
+              <!-- <form method = "get">
+                {{moviefilter.form.as_p}}
+                <input type = "submit"/>
+              </form>
+              { %for movie in moviefilter.qs %}
+                {{movie.name}} <br/>
+              { %endfor% }
+             -->
+            <span class="left-pan"><i class="fa fa-microphone"></i></span>
+          </form>
+        </div>
+      </div>
+    </div>
+    <main id="main" data-aos="fade" data-aos-delay="1500">
+      <!-- ======= Currently Running Section ======= -->
+      <section id="gallery" class="gallery">
+        <div class="container-fluid">
+            <h1>Booking History</h1>
+                <ul>
+        {% for booking in booking_histories %}
+            <li>{{ booking.display_booking_info }}</li>
+        {% endfor %}
+    </ul>
+          
+        </div>
+
+            
+
+        <!-- End Coming soon section -->
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright <strong><span>University of Georgia</span></strong
+          >. All Rights Reserved
+        </div>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/photofolio-bootstrap-photography-website-template/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      <!-- </div> -->
+    </footer>
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <div id="preloader">
+      <div class="line"></div>
+    </div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+  </body>
+</html>

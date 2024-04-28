@@ -24,6 +24,7 @@ import os
  #   pass
 
 #user profile model and fields
+##Difference between this and Customer??
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     #need first, last name
@@ -48,6 +49,9 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s profile"
+    
+    def booking_history (self):
+        return BookingHistory.objects.filter(user=self) 
 
     # def decrypt_card_info(self):
     #     if self.card_number and self.cvv:
@@ -82,28 +86,37 @@ class Status(models.TextChoices):
     INACTIVE = 'Inactive', 'Inactive'
     SUSPENDED = 'Suspended', 'Suspended'
 
-class Customer(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    status = models.CharField(
-        max_length=10,
-        choices=Status.choices,
-        default=Status.ACTIVE,
-    )
 
-    def storePaymentCard(self):
-        pass
+##What is the difference between this and UserProfile???
+# class Customer(models.Model):
+#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     first_name = models.CharField(max_length=100)
+#     last_name = models.CharField(max_length=100)
+#     password = models.CharField(max_length=100)
+#     email = models.EmailField(unique=True)
+#     status = models.CharField(
+#         max_length=10,
+#         choices=Status.choices,
+#         default=Status.ACTIVE,
+#     )
 
-    def checkout(self):
-        pass
+#     def storePaymentCard(self):
+#         pass
+
+#     def checkout(self):
+#         pass
+    
+#     def booking_history (self):
+#         return BookingHistory.objects.filter(user=self) 
+    
+
+
+
 
 
 #credit card model 
 class CreditCard(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True)
     name_on_card = models.CharField(max_length=100, blank=True)  
     card_number = models.CharField(max_length=16, blank=True)
     cvv = models.CharField(max_length=4,blank=True)
@@ -126,7 +139,7 @@ class CreditCard(models.Model):
         pass
    
     def __str__(self):
-     return f"Credit Card for {self.customer.first_name} {self.customer.last_name}"
+     return f"Credit Card for {self.user.first_name} {self.user.last_name}"
 
 
 #movie card model
@@ -183,6 +196,7 @@ class Bookings(models.Model):
     #promotion_id =
     # show_id = models.IntegerField(unique=True)
     # (Having card id => which card user used to perform booking is also a good practice.)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='bookings')
     booking_number = models.IntegerField(unique=True)
     ticket_number = models.IntegerField()
     availability = models.IntegerField()
@@ -267,6 +281,7 @@ class Show(models.Model):
     showroom = models.ForeignKey('Showroom', on_delete=models.CASCADE, default=1)
     showtime = models.ForeignKey('Showtimes', on_delete=models.CASCADE, default=1)
     show_id = models.IntegerField(unique=True)
+    ticket = models.ManyToManyField('Ticket', default = 'true')
 
     # def save(self, *args, **kwargs):
     #     if not self.pk:  # Check if this is a new record
@@ -303,3 +318,15 @@ class TicketPrices(models.Model):
         pass
 
 
+class BookingHistory(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='booking_histories', default = 1)
+    # Add fields to store booking details like booking number, ticket number, etc.
+    booking_number = models.IntegerField(unique=True)
+    ticket_number = models.IntegerField()
+    show = models.ForeignKey(Show, on_delete=models.CASCADE)
+    #show = models.ForeignKey
+        # Add other fields as needed
+
+    # Optionally, add a method to format booking details for display
+    def display_booking_info(self):
+        return f"Booking Number: {self.booking_number}, Ticket Number: {self.ticket_number}"
