@@ -233,6 +233,7 @@ class TimeSlot(models.TextChoices):
     EVENING = 'Evening 15:00-18:00', '15:00-18:00'
     NIGHT = 'Night 18:00-21:00', '18:00-21:00'
 
+##Need var numSeats, fk to Seat
 class Showroom(models.Model):
     seats = models.IntegerField()
     showroom_number = models.IntegerField(unique=True)
@@ -243,6 +244,7 @@ class Showroom(models.Model):
     def __str__(self):
         return f"Showroom {self.showroom_number}"
 
+#Need var numAvailSeats, all seats in ShowRoom
 class Showtimes(models.Model):
     date = models.DateField(default=timezone.now)
     time_slot = models.CharField(max_length=40, choices=TimeSlot.choices, default=TimeSlot.MORNING)
