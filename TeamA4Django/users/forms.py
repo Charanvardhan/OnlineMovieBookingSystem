@@ -199,6 +199,7 @@ class UserProfileEditForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'address_line_1', 'address_line_2', 'apartment_suite', 'city', 
                   'state_province', 'country', 'zip_postal_code', 'name_on_card', 
                   'card_number', 'expiration', 'cvv', 'billing_zip_postal_code', 'subscribe_to_promotions']
+        exclude = ['user', 'email', 'password']
     
     def __init__(self, *args, **kwargs):
         super(UserProfileEditForm, self).__init__(*args, **kwargs)
