@@ -195,21 +195,7 @@ class Movie(models.Model):
 
 
 
-class Bookings(models.Model):
-    #customer_id = 
-    #promotion_id =
-    # show_id = models.IntegerField(unique=True)
-    # (Having card id => which card user used to perform booking is also a good practice.)
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='bookings')
-    booking_number = models.IntegerField(unique=True)
-    ticket_number = models.IntegerField()
-    availability = models.IntegerField()
 
-    def purchaseTicket(self):
-        pass
-
-    def deleteBooking(self):
-        pass
 
 
 class Ticket(models.Model):
@@ -217,6 +203,7 @@ class Ticket(models.Model):
     #The ticket price schema can be used as foreign key in tickets.
     # Also mention the type of ticket in ticket
     ticket_number = models.IntegerField() #idk if this should be here, added to remove error 
+    # booking = models.OneToOneField(Booking, on_delete=models.CASCADE)
 
 
 class Admin(models.Model):
@@ -279,6 +266,23 @@ class Showtimes(models.Model):
 
     def __str__(self):
         return self.get_formatted_showtimes()
+    
+class Bookings(models.Model):
+    #customer_id = 
+    #promotion_id =
+    # show_id = models.IntegerField(unique=True)
+    # (Having card id => which card user used to perform booking is also a good practice.)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='bookings')
+    showtime = models.OneToOneField(Showtimes, on_delete=models.CASCADE)
+    booking_number = models.IntegerField(unique=True)
+    ticket_number = models.IntegerField()
+    availability = models.IntegerField()
+
+    def purchaseTicket(self):
+        pass
+
+    def deleteBooking(self):
+        pass
 
 class Show(models.Model):
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE, default=1)

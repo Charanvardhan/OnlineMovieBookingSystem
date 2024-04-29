@@ -105,6 +105,12 @@ def logout_view(request):
     logout(request) 
     return render(request, 'index.html')
 
+def checkout_view(request, pk):
+    show = get_object_or_404(Show, pk=pk)
+    context = {"show" : show}
+    print("show objects: ", show)
+    # user = authenticate(username = user.email)
+    return render(request, 'checkout.html', context)
 
 def admin_login_view(request):
     if request.method == 'POST':
