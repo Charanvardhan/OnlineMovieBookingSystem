@@ -329,11 +329,11 @@ def login_view(request):
     
     return render(request, 'login.html', {'form': form})
 
-@login_required(login_url='/login/')  # Redirects to login if not logged in
-def booking_history_view(request):
-    customer = request.user  # Assuming authenticated user has a related Customer object
-    booking_histories = customer.booking_history()
-    return render(request, 'booking_history.html', {'booking_histories': booking_histories})
+# @login_required(login_url='/login/')  # Redirects to login if not logged in
+# def booking_history_view(request):
+#     customer = request.user  # Assuming authenticated user has a related Customer object
+#     booking_histories = customer.booking_history()
+#     return render(request, 'booking_history.html', {'booking_histories': booking_histories})
 
 def registration_confirmation(request):
     return render(request, 'registrationconfirmation.html')
