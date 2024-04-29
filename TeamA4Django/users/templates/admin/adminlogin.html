@@ -126,7 +126,7 @@
                   </div>
               {% endif %}
               <div class="row justify-content-center mt-4">
-                  <div class="col-lg-9">
+                  <div class="loginWindow">
                       <form method="POST" action="">
                           {% csrf_token %}
                           <!-- Display form-specific errors  -->
@@ -154,7 +154,7 @@
                                   <div class="alert alert-danger">{{ form.password.errors.as_text }}</div>
                               {% endif %}
                           </div>
-                      
+                          <br>
                           <div class="text-center">
                               <button type="submit" class="btn-get-started">Log in</button>
                           </div>

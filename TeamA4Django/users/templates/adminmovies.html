@@ -6,8 +6,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
     <title>SINABOOK | Admin Movies</title>
-    <meta content=" name="description" />
-    <meta content=" name="keywords" />
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
 
     <!-- Favicons -->
      <link href="{% static 'assets/img/ticketLogo1.png'%}" rel="icon" />
@@ -64,58 +64,38 @@
         class="container-fluid d-flex align-items-center justify-content-between"
       >
         <a
-          href="index.html"
+           href="{% url 'index' %}" 
           class="logo d-flex align-items-center me-auto me-lg-0"
         >
           <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png'%}" alt="> -->
+          <!-- <img src="assets/img/logo.png'%}" alt=""> -->
           <!-- <i class="bi bi-camera"></i> -->
-          <img src="{% static 'assets/img/ticketLogo1.png'%}" alt=" />
+          <img src="{% static 'assets/img/ticketLogo1.png'%}" alt="" />
           <h1>SINABOOK</h1>
         </a>
 
-       <nav id="navbar" class="navbar">
+        <nav id="navbar" class="navbar">
           <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About</a></li> -->
-            <!-- <li class="dropdown">
-              <a href="#"
-                ><span>Gallery</span>
-                <i class="bi bi-chevron-down dropdown-indicator"></i
-              ></a>
-              <ul>
-                <li><a href="gallery.html">Nature</a></li>
-                <li><a href="gallery.html">People</a></li>
-                <li><a href="gallery.html">Architecture</a></li>
-                <li><a href="gallery.html">Animals</a></li>
-                <li><a href="gallery.html">Sports</a></li>
-                <li><a href="gallery.html">Travel</a></li>
-                <li class="dropdown">
-                  <a href="#"
-                    ><span>Sub Menu</span>
-                    <i class="bi bi-chevron-down dropdown-indicator"></i
-                  ></a>
-                  <ul>
-                    <li><a href="#">Sub Menu 1</a></li>
-                    <li><a href="#">Sub Menu 2</a></li>
-                    <li><a href="#">Sub Menu 3</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li> -->
-           <!-- <li><a href="login.html">Log in</a></li> -->
-            <!-- <li><a href="services.html">Services</a></li>
-            <li><a href="contact.html">Contact</a></li> -->
-          </ul>
-        </nav>
-        <!-- .navbar -->
+              <li><a href="index" class="active">Home</a></li>
+              <!-- Uncomment and update href attributes as needed for other links -->
+              <!-- <li><a href="/about/">About</a></li> -->
+              
 
-        <!-- <div class="header-social-links">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-         -->
+              {% if request.user.is_authenticated %}
+              <!-- Displayed only if user is logged in -->
+              <li><a href="{% url 'log-out' %}">Log out</a></li>
+             
+        
+              {% else %}
+              <!-- Displayed only if user is not logged in -->
+              <li><a href="{% url 'admin-login' %}">Log in</a></li>
+              <a href="{% url 'createAccount' %}"> Create Account</a>
+              {% endif %}
+               <!-- Add more links as needed -->         
+              
+            
+          </ul>     
+        </nav>
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
       </div>
@@ -133,16 +113,16 @@
         <div class="row justify-content-center">
           <div class= "text-center">
             <h3><span>Manage Movies</span></h3>
-            <p>Handle Functions Related to Movies and Movie Details
+            <p>Make changes to and delete movies
             </p>
           </div>
-
-<div class="container">
-    <h2>Manage Movies</h2>
-    <div class="row">
+        </div>
+      </div>
+      <div class="container-fluid">   
+        <div class="row">
         {% for movie in movies %}
-        <div class="col-md-4">
-            <div class="card mb-4">
+        <div class="col-md-4">          
+          <div class="card mb-4">
                 {% if movie.image %}
                 <img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.title }}">
                 {% endif %}
@@ -152,46 +132,15 @@
                     <a href="admineditmovie.html" class="btn-get-started">Edit</a>
                     <br>
                     <br>
-                    <a href="#main " class="btn-get-started">Delete</a>
-                   
-                </div>
+                    <a href="#main " class="btn-get-started">Delete</a>                
+                  </div>            
+                </div>       
+              </div>
+              {% empty %}
+              <p>No movies found.</p>
+              {% endfor %}
             </div>
-        </div>
-        {% empty %}
-        <p>No movies found.</p>
-        {% endfor %}
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          </div>   
           <div class="row gy-4 justify-content-center">
             <!--Gallery Item-->
             <div class="col-xl-3 col-lg-4 col-md-6">
@@ -199,7 +148,7 @@
                 <img
                   src="{% static 'assets/img/gallery/barbie.png'%}"
                   class="img-fluid"
-                  alt="
+                  alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
@@ -222,7 +171,7 @@
                 <img
                   src="{% static 'assets/img/gallery/oppenheimer.png'%}"
                   class="img-fluid"
-                  alt="
+                  alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
@@ -236,26 +185,26 @@
                 </div>
               </div>
               <div class="container">
-              <a href="admineditmovie.html" class="btn-get-started">Edit</a>
-              <br>
-              <br>
-              <a href="#main " class="btn-get-started">Delete</a>
-            </div>
-            </div>
+                <a href="admineditmovie.html" class="btn-get-started">Edit</a>
+                <br>
+                <br>
+                <a href="#main " class="btn-get-started">Delete</a>
+              </div>
+            </div>            
             <!-- End Gallery Item -->
             <div class="col-xl-3 col-lg-4 col-md-6">
               <div class="gallery-item h-100">
                 <img
                   src="{% static 'assets/img/gallery/avatar.png'%}"
                   class="img-fluid"
-                  alt="
+                  alt=""
                 />
                 <div
                   class="gallery-links d-flex align-items-center justify-content-center"
                 >
                   <a href="{% static 'assets/img/gallery/avatar.png'%}" title="Gallery 3">
                   </a>
-                  <a href="gallery-single.html" class=" "> </a>
+                  <a href="gallery-single.html" class=""> </a>
                 </div>
               </div>
               <div class="container">
@@ -272,7 +221,7 @@
                   class="userProfile"
                   src="{% static 'assets/img/addSymbol.png'%}"
                   class="img-fluid"
-                  alt="
+                  alt=""
                 />
                 <br>
                 <br>
@@ -288,14 +237,12 @@
                   <a href="{% static 'assets/img/addSymbol.png'%}" title="Gallery 0">
                   </a>
                   <a href="gallery-single.html" class=" "> </a>
-                </div>
-              </div>
-            </div>
-            <div>
-        </div>
+                </div>              
+              </div>            
+            </div>                           
+          </div>      
+        </div>   
       </div>
-      </div>
-    </div>
     </section>
 
     <!-- End Hero Section -->
