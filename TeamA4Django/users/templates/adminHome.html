@@ -159,32 +159,35 @@
       </div>
     </section>
     <!-- End Hero Section -->
-    <div class="container">
-      <ul>
-        <li class="dropdown">
-          <a href="{% url 'manage-movies' %}">Manage Movie</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-              <li><a href="{% url 'admin_redirect' %}">Schedule Movies</a></li>
-                <li><a href="{% url 'add-movie' %}">Add Movie</a></li>
-                <li><a href="#">Edit Movies</a></li>
-                <li><a href="#">Delete Movies</a></li>
-            </ul>
-            <a href="{% url 'admin-users' %}"> Manage Users</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="#">Delete User</a></li>
-                <li><a href="#">Suspend User</a></li>
-                <li><a href="#">Edit User Details</a></li>
-                <li><a href=#>Add New Adminstator</a></li>
-            </ul>
-            <a href="adminpromotions.html"> Manage Promotions</a>
-            <i class="bi bi-chevron-down dropdown-indicator"></i>
-            <ul>
-                <li><a href="{% url 'promotions' %}">Add Promotions</a></li>
-            </ul>
-        </li>
-    </ul>
+    <div class="admincontrolscontainer">
+        <!-- <li class="dropdown"> -->
+          <div>
+          <h3>Manage Movies</h2>
+          <a href="{% url 'manage-movies' %}" class="btn-book">Manage Movie</a>
+            <!-- <i class="bi bi-chevron-down dropdown-indicator"></i> -->
+              <a href="{% url 'admin_redirect' %}" class="btn-book">Schedule Movies</a>
+                <a href="{% url 'add-movie' %}" class="btn-book">Add Movie</a>
+                <a href="#" class="btn-book">Edit Movies</a>
+                <a href="#" class="btn-book">Delete Movies</a>
+                </div>
+                <br>
+            <div>
+              <h3>Manage Users</h2>
+            <a href="{% url 'admin-users' %}" class="btn-book"> Manage Users</a>
+            <!-- <i class="bi bi-chevron-down dropdown-indicator"></i> -->
+                <a href="#" class="btn-book">Delete User</a>
+                <a href="#" class="btn-book">Suspend User</a>
+                <a href="#" class="btn-book">Edit User Details</a>
+                <a href=# class="btn-book">Add New Adminstator</a>
+                </div>
+                <br>
+              <div>
+              <h3>Manage Promotions</h2>
+            <a href="adminpromotions.html" class="btn-book"> Manage Promotions</a>
+            <!-- <i class="bi bi-chevron-down dropdown-indicator"></i> -->
+                <a href="{% url 'promotions' %}" class="btn-book">Add Promotions</a>
+                </div>
+        <!-- </li> -->
     </div>
 
                 

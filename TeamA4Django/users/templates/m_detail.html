@@ -52,6 +52,55 @@
     <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" />
 </head>
 <body>
+  <header id="header" class="header d-flex align-items-center fixed-top">
+      <div
+        class="nav-container d-flex align-items-center justify-content-between"
+      >
+        <a
+        href="/"
+          class="logo d-flex align-items-center me-auto me-lg-0"
+        >
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="assets/img/logo.png'%}" alt=""> -->
+          <!-- <i class="bi bi-camera"></i> -->
+          <img src="{% static 'assets/img/ticketLogo1.png'%}" alt="" />
+          <h1>SINABOOK</h1>
+        </a>
+
+        <nav id="navbar" class="navbar">
+          <ul>
+              <li><a href="/" class="active">Home</a></li>
+              <!-- Uncomment and update href attributes as needed for other links -->
+              <!-- <li><a href="/about/">About</a></li> -->
+              
+
+              {% if request.user.is_authenticated %}
+              <!-- Displayed only if user is logged in -->
+              <li><a href="{% url 'logout' %}">Log out</a></li>
+              <li><a href="{% url 'profile' %}">Profile</a></li>
+              <li><a href="{% url 'change_password' %}">Change Password</a></li>
+              
+            
+              {% else %}
+              <!-- Displayed only if user is not logged in -->
+              <li><a href="{% url 'login' %}">Log in</a></li>
+              <a href="{% url 'createAccount' %}"> Create Account</a>
+              {% endif %}
+               <!-- Add more links as needed -->
+          </ul>
+      </nav>
+
+        <!-- <div class="header-social-links">
+        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+         -->
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      </div>
+    </header>
+    
 <div class = "moviecontainer">
 
     <!-- Task for a front end person, take the stuff from the index (CSS Classes and stuff) and apply them here -->
@@ -68,11 +117,11 @@
         <p>Release Date: {{movie.release_date}}</p>
         <!-- Showtime (if movie is nowPlaying) -->
         <iframe
-                          width="1000"
-                          height="550"
-                          src="{{movie.trailer_url}}"
-                        >
-                        </iframe>
+        width="900"
+        height="500"
+        src="{{movie.trailer_url}}"
+        >
+      </iframe>
 
 
 
@@ -84,12 +133,9 @@
                 <a href = "{% url 'show' movie.pk %}" class="btn-book" > Book Movie </a>
               </div>
             {% else %}
-              <div>
-                <div class = "book-now-button">
-                  <h1> This movie isn't playing yet check back later.</h1>
-                  <button type="button" class="btn btn-book disabled">Book Movie</button>
-                </div>
-              </div>
+                    <h2> This movie isn't playing yet check back later.</h2>
+                    <button type="button" class="btn btn-book disabled">Book Movie</button>
+
             {% endif %}
         {% else %}
           <div class = "log-in">
