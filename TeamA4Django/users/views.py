@@ -183,7 +183,7 @@ def create_account_view(request):
                 email.send()
 
                 messages.success(request, 'Please confirm your email address to complete the registration.')
-                return redirect('emailverification')  
+                return render(request, 'emailverification.html')
             else:
                 messages.error(request, 'Please correct the error in the credit card information.')
         else:
