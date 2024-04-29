@@ -170,7 +170,7 @@ def create_account_view(request):
             user.save()
             user_profile = UserProfile(user=user, **user_profile_form.cleaned_data)
             user_profile.save()
-
+            
             if credit_card_form.is_valid():
                 credit_card = credit_card_form.save(commit=False)
                 credit_card.user_profile = user_profile
@@ -473,6 +473,9 @@ def show(request, id):
         if not shows.exists():
             return JsonResponse({'error': 'No shows found for this movie'}, status=404)
 
+        user = request.user
+        print("user profile: ", user)
+
         show_data = []
         for show in shows:
             show_data.append({
@@ -484,8 +487,20 @@ def show(request, id):
                 'start_time': show.showtime.time_slot,
                 # 'end_time': show.showtime.end_time,
             })
+            print("user's credit card: ", CreditCard.user == request.user)
+            # print("Credit Card: ", CreditCard.user.first_name)
+            credit_card_form = CreditCardForm(request.POST or None)
+            if credit_card_form.is_valid():
+                credit_card = credit_card_form.save(commit=False)
+                credit_card.user_profile = user_profile
+                credit_card.save()
+
+
+
+            context = {'shows': show_data, 
+                       'user': user}
         
-        return render(request, 'showBooking.html', {'shows': show_data})
+        return render(request, 'showBooking.html', context)
     except Exception as e:
         print("hello")
         return JsonResponse({'error': str(e)}, status=500)

@@ -417,6 +417,19 @@
                     <a href="checkout.html" class="btn-get-started"
             >Continue to Checkout</a
           >
+          {% if user.creditcard_set.exists %}
+            <h2>Payment Options</h2>
+            <form action="{% url 'process_payment' %}" method="post">
+              {% csrf_token %}
+              <label for="credit_card">Select Credit Card:</label>
+              <select name="credit_card" id="credit_card">
+                {% for credit_card in user.userprofile.creditcard_set.all %}
+                  <option value="{{ credit_card.id }}">{{ credit_card.card_number }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit">Pay with Saved Card</button>
+            </form>
+          {% endif %}
                     <!-- End Contact Form -->
                   
         </div>
