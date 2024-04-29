@@ -81,7 +81,7 @@
         {% if request.user.is_authenticated %}
             {% if movie.status == "nowPlaying" %}
               <div class = "book-bow-button">
-                <a href = "{% url 'show' movie.pk %}" class="btn-book" data-bs-toggle="modal"> Book Movie </a>
+                <a href = "{% url 'show' movie.pk %}" class="btn-book" > Book Movie </a>
               </div>
             {% else %}
               <div>
@@ -93,7 +93,7 @@
             {% endif %}
         {% else %}
           <div class = "log-in">
-            <a href = "{% url 'login' %}" class="btn-book" data-bs-toggle="modal"> Log in to Book </a>
+            <a href = "{% url 'login' %}" class="btn-book" > Log in to Book </a>
             <a href="{% url 'createAccount' %}"> Create Account</a>
           </div>
         {% endif %}
