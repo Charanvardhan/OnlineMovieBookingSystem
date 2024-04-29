@@ -1,13 +1,16 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User 
 from .models import UserProfile, CreditCard, Movie, Show, Showtimes, Promotions
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import ValidationError
 import os
 from cryptography.fernet import Fernet
 from cryptography.fernet import InvalidToken
+
+from django import forms
+from .models import UserProfile
 
 
 class CustomPasswordResetForm(PasswordChangeForm):
@@ -190,8 +193,6 @@ class ShowAdminForm(forms.ModelForm):
         return cleaned_data
 
 
-from django import forms
-from .models import UserProfile
 
 class UserProfileEditForm(forms.ModelForm):
     class Meta:
@@ -233,3 +234,11 @@ class UserProfileEditForm(forms.ModelForm):
         else:
             decrypted_cvv = ""
         return decrypted_cvv
+    
+#class TicketPurchaseForm(forms.ModelForm):
+    #class Meta:
+        #model = Ticket1
+        #fields = ['ticket_type', 'quantity']
+        #widgets = {
+           # 'quantity': forms.NumberInput(attrs={'class': 'form-control', 'min': 0})
+       # }

@@ -198,12 +198,6 @@ class Movie(models.Model):
 
 
 
-class Ticket(models.Model):
-    # Ticket maps booking to the seat. 
-    #The ticket price schema can be used as foreign key in tickets.
-    # Also mention the type of ticket in ticket
-    ticket_number = models.IntegerField() #idk if this should be here, added to remove error 
-    # booking = models.OneToOneField(Booking, on_delete=models.CASCADE)
 
 
 class Admin(models.Model):
@@ -240,7 +234,7 @@ class TimeSlot(models.TextChoices):
 
 ##Need var numSeats, fk to Seat
 class Showroom(models.Model):
-    seats = models.IntegerField()
+    seats1 = models.IntegerField()
     showroom_number = models.IntegerField(unique=True)
 
     def get_seats(self):
@@ -289,7 +283,7 @@ class Show(models.Model):
     showroom = models.ForeignKey('Showroom', on_delete=models.CASCADE, default=1)
     showtime = models.ForeignKey('Showtimes', on_delete=models.CASCADE, default=1)
     show_id = models.IntegerField(unique=True)
-    ticket = models.ManyToManyField('Ticket', default = 'true')
+    #ticket = models.ManyToManyField('Ticket', default = 'true')
 
     # def save(self, *args, **kwargs):
     #     if not self.pk:  # Check if this is a new record
@@ -313,17 +307,18 @@ class Show(models.Model):
         return f"{self.movie} at {self.showtime}"
 
 
+#class TicketType1(models.Model):
+     #name = models.CharField(max_length=100, default='Generic Ticket')
+     #price = models.DecimalField(max_digits=6, decimal_places=2, help_text="Price per ticket", default='0.00')
 
-class TicketPrices(models.Model):
-    adult_tickets = models.IntegerField()
-    senior_tickets = models.IntegerField()
-    child_tickets = models.IntegerField()
 
-    def applyPromotion(self):
-        pass
-
-    def applyShowtime(self):
-        pass
+#class Ticket1(models.Model):
+    # Ticket maps booking to the seat. 
+    #The ticket price schema can be used as foreign key in tickets.
+    # Also mention the type of ticket in ticket
+    #ticket_number = models.AutoField(primary_key=True)  # Ensuring each ticket number is unique
+    #ticket_type = models.ForeignKey(TicketType1, on_delete=models.CASCADE, null=True)
+    #quantity = models.IntegerField(default=0)
 
 
 class BookingHistory(models.Model):
@@ -335,6 +330,14 @@ class BookingHistory(models.Model):
     #show = models.ForeignKey
         # Add other fields as needed
 
-    # Optionally, add a method to format booking details for display
     def display_booking_info(self):
         return f"Booking Number: {self.booking_number}, Ticket Number: {self.ticket_number}"
+    
+class Seat(models.Model):
+    showroom = models.ForeignKey('Showroom', on_delete=models.CASCADE, related_name='seats')
+    row = models.IntegerField()
+    column = models.IntegerField()
+    is_occupied = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Row {self.row}, Seat {self.column} in Showroom {self.showroom.showroom_number}"

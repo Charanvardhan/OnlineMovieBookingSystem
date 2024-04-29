@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import UserProfile, CreditCard, Movie, Bookings, Showtimes
-from .models import Admin, Promotions, Show, TicketPrices, Showroom, Ticket
-from .models import Show
+from .models import Admin, Promotions, Show, Showroom
+from .models import Show, Seat
 from .forms import ShowAdminForm
 
 admin.site.register(UserProfile)
@@ -13,9 +13,11 @@ admin.site.register(Showtimes)
 admin.site.register(Admin)
 # admin.site.register(Promotions)
 # admin.site.register(Show)
-admin.site.register(Ticket)
-admin.site.register(TicketPrices)
+
+#admin.site.register(Ticket1)
+#admin.site.register(TicketType1)
 admin.site.register(Showroom)
+admin.site.register(Seat)
 
 
 

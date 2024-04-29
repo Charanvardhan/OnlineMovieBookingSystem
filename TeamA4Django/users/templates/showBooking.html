@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -181,12 +181,16 @@
             </option>
             {% endfor %}
           </select>
-          <br />
 
-                    
+                
           <h3>Select seats:</h3>
                                
           <div class="seatsContainer">
+
+
+             <div class="row">
+
+
             <ul class="showcase">
                           
               <li>
@@ -331,6 +335,8 @@
                           
             </div>
 
+
+            
                         
             <p class="text">
               You have selected <span id="count">0</span> seats for the total
@@ -342,24 +348,89 @@
                     
           <h2>Ticket Price:</h2>
                     
-          <p>$12.00</p>
+          <p>Adult: $12.00</p>
+          <p>Child: $8.00</p>
+          <p>Senior: $12.00</p>
                     
+          <form method="post" action="">
+            {% csrf_token %}
+           
+
+            <div class="form-group">
+                <label for="{{ form.adult_tickets.id_for_label }}">Adult Tickets:</label>
+                {{ form.adult_tickets }}
+                {% if form.adult_tickets.errors %}
+                    <div class="error">{{ form.adult_tickets.errors }}</div>
+                {% endif %}
+            </div>
+
+    <div class="form-group mt-3">
+        <p>Adult Ticket:</p>
+
+        {{ form.adult_tickets }}
+        {% if form.adult_tickets.errors %}
+       
+        <div class="error">{{ form.adult_tickets.errors|striptags }}</div>
+        {% endif %}
+      </div>
+
+
+    <div class="form-group mt-3">
+        <p>Senior Ticket:</p>
+        {{ form.senior_tickets|add_class:"form-control" }}
+        {% if form.senior_tickets.errors %}
+        <div class="error">{{ form.senior_tickets.errors|striptags }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group mt-3">
+        <p>Child Ticket:</p>
+        {{ form.child_tickets|add_class:"form-control" }} {% if form.child_tickets.errors %}
+        <div class="error">{{ form.child_tickets.errors|striptags }}</div>
+        {% endif %}
+      </div>
+
+    <button type="submit" class="btn btn-primary">Purchase Tickets</button>
+</form>
+             
+        </form>
+        
+
+          <h2>Ticket Types:</h2>
+            <div class="ticket-types">
+            <div>
+                <label for="adultCount">Adult Tickets:</label>
+                <button onclick="adecrement('adultCount')">-</button>
+                <input class="plusMinus" id="adultCount" type="number" min="0" max="100" value="0">
+                <button onclick="aincrement('adultCount')">+</button>   
+                $12.00 each
+            </div>
+            <div>
+                <label for="seniorCount">Senior Tickets:</label>
+                <button onclick="sdecrement('seniorCount')">-</button>
+                <input class="plusMinus" id="seniorCount" type="number" min="0" max="100" value="0">
+                <button onclick="sincrement('seniorCount')">+</button>
+                $10.00 each
+            </div>
+            <div>
+                <label for="childCount">Child Tickets:</label>
+                <button onclick="cdecrement('childCount')">-</button>
+                <input class="plusMinus" id="childCount" type="number" min="0" max="100" value="0">
+                <button onclick="cincrement('childCount')">+</button>
+                $8.00 each
+            </div>
+        </div>     
+        
           <h2>Seat reservation(s):</h2>
-          <button onclick="decrement()">-</button>
-          <input
-            class="plusMinus"
-            id="seatCount"
-            type="number"
-            min="1"
-            max="100"
-            value="0"
-          />
-          <button onclick="increment()">+</button>           
+               
           <p class="orderSummarytext">
             You have selected
             <span id="countDisplay">0</span> seats.           
           </p>
-                    
+
+
+
+
           <script>
             function increment() {
               var countElement = document.getElementById("seatCount");
@@ -367,7 +438,24 @@
               countElement.value = count + 1;
               updateDisplay();
             }
-
+            function aincrement() {
+              var countElement = document.getElementById("adultCount");
+              var count = parseInt(countElement.value, 10);
+              countElement.value = count + 1;
+              updateDisplay();
+            }
+            function cincrement() {
+              var countElement = document.getElementById("childCount");
+              var count = parseInt(countElement.value, 10);
+              countElement.value = count + 1;
+              updateDisplay();
+            }
+            function sincrement() {
+              var countElement = document.getElementById("seniorCount");
+              var count = parseInt(countElement.value, 10);
+              countElement.value = count + 1;
+              updateDisplay();
+            }
             function decrement() {
               var countElement = document.getElementById("seatCount");
               var count = parseInt(countElement.value, 10);
@@ -377,40 +465,68 @@
               }
               updateDisplay();
             }
-
-            function updateDisplay() {
-              var count = parseInt(
-                document.getElementById("seatCount").value,
-                10
-              );
-              document.getElementById("countDisplay").innerText = count;
-              calculateTotal();
+            function adecrement() {
+              var countElement = document.getElementById("adultCount");
+              var count = parseInt(countElement.value, 10);
+              if (count > 0) {
+                // Prevents negative values
+                countElement.value = count - 1;
+              }
+              updateDisplay();
+            }
+            function sdecrement() {
+              var countElement = document.getElementById("seniorCount");
+              var count = parseInt(countElement.value, 10);
+              if (count > 0) {
+                // Prevents negative values
+                countElement.value = count - 1;
+              }
+              updateDisplay();
+            }
+            function cdecrement() {
+              var countElement = document.getElementById("childCount");
+              var count = parseInt(countElement.value, 10);
+              if (count > 0) {
+                // Prevents negative values
+                countElement.value = count - 1;
+              }
+              updateDisplay();
             }
 
-            function calculateTotal() {
-              var ticketPrice = 12; // Assuming a fixed price of $12 per ticket
-              var count = parseInt(
-                document.getElementById("seatCount").value,
-                10
-              );
-              var total = ticketPrice * count;
-              document.getElementById("total").innerText = total.toFixed(2);
-            } // Initialize the display on page load
+            function updateDisplay() {
+                var adultCount = parseInt(document.getElementById('adultCount').value, 10) || 0;
+                var seniorCount = parseInt(document.getElementById('seniorCount').value, 10) || 0;
+                var childCount = parseInt(document.getElementById('childCount').value, 10) || 0;
+
+                var totalTickets = adultCount + seniorCount + childCount;
+              document.getElementById('seatCount').value = totalTickets; // Syncs the 'seatCount' input with the tota
+              document.getElementById('countDisplay').innerText =totalTickets;
+              calculateTotal(adultCount, seniorCount, childCount);
+            }
+
+            function calculateTotal(adultCount, seniorCount, childCount) {
+              var adultPrice = 12; // Price per adult ticket
+              var seniorPrice = 10; // Price per senior ticket
+              var childPrice = 8;  // Price per child ticket
+            
+              var totalPrice = (adultCount * adultPrice) + (seniorCount * seniorPrice) + (childCount * childPrice);
+              document.getElementById('total').innerText = totalPrice.toFixed(2);
+            }
 
             document.addEventListener("DOMContentLoaded", function () {
               updateDisplay(); // To reflect any default value or changes on reload
             });
           </script>
                     <!-- <p>15A, 15B, 15C</p> -->
-                    <br />
-                    <br />
+    
                     <br />
                     <br />
                     
           <hr />
-                    
+               
           <h2>Total:</h2>
-                    
+            
+          </p>
           <p class="orderSummarytext">$<span id="total">0</span></p>
                     
           <hr />

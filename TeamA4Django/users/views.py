@@ -472,6 +472,15 @@ def show(request, id):
         
         if not shows.exists():
             return JsonResponse({'error': 'No shows found for this movie'}, status=404)
+        
+        #if request.method == 'POST':
+                #form = TicketPurchaseForm(request.POST)
+                #if form.is_valid():
+                    # Assume you want to save the form but still stay on the page,
+                    # or you might redirect to a success page that confirms the ticket purchase.
+                    #form.save()
+        #else:
+             #form = TicketPurchaseForm()  # An unbound form for GET requests
 
         user = request.user
         print("user profile: ", user)
