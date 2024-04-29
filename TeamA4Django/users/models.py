@@ -50,6 +50,9 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"{self.user.username}'s profile"
     
+    def first_and_last_name (self):
+        return f"{self.first_name} {self.last_name}"
+    
     def booking_history (self):
         return BookingHistory.objects.filter(user=self) 
 
@@ -135,8 +138,8 @@ class CreditCard(models.Model):
     def addPayment(self):
         pass
 
-    def updateSeats(self):
-        pass
+    # def updateSeats(self):
+    #     pass
    
     def __str__(self):
      return f"Credit Card for {self.user.first_name} {self.user.last_name}"

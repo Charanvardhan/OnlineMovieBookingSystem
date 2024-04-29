@@ -40,7 +40,7 @@ class Command(BaseCommand):
                 # isPlaying :True
             },
             {
-                'title': 'Avatar: The Way of the Water',
+                'title': 'Avatar: Way of the Water',
                 'description': 'Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Navi race to protect their home.',
                 'cast': 'Sam Worthington as Jake Sully, Zoe Saldana as Neytiri, Sigourney Weaver as Dr. Grace Augustine, Stephen Lang as Colonel Miles Quaritch, and others',
                 'producer': 'James Cameron',
@@ -53,7 +53,22 @@ class Command(BaseCommand):
                 'image': 'static/assets/img/gallery/avatar.png',
                 'rating': 'PG-13',
                 'status': 'nowPlaying',
-            }
+            },
+            {
+                'title': 'Challengers',
+                'description': 'JFrom visionary filmmaker Luca Guadagnino, Challengers stars Zendaya as Tashi Duncan, a former tennis prodigy turned coach and a force of nature who makes no apologies for her game on and off the court.',
+                'cast': 'Zendaya , Mike Faist, Josh O Connor, A.J. Lister',
+                'producer': 'James Cameron',
+                'director': 'Luca Guadagnino',
+                'review': 'Critics praised its groundbreaking visual effects and immersive world-building. However, opinions on the film\'s story and characters have been more mixed.',
+                'release_date': '2024-04-29',
+                'duration': 130,
+                'trailer_url': 'https://www.youtube.com/embed/VobTTbg-te0?si=vBMGPenZsgxuqiWT', #needs to be embedded!
+                'genre': 'Drama',
+                'image': 'static/assets/img/gallery/challengers.jpeg',
+                'rating': 'R',
+                'status': 'nowPlaying',
+            },
         ]
 
         for movie_data in populate_running_movies:

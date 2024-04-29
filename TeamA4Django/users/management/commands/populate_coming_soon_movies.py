@@ -38,6 +38,21 @@ class Command(BaseCommand):
                 'rating': 'R',
                 'status': 'comingSoon',
             },
+             {
+                'title': 'Pearl',
+                'description': 'In 1918, a young woman on the brink of madness pursues stardom in a desperate attempt to escape the drudgery, isolation, and lovelessness of life on her parents farm.',
+                'cast': 'Mia Goth, David Corenswet, Tandi Wright',
+                'producer': 'A24',
+                'director': 'Ti West',
+                'review': 'Pearl" is an emotionally charged and thought‑provoking film that delves deep into the complexities of human relationships and the profound impact of love, loss, and resilience',
+                'release_date': '2024-10-22',
+                'duration': 110,
+                'trailer_url': "https://www.youtube.com/embed/L5PW5r3pEOg?si=uLpYD2pK_QRYW5wx" ,
+                'genre': 'Horror',
+                'image': 'static/assets/img/gallery/pearl.jpeg',
+                'rating': 'R',
+                'status': 'comingSoon',
+            },
           
         ]
 

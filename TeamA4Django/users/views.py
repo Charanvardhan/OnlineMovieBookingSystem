@@ -150,6 +150,7 @@ def create_account_view(request):
     user_profile_form = UserProfileForm(request.POST or None)
     credit_card_form = CreditCardForm(request.POST or None)
 
+    ##Do a check to see if user (email) is unique
     if request.method == 'POST':
         if user_profile_form.is_valid():
             user = User.objects.create_user(
@@ -241,7 +242,8 @@ def index_view(request):
     # print("Coming Soon : ", coming_soon[0].title)
     movies = Movie.objects.all()
     
-    context = {"movies": movies}
+    context = {"movies": movies,
+               }
     return render(request, 'index.html', context )
     # now_playing_movies = Movie.objects.filter(status='nowPlaying')
     # print("Now Playing : ", now_playing_movies[0].title)
@@ -329,7 +331,7 @@ def login_view(request):
 
 @login_required(login_url='/login/')  # Redirects to login if not logged in
 def booking_history_view(request):
-    customer = request.user.customer  # Assuming authenticated user has a related Customer object
+    customer = request.user  # Assuming authenticated user has a related Customer object
     booking_histories = customer.booking_history()
     return render(request, 'booking_history.html', {'booking_histories': booking_histories})
 

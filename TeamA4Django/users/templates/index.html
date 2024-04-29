@@ -122,7 +122,7 @@
 
             <!-- should show name of user when logged in -->
             {% if user.is_authenticated %}
-            <p>Hello {{ user.first_name }}!</p>
+            <p>Hello Loyal Customer!</p>
                  {% else %}
             <p>Hello, Guest!</p>
            {% endif %}
@@ -174,10 +174,10 @@
               <div class = "meg-work"> -->
             <hr>
             
-            <div class = "row row-cols-5">
+            <div class = "row row-cols-3 space-around">
               {% for movie in movies%}
                 {% if movie.status == "nowPlaying"%}
-                  <div class = "db-card-for-movie card">
+                  <div class = "card text-center space-around">
                     <img src = "{{ movie.image.url}}" alt = "every db movie img" class = "card-img-top"> 
                       <div class="text-center card-body">
                         <h1 class = "card-title"> {{movie.title}}</h1>
@@ -190,6 +190,7 @@
                 {%endif%}
               {% endfor %}
           </div>
+        </div>
 
 
               
@@ -198,12 +199,12 @@
             <div class = "container-fluid">
               <h4>Coming Soon:</h4>
               <hr>
-              <div class = "row row-cols-5">
+              <div class = "row row-cols-3">
                 
                 
                 {%for movie in movies%}
                   {% if movie.status == "comingSoon"%}
-                    <div class = "db-card-for-movie card">
+                    <div class = "db-card-for-movie card text-center space-around">
                       <img src = "{{ movie.image.url}}" alt = "every db movie img" class = "card-img-top"> 
                       <div class="text-center card-body">
                         <h1 class = "card-title"> {{movie.title}}</h1>
@@ -219,7 +220,7 @@
               </div>
             </div>
 
-            </div>
+            
 
         <!-- End Coming soon section -->
       </section>
